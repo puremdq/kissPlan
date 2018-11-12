@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--自定义 密码比较器-->
+    <!--<bean id="credentialsMatcher" class="com.aojiaoo.core.shiro.realm.credentialsMatcher.CredentialsMatcher"/>-->
+    <!-- 配置自定义Realm -->
+    <bean id="dbRealm" class="com.aojiaoo.core.shiro.realm.DbRealm">
+        <!--<property name="credentialsMatcher" ref="credentialsMatcher"/>-->
+    </bean>
+
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="sid"/>
+        <property name="httpOnly" value="true"/>
+        <property name="maxAge" value="-1"/>
+        <property name="name" value="kissPlan-sid"/>
+    </bean>
+
+    <bean name="cacheSessionDAO" class="com.aojiaoo.core.shiro.session.CacheSessionDAO">
+        <property name="cacheManager" ref="ehcacheShiroManager"/>
+    </bean>
+
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+        <property name="sessionIdCookieEnabled" value="true"/>
+
+        <!-- session的失效时长，单位毫秒 1小时: 3600000, itzixi站点设置以 6小时 为主：21600000 -->
+        <!-- 设置全局会话超时时间，默认30分钟，即如果30分钟内没有访问会话将过期 1800000 -->
+        <property name="globalSessionTimeout" value="21600000"/>
+        <!-- 删除失效的session -->
+        <property name="deleteInvalidSessions" value="true"/>
+        <property name="sessionDAO" ref="cacheSessionDAO"/>
+        <!-- 是否开启会话验证器，默认是开启的 -->
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+        <property name="sessionIdUrlRewritingEnabled" value="false"/>
+    </bean>
+
+
+    <bean id="cacheManager" class="com.aojiaoo.utils.CacheUntil" factory-method="load">
+        <constructor-arg value="classpath:ehcache.xml"/>
+    </bean>
+
+    <bean id="ehcacheShiroManager" class="com.aojiaoo.core.shiro.cache.EhcacheShiroManager">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="cacheConfiguration" value="#{T(com.aojiaoo.utils.CacheUntil).getXmlConfigurationr()}"/>
+    </bean>
+
+    <!--start配置记住我-->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="rememberMe"/>
+        <property name="httpOnly" value="true"/>
+        <property name="maxAge" value="216000"/><!-- 10天 -->
+        <property name="name" value="kissPlan-rid"/>
+    </bean>
+
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AMVhmFLUs0KTA3Kprsdag==')}"/>
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+    <!--end配置记住我-->
+
+
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="dbRealm"/>
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="cacheManager" ref="ehcacheShiroManager"/>
+    </bean>
+
+
+    <bean id="formAuthenticationFilter" class="com.aojiaoo.core.shiro.filter.FormAuthenticationFilter"/>
+    <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter"/>
+
+    <!--配置shiroFilter (名称应与web.xml文件的fiterName一致)-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+
+        <property name="filters">
+            <map>
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <entry key="logout" value-ref="logoutFilter"/>
+            </map>
+        </property>
+
+
+        <!-- Shiro的核心安全接口,这个属性是必须的 -->
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 身份认证失败，则跳转到登录页面的配置 -->
+        <property name="loginUrl" value="/login"/>
+        <!-- 权限认证失败，则跳转到指定页面 -->
+        <!--<property name="unauthorizedUrl" value="/nopower.jsp"/>-->
+        <!-- Shiro连接约束配置,即过滤链的定义 -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!--anon 表示匿名访问，不需要认证以及授权
+                authc表示需要认证 没有进行身份认证是不能进行访问的
+                -->
+                /favicon.ico = anon
+                /test/** = anon
+                /static/** = anon
+                /login = authc
+                /logout = logout
+                /** = user
+            </value>
+        </property>
+    </bean>
+
+</beans>
+
