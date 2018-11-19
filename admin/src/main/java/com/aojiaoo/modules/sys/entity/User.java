@@ -11,6 +11,14 @@ public class User extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    public User() {
+
+    }
+
+    public User(Integer id) {
+        this.id = id;
+    }
+
     /**
      * id
      * 表字段： sys_user.id

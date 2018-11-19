@@ -101,7 +101,7 @@
                 /static/** = anon
                 /login = authc
                 /logout = logout
-                /** = user
+                /** = authc
             </value>
         </property>
     </bean>

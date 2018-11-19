@@ -62,7 +62,7 @@
         <property name="mapperLocations" value="classpath:mappings/**/*.xml"/>
 
         <property name="plugins">
-            <bean class="com.aojiaoo.core.mybatis.plugins.paging.MyPageInterceptor"/>
+            <bean class="com.aojiaoo.core.mybatis.plugins.paging.PageInterceptor"/>
         </property>
     </bean>
 

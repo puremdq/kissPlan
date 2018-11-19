@@ -9,7 +9,6 @@ import javax.servlet.ServletResponse;
 
 public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
 
-
     /*执行登录*/
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {

@@ -13,11 +13,11 @@ import java.lang.annotation.Annotation;
 import java.util.Arrays;
 
 
-public class JsonReturnHandler implements HandlerMethodReturnValueHandler{
+public class JsonReturnHandler implements HandlerMethodReturnValueHandler {
     @Override
     public boolean supportsReturnType(MethodParameter returnType) {
         // 如果有我们自定义的 JSON 注解 就用我们这个Handler 来处理
-        boolean hasJsonAnno= returnType.getMethodAnnotation(JSON.class) != null;
+        boolean hasJsonAnno = returnType.getMethodAnnotation(JSON.class) != null;
         return hasJsonAnno;
     }
 

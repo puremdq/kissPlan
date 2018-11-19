@@ -18,7 +18,7 @@ limitations under the License.
 
     <cache alias="shiro-activeSessionCache">
         <key-type serializer="org.ehcache.impl.serialization.CompactJavaSerializer">
-            java.lang.String
+            java.lang.Object
         </key-type>
         <value-type serializer="org.ehcache.impl.serialization.CompactJavaSerializer">
             java.lang.Object
@@ -32,7 +32,7 @@ limitations under the License.
 
     <cache alias="org.apache.shiro.realm.text.PropertiesRealm-0-accounts">
         <key-type serializer="org.ehcache.impl.serialization.CompactJavaSerializer">
-            java.lang.String
+            java.lang.Object
         </key-type>
         <value-type serializer="org.ehcache.impl.serialization.CompactJavaSerializer">
             java.lang.Object
@@ -46,7 +46,7 @@ limitations under the License.
 
     <cache-template name="default">
         <key-type serializer="org.ehcache.impl.serialization.CompactJavaSerializer">
-            java.lang.String
+            java.lang.Object
         </key-type>
         <value-type serializer="org.ehcache.impl.serialization.CompactJavaSerializer">
             java.lang.Object

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:cache="http://www.springframework.org/schema/cache"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd"> <!-- scan the package and the sub package -->
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"> <!-- scan the package and the sub package -->
 
     <!-- DispatcherServlet上下文， 只管理@Controller类型的bean， 忽略其他型的bean, 如@Service -->
     <context:component-scan base-package="com.aojiaoo.modules.**.controller" use-default-filters='false'>
@@ -17,7 +17,11 @@
     <!-- 激活参数绑定-->
     <mvc:annotation-driven/>
 
-    <bean id="jsonReturnHandler" class="com.aojiaoo.core.json.JsonReturnHandler"/>
+    <!--<mvc:annotation-driven>-->
+        <!--<mvc:return-value-handlers>-->
+            <!--<bean class="com.aojiaoo.core.json.JsonReturnHandler"/>-->
+        <!--</mvc:return-value-handlers>-->
+    <!--</mvc:annotation-driven>-->
 
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -72,4 +76,27 @@
 
     <!--统一异常处理-->
     <bean class="com.aojiaoo.core.handler.ExceptionHandler"/>
+
+    <!--配置切面的Bean -->
+    <bean id="logAop" class="com.aojiaoo.core.aop.LogAop"/>
+    <!--<bean id="jsonFilterAop" class="com.aojiaoo.core.aop.LogAop"/>-->
+    <!-- 配置AOP -->
+    <aop:config proxy-target-class="true" expose-proxy="true">
+        <!--(execution(* com.aojiaoo.modules.*.controller..*.*(..)))-->
+        <!-- 配置切点表达式  -->
+        <aop:pointcut id="logCut"
+                      expression="execution(* com.aojiaoo.modules.*.controller..*.*(..))"/>
+        <!--<aop:pointcut id="jsonFilter" expression="execution(* com.aojiaoo.modules.*.service..*.*(..)) and @annotation(com.aojiaoo.core.json.annotation.JSON)"/>-->
+        <!-- 配置切面及配置 -->
+        <aop:aspect ref="logAop">
+            <!-- 前置通知 -->
+            <aop:before method="beforMethod" pointcut-ref="logCut"/>
+            <!-- 后置通知 -->
+            <aop:after method="afterMethod" pointcut-ref="logCut"/>
+            <!-- 返回通知 -->
+            <aop:after-returning method="afterReturnMethod" pointcut-ref="logCut" returning="result"/>
+            <!-- 异常通知 -->
+            <aop:after-throwing method="afterThrowingMethod" pointcut-ref="logCut" throwing="ex"/>
+        </aop:aspect>
+    </aop:config>
 </beans>
