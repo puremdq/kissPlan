@@ -2,11 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
 
     <!--激活自动注入  @Autowired-->
@@ -19,7 +18,6 @@
         <context:exclude-filter type="annotation"
                                 expression="com.aojiaoo.core.mybatis.annotations.MyBatisDao"/><!--不包括用了Controller注解的bean-->
     </context:component-scan>
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
     <bean class="com.aojiaoo.utils.SpringContextHolder" lazy-init="true"/>
 
     <!--<cache:annotation-driven cache-manager="jCacheCacheManager" />&lt;!&ndash;扫描cache注解，如果已有可以不要&ndash;&gt;-->
@@ -32,10 +30,7 @@
     <!--</bean>-->
 
 
-
     <import resource="classpath:context/mybatis-context.xml"/>
     <import resource="classpath:context/shiro-context.xml"/>
-
-
 
 </beans>

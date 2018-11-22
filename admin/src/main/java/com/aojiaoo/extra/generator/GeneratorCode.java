@@ -1,10 +1,6 @@
 package com.aojiaoo.extra.generator;
 
-import com.aojiaoo.utils.FreemakerUtil;
-import com.aojiaoo.utils.DbInfoUtil;
-import com.aojiaoo.utils.FileUtils;
-import com.aojiaoo.utils.PropertiesUtil;
-import com.aojiaoo.utils.StringUtil;
+import com.aojiaoo.utils.*;
 import com.google.common.io.Files;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -45,15 +41,17 @@ public class GeneratorCode {
 
         String entityName = GeneratorCode.getEntityNameByTableName(tableName, properties);
         String entityPackage = properties.getProperty("generatorCode.entityPackage");
+        String baseEntityFullName = properties.getProperty("generatorCode.baseEntity");
 
         Map<String, Object> templateMap = new HashMap<>();
         templateMap.put("tableName", tableName);
+        templateMap.put("existFieldList", ClassUtils.getStringFields(baseEntityFullName, true));
         templateMap.put("entityPackage", entityPackage);
         templateMap.put("entityName", entityName);
-        templateMap.put("baseEntityFullName", properties.getProperty("generatorCode.baseEntity"));
+        templateMap.put("baseEntityFullName", baseEntityFullName);
         templateMap.put("columnList", columnList);
 
-        String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtil.replaceAll(entityPackage, "\\.", "/"), entityName + ".java");
+        String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtils.replaceAll(entityPackage, "\\.", "/"), entityName + ".java");
         Template template = cfg.getTemplate("entity.ftl");
         template.process(templateMap, new FileWriter(filePath));
         return entityName;
@@ -76,7 +74,7 @@ public class GeneratorCode {
         templateMap.put("annotationFullName", properties.getProperty("generatorCode.mapper.annotation"));
         templateMap.put("columnList", columnList);
 
-        String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtil.replaceAll(mapperPackage, "\\.", "/"), mapperName + ".java");
+        String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtils.replaceAll(mapperPackage, "\\.", "/"), mapperName + ".java");
         Template template = cfg.getTemplate("mapper.ftl");
         Files.createParentDirs(new File(filePath));
         template.process(templateMap, new FileWriter(filePath));
@@ -95,7 +93,7 @@ public class GeneratorCode {
 
         String mappingPackage = properties.getProperty("generatorCode.mappingPackage");
         String mappingName = entityName + "Mapping";
-        String filePath = FileUtils.spliceFilePath(getMappingResourceRootPath(properties), StringUtil.replaceAll(mappingPackage, "\\.", "/"), mappingName + ".xml");
+        String filePath = FileUtils.spliceFilePath(getMappingResourceRootPath(properties), StringUtils.replaceAll(mappingPackage, "\\.", "/"), mappingName + ".xml");
         Template template = cfg.getTemplate("mapping.ftl");
         template.process(templateMap, new FileWriter(filePath));
     }
@@ -112,7 +110,7 @@ public class GeneratorCode {
         templateMap.put("serviceName", serviceName);
         templateMap.put("columnList", columnList);
 
-        String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtil.replaceAll(servicePackage, "\\.", "/"), serviceName + ".java");
+        String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtils.replaceAll(servicePackage, "\\.", "/"), serviceName + ".java");
         Template template = cfg.getTemplate("service.ftl");
         template.process(templateMap, new FileWriter(filePath));
     }
@@ -127,7 +125,7 @@ public class GeneratorCode {
         templateMap.put("serviceFullName", properties.getProperty("generatorCode.servicePackage") + "." + entityName + "Service");
         templateMap.put("entityName", entityName);
         templateMap.put("controllerName", controllerName);
-        String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtil.replaceAll(controllerPackage, "\\.", "/"), controllerName + ".java");
+        String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtils.replaceAll(controllerPackage, "\\.", "/"), controllerName + ".java");
 
         Template template = cfg.getTemplate("controller.ftl");
         template.process(templateMap, new FileWriter(filePath));
@@ -136,34 +134,34 @@ public class GeneratorCode {
 
     private static String getEntityNameByTableName(String tableName, Properties properties) {
 
-        if (StringUtil.isBlank(tableName)) {
+        if (StringUtils.isBlank(tableName)) {
             return "";
         }
 
         String tablePrefix = "";
-        if (StringUtil.isNotBlank(properties.getProperty("generatorCode.table." + tableName + ".prefix"))) {
+        if (StringUtils.isNotBlank(properties.getProperty("generatorCode.table." + tableName + ".prefix"))) {
             tablePrefix = properties.getProperty("generatorCode.table." + tableName + ".prefix");
-        } else if (StringUtil.isNotBlank(properties.getProperty("generatorCode.table.prefix"))) {
+        } else if (StringUtils.isNotBlank(properties.getProperty("generatorCode.table.prefix"))) {
             tablePrefix = properties.getProperty("generatorCode.table.prefix");
         }
 
-        if (StringUtil.isNotBlank(tablePrefix) && !tablePrefix.endsWith("_")) {
+        if (StringUtils.isNotBlank(tablePrefix) && !tablePrefix.endsWith("_")) {
             tablePrefix = tablePrefix + "_";
         }
 
-        return StringUtil.underlineToCapitalizeCamelCase(tableName.substring(tablePrefix.length()));
+        return StringUtils.underlineToCapitalizeCamelCase(tableName.substring(tablePrefix.length()));
     }
 
     private static String getSourceRootPath(Properties properties) {
         String projectPath = properties.getProperty("generatorCode.projectPath");
-        projectPath = StringUtil.isNotBlank(projectPath) ? projectPath : FileUtils.getProjectPath();
+        projectPath = StringUtils.isNotBlank(projectPath) ? projectPath : FileUtils.getProjectPath();
         String sourceRoot = properties.getProperty("generatorCode.sourceRoot");
         return FileUtils.spliceFilePath(projectPath, sourceRoot);
     }
 
     private static String getMappingResourceRootPath(Properties properties) {
         String projectPath = properties.getProperty("generatorCode.projectPath");
-        projectPath = StringUtil.isNotBlank(projectPath) ? projectPath : FileUtils.getProjectPath();
+        projectPath = StringUtils.isNotBlank(projectPath) ? projectPath : FileUtils.getProjectPath();
         String mappingResourceRoot = properties.getProperty("generatorCode.mappingResourceRoot");
         return FileUtils.spliceFilePath(projectPath, mappingResourceRoot);
     }
@@ -171,7 +169,7 @@ public class GeneratorCode {
     private static Configuration getConfiguration(Properties properties) {
         Configuration cfg = FreemakerUtil.getConfiguration();
         try {
-            FreemakerUtil.setStaticPacker(cfg, "StringUtils", StringUtil.class.getName());
+            FreemakerUtil.setStaticPacker(cfg, "StringUtils", StringUtils.class.getName());
             cfg.setDirectoryForTemplateLoading(new File(FileUtils.getFilePathByClasspathOrSelf(properties.getProperty("generatorCode.templatePath"))));
         } catch (Exception e) {
             e.printStackTrace();

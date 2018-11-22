@@ -17,12 +17,6 @@
     <!-- 激活参数绑定-->
     <mvc:annotation-driven/>
 
-    <!--<mvc:annotation-driven>-->
-        <!--<mvc:return-value-handlers>-->
-            <!--<bean class="com.aojiaoo.core.json.JsonReturnHandler"/>-->
-        <!--</mvc:return-value-handlers>-->
-    <!--</mvc:annotation-driven>-->
-
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="209715200"/>
@@ -30,13 +24,50 @@
         <property name="resolveLazily" value="true"/>
     </bean>
 
-
     <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 前缀 -->
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <!-- 后缀 -->
         <property name="suffix" value=".jsp"/>
     </bean>
+
+
+    <!--start aop-->
+    <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
+
+    <!--配置shiro aop-->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="order" value="1"/>
+    </bean>
+    <!--end 配置shiro aop-->
+
+    <!--配置切面的log aop -->
+    <bean id="logAop" class="com.aojiaoo.core.aop.LogAop"/>
+    <!--<bean id="jsonFilterAop" class="com.aojiaoo.core.aop.LogAop"/>-->
+    <aop:config proxy-target-class="true" expose-proxy="true">
+        <!--(execution(* com.aojiaoo.modules.*.controller..*.*(..)))-->
+        <!-- 配置切点表达式  -->
+        <aop:pointcut id="logCut"
+                      expression="execution(* com.aojiaoo.modules.*.controller..*.*(..)) and @annotation(org.springframework.web.bind.annotation.RequestMapping)"/>
+        <!--<aop:pointcut id="jsonFilter" />-->
+        <!-- 配置切面及配置 -->
+        <aop:aspect ref="logAop" order="2">
+            <!-- 前置通知 -->
+            <!--<aop:before method="beforMethod" pointcut-ref="logCut"/>-->
+            <aop:around method="around" pointcut-ref="logCut"/>
+            <!--&lt;!&ndash; 后置通知 &ndash;&gt;-->
+            <!--<aop:after method="afterMethod" pointcut-ref="logCut"/>-->
+            <!--&lt;!&ndash; 返回通知 &ndash;&gt;-->
+            <!--<aop:after-returning method="afterReturnMethod" pointcut-ref="logCut" returning="result"/>-->
+            <!--&lt;!&ndash; 异常通知 &ndash;&gt;-->
+            <!--<aop:after-throwing method="afterThrowingMethod" pointcut-ref="logCut" throwing="ex"/>-->
+        </aop:aspect>
+    </aop:config>
+    <!-- end 配置AOP -->
+
+    <!--统一异常处理-->
+    <bean class="com.aojiaoo.core.handler.ExceptionHandler"/>
 
     <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="contentType" value="text/html; charset=utf-8"/>
@@ -57,46 +88,4 @@
     </bean>
 
 
-
-    <!--start shiro生命周期-->
-    <!--配置LifecycleBeanPostProcessor 自动调用 spring ioc容器中的生命周期方法-->
-    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-
-    <!-- 开启Shiro注解 必须要配置LifecycleBeanPostProcessor后才有用 -->
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lifecycleBeanPostProcessor">
-        <!--配置代理为 cglib 统一代理模式  防止代理混乱-->
-        <property name="proxyTargetClass" value="true"/>
-    </bean>
-
-    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-        <property name="securityManager" ref="securityManager"/>
-    </bean>
-    <!--end shiro生命周期-->
-
-    <!--统一异常处理-->
-    <bean class="com.aojiaoo.core.handler.ExceptionHandler"/>
-
-    <!--配置切面的Bean -->
-    <bean id="logAop" class="com.aojiaoo.core.aop.LogAop"/>
-    <!--<bean id="jsonFilterAop" class="com.aojiaoo.core.aop.LogAop"/>-->
-    <!-- 配置AOP -->
-    <aop:config proxy-target-class="true" expose-proxy="true">
-        <!--(execution(* com.aojiaoo.modules.*.controller..*.*(..)))-->
-        <!-- 配置切点表达式  -->
-        <aop:pointcut id="logCut"
-                      expression="execution(* com.aojiaoo.modules.*.controller..*.*(..))"/>
-        <!--<aop:pointcut id="jsonFilter" expression="execution(* com.aojiaoo.modules.*.service..*.*(..)) and @annotation(com.aojiaoo.core.json.annotation.JSON)"/>-->
-        <!-- 配置切面及配置 -->
-        <aop:aspect ref="logAop">
-            <!-- 前置通知 -->
-            <aop:before method="beforMethod" pointcut-ref="logCut"/>
-            <!-- 后置通知 -->
-            <aop:after method="afterMethod" pointcut-ref="logCut"/>
-            <!-- 返回通知 -->
-            <aop:after-returning method="afterReturnMethod" pointcut-ref="logCut" returning="result"/>
-            <!-- 异常通知 -->
-            <aop:after-throwing method="afterThrowingMethod" pointcut-ref="logCut" throwing="ex"/>
-        </aop:aspect>
-    </aop:config>
 </beans>

@@ -4,7 +4,7 @@ import com.aojiaoo.utils.FreemakerUtil;
 import com.aojiaoo.utils.DbInfoUtil;
 import com.aojiaoo.utils.FileUtils;
 import com.aojiaoo.utils.PropertiesUtil;
-import com.aojiaoo.utils.StringUtil;
+import com.aojiaoo.utils.StringUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -27,7 +27,7 @@ public class GeneratorDoc {
         templateMap.put("tableMap", resMap);
         String fileName = DateFormatUtils.format(new Date(), "yyyy-MM-dd") + "数据库文档.md";
         String filePath = FileUtils.getFilePathByClasspathOrSelf(generatorProperties.getProperty("generatorDoc.path"));
-        filePath = StringUtil.isBlank(filePath) ? FileSystemView.getFileSystemView().getHomeDirectory().getPath() : filePath;
+        filePath = StringUtils.isBlank(filePath) ? FileSystemView.getFileSystemView().getHomeDirectory().getPath() : filePath;
         Template template = cfg.getTemplate("databaseDoc.ftl");
         template.process(templateMap, new FileWriter(FileUtils.spliceFilePath(filePath, fileName)));
 
@@ -37,7 +37,7 @@ public class GeneratorDoc {
     private static Configuration getConfiguration(Properties properties) {
         Configuration cfg = FreemakerUtil.getConfiguration();
         try {
-            FreemakerUtil.setStaticPacker(cfg, "StringUtils", StringUtil.class.getName());
+            FreemakerUtil.setStaticPacker(cfg, "StringUtilss", StringUtils.class.getName());
             cfg.setDirectoryForTemplateLoading(new File(FileUtils.getFilePathByClasspathOrSelf(properties.getProperty("generatorDoc.templatePath"))));
         } catch (Exception e) {
             e.printStackTrace();

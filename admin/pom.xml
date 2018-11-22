@@ -15,7 +15,7 @@
     <!--start properties-->
     <properties>
         <jdk.version>8</jdk.version>
-        <spring.version>5.0.8.RELEASE</spring.version>
+        <spring.version>5.1.2.RELEASE</spring.version>
         <shiro.version>1.4.0</shiro.version>
         <mybatis.version>3.4.6</mybatis.version>
         <freemarker.version>2.3.28</freemarker.version>
@@ -123,13 +123,13 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.9.1</version>
+            <version>1.9.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>1.9.1</version>
+            <version>1.9.2</version>
         </dependency>
 
         <!--end aop-->
@@ -177,7 +177,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.12</version>
+            <version>8.0.13</version>
         </dependency>
 
 

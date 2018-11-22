@@ -4,7 +4,9 @@ import com.aojiaoo.core.base.BaseEntity;
 import lombok.Data;
 import com.aojiaoo.core.mybatis.enums.IdType;
 import com.aojiaoo.core.mybatis.annotations.TableId;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper=true)
 @Data
 public class Menu extends BaseEntity {
 

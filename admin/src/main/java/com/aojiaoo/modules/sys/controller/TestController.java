@@ -26,6 +26,9 @@ public class TestController extends BaseController<TestService> {
         return test1();
     }
 
+    @ResponseBody
+    @RequestMapping("2")
+//    @JSON(type = User.class, filter = "createDate")
     public List<User> test1() {
         return userService.findList(new User());
     }
