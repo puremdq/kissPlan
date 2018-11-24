@@ -1,6 +1,5 @@
 package com.aojiaoo.modules.sys.mapper;
 
-import java.util.List;
 import com.aojiaoo.core.base.BaseMapper;
 import com.aojiaoo.modules.sys.entity.OperateLog;
 

@@ -89,6 +89,7 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
     public boolean insert(E entity, boolean isSelective) {
 
         entity.setCreateDate(new Date());
+        entity.setUpdateDate(new Date());
         entity.setCreateBy(UserUtil.getCurrentUser().getId());
         entity.setUpdateBy(entity.getCreateBy());
         List<Field> idFields = entity.getIdFields();
@@ -118,6 +119,7 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
                             field.set(entity, IdGenerator.uuid());
                             break;
                         case AUTO:
+                            field.setAccessible(true);
                             field.set(entity, null);
                             break;
                     }

@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @Documented
-public @interface OperateLog {
+public @interface Log {
 
     /**
      * The value may indicate a suggestion for a logical component name,

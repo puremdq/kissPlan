@@ -4,7 +4,6 @@
 <#assign idAndTypeStrList="${StringUtils.trimToEmpty(idAndTypeStrList)}"/>
 package ${mapperPackage};
 
-import java.util.List;
 <#if StringUtils.isNotBlank(baseMapperFullName)>
 import ${baseMapperFullName};
 </#if>

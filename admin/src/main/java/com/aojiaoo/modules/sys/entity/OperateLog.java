@@ -23,7 +23,7 @@ public class OperateLog extends BaseEntity {
      * 主键
      * 表字段： sys_operate_log.id
      */
-    @TableId(type = IdType.UUID, value = "id")
+    @TableId(type = IdType.AUTO, value = "id")
     private Long id;
     /**
      * 操作的模块名称（自定义指定）
@@ -57,13 +57,18 @@ public class OperateLog extends BaseEntity {
     private String methodName;
     /**
      * 参数
-     * 表字段： sys_operate_log.parameter
+     * 表字段： sys_operate_log.parameters
      */
-    private String parameter;
+    private String parameters;
     /**
      * 执行时间
-     * 表字段： sys_operate_log.excute_time
+     * 表字段： sys_operate_log.execute_time
      */
-    private String excuteTime;
+    private String executeTime;
+    /**
+     * 是否执行成功成功
+     * 表字段： sys_operate_log.is_success
+     */
+    private String isSuccess;
 
 }

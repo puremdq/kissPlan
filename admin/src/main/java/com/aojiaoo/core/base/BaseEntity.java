@@ -77,7 +77,7 @@ public abstract class BaseEntity implements Serializable {
     }
 
     public void setUpdateDate(Date updateDate) {
-        updateDate = updateDate;
+        this.updateDate = updateDate;
     }
 
 

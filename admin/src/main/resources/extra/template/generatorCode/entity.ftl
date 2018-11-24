@@ -50,7 +50,7 @@ public class ${entityName} <#if StringUtils.isNotBlank(baseEntityFullName)>exten
      */
         <#if columnMap.isId=='true'>
             <#if (idNum==1)>
-                <#if (columnMap.javaType=='Integer')>
+                <#if (columnMap.javaType=='Integer'||columnMap.javaType=='Long')>
                     <#assign idType="AUTO"/>
                 <#else>
                     <#assign idType="UUID"/>
