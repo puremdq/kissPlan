@@ -2,4 +2,4 @@
 target
 kissPlan.iml
 *.log
-jdbc.properties
+src/main/resources/jdbc.properties
