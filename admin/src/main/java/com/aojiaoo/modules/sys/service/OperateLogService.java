@@ -1,15 +1,15 @@
 package com.aojiaoo.modules.sys.service;
 
-import com.aojiaoo.modules.sys.entity.Log;
+import com.aojiaoo.modules.sys.entity.OperateLog;
 import com.aojiaoo.core.base.BaseService;
-import com.aojiaoo.modules.sys.mapper.LogMapper;
+import com.aojiaoo.modules.sys.mapper.OperateLogMapper;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class LogService extends BaseService<Log, LogMapper> {
+public class OperateLogService extends BaseService<OperateLog, OperateLogMapper> {
 
-    public Log get(Long id) {
+    public OperateLog get(Long id) {
         return this.mapper.selectByPrimaryKey(id);
     }
 

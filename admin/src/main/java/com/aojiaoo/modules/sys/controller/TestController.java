@@ -1,5 +1,6 @@
 package com.aojiaoo.modules.sys.controller;
 
+import com.aojiaoo.core.annotations.OperateLog;
 import com.aojiaoo.core.base.BaseController;
 import com.aojiaoo.core.json.annotation.JSON;
 import com.aojiaoo.modules.sys.entity.User;
@@ -19,6 +20,7 @@ public class TestController extends BaseController<TestService> {
     @Autowired
     UserService userService;
 
+    @OperateLog(desc = "sfdasd")
     @ResponseBody
     @JSON(type = User.class, filter = "createDate")
     @RequestMapping("1")
