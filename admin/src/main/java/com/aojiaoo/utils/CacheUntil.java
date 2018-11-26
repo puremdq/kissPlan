@@ -127,7 +127,7 @@ public class CacheUntil {
     }
 
     public static EhcacheManager load(String resource) {
-        if (StringUtil.isBlank(resource)) {
+        if (StringUtils.isBlank(resource)) {
             throw new IllegalArgumentException("非法的参数，[resource]不能为空");
         }
         try {

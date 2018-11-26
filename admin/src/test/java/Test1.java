@@ -3,15 +3,15 @@ import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.utils.DbInfoUtil;
 import com.aojiaoo.utils.FileUtils;
 import com.aojiaoo.utils.PropertiesUtil;
+import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.Test;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.net.URL;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Test1 {
 
@@ -81,17 +81,12 @@ public class Test1 {
 
     @Test
     public void test3c() throws Exception {
-//        Files.createParentDirs(new File("d:/a/b/c.txt"));
+        Properties properties = PropertiesUtil.getProperties("classpath:extra/generatorCode.properties");
+        Field[] fields = ClassUtils.getClass(properties.getProperty("generatorCode.baseEntity")).getDeclaredFields();
 
-        System.out.println("sdfasdf".substring(0,-1));
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.set(Calendar.DAY_OF_MONTH, 1);
-//        calendar.set(Calendar.HOUR_OF_DAY, 0);
-//        calendar.set(Calendar.MINUTE, 0);
-//        calendar.set(Calendar.SECOND, 0);
-//        calendar.add(Calendar.MONTH, 1);
-//        calendar.add(Calendar.DAY_OF_MONTH, -1);
-//        System.out.println(DateFormatUtils.format(calendar.getTime(), "dd"));
+        for(Field field:fields){
+            System.out.println(  Modifier.toString(field.getModifiers()));
+        }
     }
 
 

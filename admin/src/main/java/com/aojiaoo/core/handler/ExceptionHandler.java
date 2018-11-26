@@ -11,8 +11,9 @@ public class ExceptionHandler implements HandlerExceptionResolver {
 
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
-        ModelAndView modelAndView = new ModelAndView();
 
+        e.printStackTrace();
+        ModelAndView modelAndView = new ModelAndView();
         if (e instanceof org.apache.shiro.authz.UnauthorizedException || e instanceof org.apache.shiro.authz.UnauthenticatedException) {
             modelAndView.setViewName("redirect:/static/403.html");
             modelAndView.setStatus(HttpStatus.FORBIDDEN);

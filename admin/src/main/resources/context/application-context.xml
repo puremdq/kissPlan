@@ -2,54 +2,32 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
 
     <!--激活自动注入  @Autowired-->
     <context:annotation-config/>
 
     <context:component-scan base-package="com.aojiaoo.modules"><!--扫描这些包-->
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/><!--不包括用了Controller注解的bean-->
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/><!--不包括用了Controller注解的bean-->
         <!--不包括用了MyBatisDao注解的bean-->
-        <context:exclude-filter type="annotation" expression="com.aojiaoo.core.mybatis.annotations.MyBatisDao"/><!--不包括用了Controller注解的bean-->
+        <context:exclude-filter type="annotation"
+                                expression="com.aojiaoo.core.mybatis.annotations.MyBatisDao"/><!--不包括用了Controller注解的bean-->
     </context:component-scan>
-    <aop:aspectj-autoproxy proxy-target-class="true" />
     <bean class="com.aojiaoo.utils.SpringContextHolder" lazy-init="true"/>
 
     <!--<cache:annotation-driven cache-manager="jCacheCacheManager" />&lt;!&ndash;扫描cache注解，如果已有可以不要&ndash;&gt;-->
     <!--&lt;!&ndash; jcache缓存 &ndash;&gt;-->
     <!--<bean id="jCacheManager" class="org.springframework.cache.jcache.JCacheManagerFactoryBean">-->
-        <!--<property name="cacheManagerUri" value="classpath:ehcache.xml" />  &lt;!&ndash;改成配置文件对应的路径&ndash;&gt;-->
+    <!--<property name="cacheManagerUri" value="classpath:ehcache.xml" />  &lt;!&ndash;改成配置文件对应的路径&ndash;&gt;-->
     <!--</bean>-->
     <!--<bean id="jCacheCacheManager" class="org.springframework.cache.jcache.JCacheCacheManager">-->
-        <!--<property name="cacheManager" ref="jCacheManager" />-->
+    <!--<property name="cacheManager" ref="jCacheManager" />-->
     <!--</bean>-->
-
-
-
-     <!--配置切面的Bean -->
-    <bean id="logAop" class="com.aojiaoo.core.aop.LogAop"/>
-
-    <!-- 配置AOP -->
-    <aop:config>
-        <!-- 配置切点表达式  -->
-        <aop:pointcut id="pointcut" expression="execution(* com.aojiaoo.modules.*.service..*.*(..))" />
-        <!-- 配置切面及配置 -->
-        <aop:aspect order="3" ref="logAop">
-            <!-- 前置通知 -->
-            <aop:before method="beforMethod" pointcut-ref="pointcut"/>
-            <!-- 后置通知 -->
-            <aop:after method="afterMethod" pointcut-ref="pointcut"/>
-            <!-- 返回通知 -->
-            <aop:after-returning method="afterReturnMethod" pointcut-ref="pointcut" returning="result"/>
-            <!-- 异常通知 -->
-            <aop:after-throwing method="afterThrowingMethod" pointcut-ref="pointcut" throwing="ex"/>
-        </aop:aspect>
-    </aop:config>
 
 
     <import resource="classpath:context/mybatis-context.xml"/>

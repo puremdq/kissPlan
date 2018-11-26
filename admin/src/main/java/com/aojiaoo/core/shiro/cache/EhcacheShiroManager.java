@@ -113,7 +113,7 @@ public class EhcacheShiroManager implements CacheManager, Initializable, Destroy
         log.trace("Acquiring EhcacheShiro instance named [{}]", name);
 
         try {
-            org.ehcache.Cache<String, Object> cache = ensureCacheManager().getCache(name, String.class, Object.class);
+            org.ehcache.Cache<Object, Object> cache = ensureCacheManager().getCache(name, Object.class, Object.class);
 
             if (cache == null) {
                 log.info("Cache with name {} does not yet exist.  Creating now.", name);
@@ -129,12 +129,12 @@ public class EhcacheShiroManager implements CacheManager, Initializable, Destroy
         }
     }
 
-    private org.ehcache.Cache<String, Object> createCache(String name) {
+    private org.ehcache.Cache<Object, Object> createCache(String name) {
         try {
             XmlConfiguration xmlConfiguration = getConfiguration();
-            CacheConfigurationBuilder<String, Object> configurationBuilder = xmlConfiguration.newCacheConfigurationBuilderFromTemplate(
-                    "default", String.class, Object.class);
-            CacheConfiguration<String, Object> cacheConfiguration = configurationBuilder.build();
+            CacheConfigurationBuilder<Object, Object> configurationBuilder = xmlConfiguration.newCacheConfigurationBuilderFromTemplate(
+                    "default", Object.class, Object.class);
+            CacheConfiguration<Object, Object> cacheConfiguration = configurationBuilder.build();
             return ensureCacheManager().createCache(name, cacheConfiguration);
         } catch (InstantiationException e) {
             throw new CacheException(e);

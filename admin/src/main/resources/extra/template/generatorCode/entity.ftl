@@ -11,11 +11,13 @@ package ${entityPackage};
 import ${baseEntityFullName};
 </#if>
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 <#if (idNum>0)>
 import com.aojiaoo.core.mybatis.enums.IdType;
 import com.aojiaoo.core.mybatis.annotations.TableId;
 </#if>
-
+@EqualsAndHashCode(callSuper=true)
 @Data
 public class ${entityName} <#if StringUtils.isNotBlank(baseEntityFullName)>extends ${StringUtils.substringAfterLast(baseEntityFullName,".")}</#if> {
 
@@ -34,27 +36,30 @@ public class ${entityName} <#if StringUtils.isNotBlank(baseEntityFullName)>exten
         </#list>
     </#assign>
     <#assign constructorStr="${StringUtils.trimToEmpty(constructorStr)}"/>
+
     public ${entityName}(${idAndTypeStrList?substring(0,(idAndTypeStrList?length)-1)}) {
-    ${StringUtils.trimToEmpty(constructorStr)}
+        ${StringUtils.trimToEmpty(constructorStr)}
     }
 </#if>
 
 <#list columnList as columnMap>
+<#if (!existFieldList.contains(StringUtils.underlineToCamelCase(columnMap.col)))>
     /**
      * ${columnMap.remarks}
      * 表字段： ${tableName}.${columnMap.col}
      */
-    <#if columnMap.isId=='true'>
-    <#if (idNum==1)>
-        <#if (columnMap.javaType=='Integer')>
-            <#assign idType="AUTO"/>
-        <#else>
-            <#assign idType="UUID"/>
-        </#if>
-    </#if>
+        <#if columnMap.isId=='true'>
+            <#if (idNum==1)>
+                <#if (columnMap.javaType=='Integer'||columnMap.javaType=='Long')>
+                    <#assign idType="AUTO"/>
+                <#else>
+                    <#assign idType="UUID"/>
+                </#if>
+            </#if>
     @TableId(type = IdType.${idType}, value = "${columnMap.col}")
-    </#if>
+        </#if>
     private ${columnMap.javaType} ${StringUtils.underlineToCamelCase(columnMap.col)};
+</#if>
 </#list>
 
 }

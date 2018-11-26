@@ -38,7 +38,7 @@ public class ResourceUtil {
 
     public static URL getURL(String resourceLocation) throws FileNotFoundException {
 
-        if (StringUtil.isBlank(resourceLocation)) {
+        if (StringUtils.isBlank(resourceLocation)) {
             throw new InvalidParameterException("resourceLocation不能为空");
         }
 

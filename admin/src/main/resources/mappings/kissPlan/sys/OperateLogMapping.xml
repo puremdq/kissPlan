@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aojiaoo.modules.sys.mapper.OperateLogMapper">
+
+
+
+    <sql id="Base_Column_List">
+            a.id as id,a.operate_name as operateName,a.operate_desc as operateDesc,a.ip as ip,a.url as url,a.request_type as requestType,a.method_name as methodName,a.parameters as parameters,a.execute_time as executeTime,a.create_by as createBy,a.create_date as createDate,a.update_by as updateBy,a.update_date as updateDate,a.del_flag as delFlag,a.is_success as isSuccess
+    </sql>
+
+    <sql id="Base_select_table">
+        sys_operate_log a
+    </sql>
+
+
+    <select id="selectByPrimaryKey" resultType="com.aojiaoo.modules.sys.entity.OperateLog">
+        select
+        <include refid="Base_Column_List"/>
+        from <include refid="Base_select_table"/>
+        <where>
+              and  a.id = #{id,jdbcType=BIGINT}
+        </where>
+    </select>
+
+    <select id="selectBySelective" resultType="com.aojiaoo.modules.sys.entity.OperateLog">
+        select
+        <include refid="Base_Column_List"/>
+        from <include refid="Base_select_table"/>
+        <where>
+               <if test="id != null">
+                   and a.id = #{id,jdbcType=BIGINT}
+               </if>
+               <if test="operateName != null and operateName != ''">
+                   and a.operate_name = #{operateName,jdbcType=VARCHAR}
+               </if>
+               <if test="operateDesc != null and operateDesc != ''">
+                   and a.operate_desc = #{operateDesc,jdbcType=VARCHAR}
+               </if>
+               <if test="ip != null and ip != ''">
+                   and a.ip = #{ip,jdbcType=VARCHAR}
+               </if>
+               <if test="url != null and url != ''">
+                   and a.url = #{url,jdbcType=LONGVARCHAR}
+               </if>
+               <if test="requestType != null and requestType != ''">
+                   and a.request_type = #{requestType,jdbcType=VARCHAR}
+               </if>
+               <if test="methodName != null and methodName != ''">
+                   and a.method_name = #{methodName,jdbcType=VARCHAR}
+               </if>
+               <if test="parameters != null and parameters != ''">
+                   and a.parameters = #{parameters,jdbcType=LONGVARCHAR}
+               </if>
+               <if test="executeTime != null and executeTime != ''">
+                   and a.execute_time = #{executeTime,jdbcType=VARCHAR}
+               </if>
+               <if test="createBy != null and createBy != ''">
+                   and a.create_by = #{createBy,jdbcType=CHAR}
+               </if>
+               <if test="createDate != null">
+                   and a.create_date = #{createDate,jdbcType=TIMESTAMP}
+               </if>
+               <if test="updateBy != null and updateBy != ''">
+                   and a.update_by = #{updateBy,jdbcType=CHAR}
+               </if>
+               <if test="updateDate != null">
+                   and a.update_date = #{updateDate,jdbcType=TIMESTAMP}
+               </if>
+               <if test="delFlag != null and delFlag != ''">
+                   and a.del_flag = #{delFlag,jdbcType=CHAR}
+               </if>
+               <if test="isSuccess != null and isSuccess != ''">
+                   and a.is_success = #{isSuccess,jdbcType=CHAR}
+               </if>
+        </where>
+    </select>
+
+
+
+    <insert id="insert" parameterType="com.aojiaoo.modules.sys.entity.OperateLog">
+        insert into sys_operate_log (
+            id,operate_name,operate_desc,ip,url,request_type,method_name,parameters,execute_time,create_by,create_date,update_by,update_date,del_flag,is_success
+        )
+        values (
+            #{id,jdbcType=BIGINT},
+            #{operateName,jdbcType=VARCHAR},
+            #{operateDesc,jdbcType=VARCHAR},
+            #{ip,jdbcType=VARCHAR},
+            #{url,jdbcType=LONGVARCHAR},
+            #{requestType,jdbcType=VARCHAR},
+            #{methodName,jdbcType=VARCHAR},
+            #{parameters,jdbcType=LONGVARCHAR},
+            #{executeTime,jdbcType=VARCHAR},
+            #{createBy,jdbcType=CHAR},
+            #{createDate,jdbcType=TIMESTAMP},
+            #{updateBy,jdbcType=CHAR},
+            #{updateDate,jdbcType=TIMESTAMP},
+            #{delFlag,jdbcType=CHAR},
+            #{isSuccess,jdbcType=CHAR}
+        )
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.aojiaoo.modules.sys.entity.OperateLog">
+
+        insert into sys_operate_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+                        id,
+                    </if>
+                    <if test="operateName != null">
+                        operate_name,
+                    </if>
+                    <if test="operateDesc != null">
+                        operate_desc,
+                    </if>
+                    <if test="ip != null">
+                        ip,
+                    </if>
+                    <if test="url != null">
+                        url,
+                    </if>
+                    <if test="requestType != null">
+                        request_type,
+                    </if>
+                    <if test="methodName != null">
+                        method_name,
+                    </if>
+                    <if test="parameters != null">
+                        parameters,
+                    </if>
+                    <if test="executeTime != null">
+                        execute_time,
+                    </if>
+                    <if test="createBy != null">
+                        create_by,
+                    </if>
+                    <if test="createDate != null">
+                        create_date,
+                    </if>
+                    <if test="updateBy != null">
+                        update_by,
+                    </if>
+                    <if test="updateDate != null">
+                        update_date,
+                    </if>
+                    <if test="delFlag != null">
+                        del_flag,
+                    </if>
+                    <if test="isSuccess != null">
+                        is_success,
+                    </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                   <if test="id != null">
+                       #{id,jdbcType=BIGINT},
+                   </if>
+                   <if test="operateName != null">
+                       #{operateName,jdbcType=VARCHAR},
+                   </if>
+                   <if test="operateDesc != null">
+                       #{operateDesc,jdbcType=VARCHAR},
+                   </if>
+                   <if test="ip != null">
+                       #{ip,jdbcType=VARCHAR},
+                   </if>
+                   <if test="url != null">
+                       #{url,jdbcType=LONGVARCHAR},
+                   </if>
+                   <if test="requestType != null">
+                       #{requestType,jdbcType=VARCHAR},
+                   </if>
+                   <if test="methodName != null">
+                       #{methodName,jdbcType=VARCHAR},
+                   </if>
+                   <if test="parameters != null">
+                       #{parameters,jdbcType=LONGVARCHAR},
+                   </if>
+                   <if test="executeTime != null">
+                       #{executeTime,jdbcType=VARCHAR},
+                   </if>
+                   <if test="createBy != null">
+                       #{createBy,jdbcType=CHAR},
+                   </if>
+                   <if test="createDate != null">
+                       #{createDate,jdbcType=TIMESTAMP},
+                   </if>
+                   <if test="updateBy != null">
+                       #{updateBy,jdbcType=CHAR},
+                   </if>
+                   <if test="updateDate != null">
+                       #{updateDate,jdbcType=TIMESTAMP},
+                   </if>
+                   <if test="delFlag != null">
+                       #{delFlag,jdbcType=CHAR},
+                   </if>
+                   <if test="isSuccess != null">
+                       #{isSuccess,jdbcType=CHAR},
+                   </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.aojiaoo.modules.sys.entity.OperateLog">
+        update sys_operate_log
+        <set>
+                 <if test="operateName != null">
+                     operate_name = #{operateName,jdbcType=VARCHAR},
+                 </if>
+                 <if test="operateDesc != null">
+                     operate_desc = #{operateDesc,jdbcType=VARCHAR},
+                 </if>
+                 <if test="ip != null">
+                     ip = #{ip,jdbcType=VARCHAR},
+                 </if>
+                 <if test="url != null">
+                     url = #{url,jdbcType=LONGVARCHAR},
+                 </if>
+                 <if test="requestType != null">
+                     request_type = #{requestType,jdbcType=VARCHAR},
+                 </if>
+                 <if test="methodName != null">
+                     method_name = #{methodName,jdbcType=VARCHAR},
+                 </if>
+                 <if test="parameters != null">
+                     parameters = #{parameters,jdbcType=LONGVARCHAR},
+                 </if>
+                 <if test="executeTime != null">
+                     execute_time = #{executeTime,jdbcType=VARCHAR},
+                 </if>
+                 <if test="createBy != null">
+                     create_by = #{createBy,jdbcType=CHAR},
+                 </if>
+                 <if test="createDate != null">
+                     create_date = #{createDate,jdbcType=TIMESTAMP},
+                 </if>
+                 <if test="updateBy != null">
+                     update_by = #{updateBy,jdbcType=CHAR},
+                 </if>
+                 <if test="updateDate != null">
+                     update_date = #{updateDate,jdbcType=TIMESTAMP},
+                 </if>
+                 <if test="delFlag != null">
+                     del_flag = #{delFlag,jdbcType=CHAR},
+                 </if>
+                 <if test="isSuccess != null">
+                     is_success = #{isSuccess,jdbcType=CHAR},
+                 </if>
+        </set>
+
+        <where>
+              and  id = #{id,jdbcType=BIGINT}
+        </where>
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.aojiaoo.modules.sys.entity.OperateLog">
+        update sys_operate_log
+        <set>
+                   operate_name = #{operateName,jdbcType=VARCHAR},
+                   operate_desc = #{operateDesc,jdbcType=VARCHAR},
+                   ip = #{ip,jdbcType=VARCHAR},
+                   url = #{url,jdbcType=LONGVARCHAR},
+                   request_type = #{requestType,jdbcType=VARCHAR},
+                   method_name = #{methodName,jdbcType=VARCHAR},
+                   parameters = #{parameters,jdbcType=LONGVARCHAR},
+                   execute_time = #{executeTime,jdbcType=VARCHAR},
+                   create_by = #{createBy,jdbcType=CHAR},
+                   create_date = #{createDate,jdbcType=TIMESTAMP},
+                   update_by = #{updateBy,jdbcType=CHAR},
+                   update_date = #{updateDate,jdbcType=TIMESTAMP},
+                   del_flag = #{delFlag,jdbcType=CHAR},
+                   is_success = #{isSuccess,jdbcType=CHAR},
+        </set>
+
+        <where>
+              and  id = #{id,jdbcType=BIGINT}
+        </where>
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        delete from sys_operate_log
+        <where>
+              and  id = #{id,jdbcType=BIGINT}
+        </where>
+    </delete>
+
+</mapper>

@@ -1,6 +1,6 @@
 package com.aojiaoo.utils;
 
-public class StringUtil extends org.apache.commons.lang3.StringUtils {
+public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
 
     //实现类似mysql的find_in_set
@@ -9,7 +9,7 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
             return false;
         }
         for (String s : strList.split(",")) {
-            if (StringUtil.equals(str, s)) {
+            if (StringUtils.equals(str, s)) {
                 return true;
             }
         }
@@ -71,8 +71,8 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
      */
     public static String camelCaseToUnderLineCase(String s) {
 
-        if (s == null) {
-            return null;
+        if (s == null || !s.contains("_")) {
+            return s;
         }
 
         StringBuilder sb = new StringBuilder();

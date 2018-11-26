@@ -1,11 +1,11 @@
 package com.aojiaoo.modules.sys.controller;
 
+import com.aojiaoo.core.annotations.Log;
 import com.aojiaoo.core.base.BaseController;
 import com.aojiaoo.core.json.annotation.JSON;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.service.TestService;
 import com.aojiaoo.modules.sys.service.UserService;
-import com.fasterxml.jackson.annotation.JsonFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +20,18 @@ public class TestController extends BaseController<TestService> {
     @Autowired
     UserService userService;
 
+    @Log(desc = "sfdasd")
     @ResponseBody
-    @JsonFilter("createDate")
-    @JSON(type = User.class,filter = "createDate")
+    @JSON(type = User.class, filter = "createDate")
     @RequestMapping("1")
-    public List<User> test() {
-        return userService.findList(new User());
+    public List<User> test(User user) {
+        return test1();
     }
 
+    @ResponseBody
+    @RequestMapping("2")
+//    @JSON(type = User.class, filter = "createDate")
+    public List<User> test1() {
+        return userService.findList(new User());
+    }
 }

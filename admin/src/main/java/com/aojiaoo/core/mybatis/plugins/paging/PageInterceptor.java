@@ -51,7 +51,7 @@ import java.util.Properties;
                 @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class}),
         }
 )
-public class MyPageInterceptor implements Interceptor {
+public class PageInterceptor implements Interceptor {
     //缓存count查询的ms
     private String countSuffix = "_COUNT";
 

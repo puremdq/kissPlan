@@ -30,26 +30,26 @@ public class DbInfoUtil {
         try {
             conn = getConnection(driver, url, user, pwd);
             DatabaseMetaData databaseMetaData = conn.getMetaData();
-            ResultSet resultSet = databaseMetaData.getTables(getDataBaseName(url), getSchema(conn), tableNamePattern, new String[]{"TABLE"});
+            ResultSet resultSet = databaseMetaData.getTables(conn.getCatalog(), conn.getSchema(), tableNamePattern, new String[]{"TABLE"});
 
             while (resultSet.next()) {
                 /*某个表*/
                 List<Map<String, String>> currentTableList = new ArrayList<>();
                 String tableName = resultSet.getString("TABLE_NAME");
                 List<String> idList = getIdList(conn.getMetaData(), tableName);
-                ResultSet rs = conn.getMetaData().getColumns(getDataBaseName(url), getSchema(conn), tableName.toUpperCase(), "%");
+                ResultSet rs = conn.getMetaData().getColumns(conn.getCatalog(), conn.getSchema(), tableName, "%");
                 while (rs.next()) {
                     /*某个字段*/
-                    //System.out.println("字段名："+rs.getString("COLUMN_NAME")+"--字段注释："+rs.getString("REMARKS")+"--字段数据类型："+rs.getString("TYPE_NAME"));
+//                    System.out.println("字段名："+rs.getString("COLUMN_NAME")+"--字段注释："+rs.getString("REMARKS")+"--字段数据类型："+rs.getString("TYPE_NAME"));
                     Map<String, String> colMap = new HashMap<>();
                     colMap.put("col", rs.getString("COLUMN_NAME"));
-                    colMap.put("remarks", StringUtil.trimToEmpty(rs.getString("REMARKS")));
+                    colMap.put("remarks", StringUtils.trimToEmpty(rs.getString("REMARKS")));
                     colMap.put("jdbcType", getJdbcTypeName(rs.getInt("DATA_TYPE")));
                     colMap.put("javaType", getJavaTypeByJdbcType(rs.getInt("DATA_TYPE")));
                     colMap.put("colSize", rs.getString("COLUMN_SIZE"));
                     colMap.put("databaseType", rs.getString("TYPE_NAME"));
                     colMap.put("nullAble", "1".equals(rs.getString("NULLABLE")) ? "Y" : "N");
-                    colMap.put("colDef", StringUtil.trimToEmpty(rs.getString("COLUMN_DEF")));
+                    colMap.put("colDef", StringUtils.trimToEmpty(rs.getString("COLUMN_DEF")));
                     colMap.put("isId", (idList != null && idList.contains(rs.getString("COLUMN_NAME"))) + "");
                     currentTableList.add(colMap);
                 }
@@ -97,23 +97,6 @@ public class DbInfoUtil {
             throw e;
         }
         return conn;
-    }
-
-    //其他数据库不需要这个方法 oracle和db2需要
-    private static String getSchema(Connection currentConn) throws Exception {
-        String schema = currentConn.getMetaData().getUserName();
-        if ((schema == null) || (schema.length() == 0)) {
-            throw new Exception("ORACLE数据库模式不允许为空");
-        }
-
-        return schema.toUpperCase();
-    }
-
-
-    //得到数据库名称
-    private static String getDataBaseName(String url) {
-        url = StringUtil.trimToEmpty(url);
-        return url.substring(url.lastIndexOf("/") + 1, url.indexOf("?"));
     }
 
 
@@ -203,7 +186,7 @@ public class DbInfoUtil {
     }
 
     private static String getSimpleClassName(String className) {
-        if (StringUtil.startsWith(className, "java.lang.")) {
+        if (StringUtils.startsWith(className, "java.lang.")) {
             return className.substring("java.lang.".length());
         } else {
             return className;
@@ -215,7 +198,7 @@ public class DbInfoUtil {
 
         List<String> stringList = new ArrayList<>();
 
-        ResultSet primaryKeyResultSet = dbMetaData.getPrimaryKeys(null, null, tableName);
+        ResultSet primaryKeyResultSet = dbMetaData.getPrimaryKeys(conn.getCatalog(), conn.getSchema(), tableName);
         while (primaryKeyResultSet.next()) {
             stringList.add(primaryKeyResultSet.getString("COLUMN_NAME"));
         }
@@ -224,7 +207,7 @@ public class DbInfoUtil {
 
     public static void main(String[] args) {
         //mysql
-        String table = "sys_menu";
+        String table = "sys_log";
         PropertiesUtil.load("classpath:jdbc.properties");
         Map<String, List<Map<String, String>>> map = getTableInfo(PropertiesUtil.get("jdbc.driver"), PropertiesUtil.get("jdbc.url"), PropertiesUtil.get("jdbc.username"), PropertiesUtil.get("jdbc.password"), table);
         System.out.println(map);
