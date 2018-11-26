@@ -55,9 +55,9 @@ public abstract class BaseEntity implements Serializable {
     protected List<Field> getIdFields() {
         List<Field> idFields = new ArrayList<>();
         Field[] fields = this.getClass().getDeclaredFields();
-        for (int i = 0; i < fields.length; i++) {
-            if (fields[i].getAnnotation(TableId.class) != null) {
-                idFields.add(fields[i]);
+        for (Field field : fields) {
+            if (field.getAnnotation(TableId.class) != null) {
+                idFields.add(field);
             }
         }
         return idFields;

@@ -44,13 +44,15 @@
 
     <!--配置切面的log aop -->
     <bean id="logAop" class="com.aojiaoo.core.aop.LogAop"/>
+    <bean id="responseBodyAop" class="com.aojiaoo.core.advice.ResponseBodyAdvice"/>
     <!--<bean id="jsonFilterAop" class="com.aojiaoo.core.aop.LogAop"/>-->
     <aop:config proxy-target-class="true" expose-proxy="true">
         <!--(execution(* com.aojiaoo.modules.*.controller..*.*(..)))-->
         <!-- 配置切点表达式  -->
         <aop:pointcut id="logCut"
                       expression="execution(* com.aojiaoo.modules.*.controller..*.*(..)) and @annotation(org.springframework.web.bind.annotation.RequestMapping)"/>
-        <!--<aop:pointcut id="jsonFilter" />-->
+
+
         <!-- 配置切面及配置 -->
         <aop:aspect ref="logAop" order="2">
             <!-- 前置通知 -->

@@ -30,8 +30,15 @@ public class TestController extends BaseController<TestService> {
 
     @ResponseBody
     @RequestMapping("2")
-//    @JSON(type = User.class, filter = "createDate")
+    @JSON(type = User.class, include = "id")
     public List<User> test1() {
         return userService.findList(new User());
+    }
+
+    @ResponseBody
+    @RequestMapping("3")
+    public List<User> test3() {
+        List<User> list = userService.findList(new User());
+        return list;
     }
 }

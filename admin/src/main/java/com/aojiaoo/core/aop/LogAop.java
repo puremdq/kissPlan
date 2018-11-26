@@ -3,6 +3,7 @@ package com.aojiaoo.core.aop;
 import com.aojiaoo.core.annotations.Log;
 import com.aojiaoo.modules.sys.entity.OperateLog;
 import com.aojiaoo.modules.sys.service.OperateLogService;
+import com.aojiaoo.utils.ClassUtils;
 import com.aojiaoo.utils.GlobalProperties;
 import com.aojiaoo.utils.WebUntil;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,8 +14,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class LogAop {
 
@@ -26,11 +25,7 @@ public class LogAop {
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         OperateLog operateLog = new OperateLog();
         Object object = null;
-        // 获得被拦截的方法
-        Method method = null;
 
-        //常见日志实体对象
-        //获取登录用户账户
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
         //方法通知前获取时间,为什么要记录这个时间呢？当然是用来计算模块执行时间的
@@ -44,7 +39,7 @@ public class LogAop {
         MethodSignature msig = (MethodSignature) pjp.getSignature();
         Class[] parameterTypes = msig.getMethod().getParameterTypes();
 
-        method = target.getClass().getMethod(methodName, parameterTypes);
+        Method  method = target.getClass().getMethod(methodName, parameterTypes);
         // 判断是否包含自定义的注解，说明一下这里的SystemLog就是我自己自定义的注解
         if (method.isAnnotationPresent(Log.class)) {
             Log logAnnotation = method.getAnnotation(Log.class);
@@ -53,7 +48,7 @@ public class LogAop {
         }
 
         operateLog.setMethodName(methodName);
-        operateLog.setParameters(getParameterString(pjp.getArgs()));
+        operateLog.setParameters(ClassUtils.getParameterStringMap(pjp.getArgs()).toString());
         operateLog.setRequestType(request.getMethod());
         operateLog.setUrl(request.getRequestURI());
         operateLog.setIp(WebUntil.getIp(request));
@@ -73,16 +68,5 @@ public class LogAop {
         return object;
     }
 
-    private String getParameterString(Object[] parameters) {
-        if (parameters == null) {
-            return null;
-        }
-
-        Map<String, String> parametersMap = new LinkedHashMap<>();
-        for (int i = 0; i < parameters.length; i++) {
-            parametersMap.put("arg" + i, parameters[i].toString());
-        }
-        return parametersMap.toString();
-    }
 
 }
