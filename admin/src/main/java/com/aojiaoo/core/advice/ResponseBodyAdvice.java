@@ -1,8 +1,7 @@
 package com.aojiaoo.core.advice;
 
-import com.aojiaoo.core.json.CustomerJsonSerializer;
 import com.aojiaoo.core.json.annotation.JSON;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.aojiaoo.modules.sys.entity.User;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
@@ -19,20 +18,20 @@ public class ResponseBodyAdvice implements org.springframework.web.servlet.mvc.m
 
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-
-        JSON json = methodParameter.getMethodAnnotation(JSON.class);
-        if (json == null) {
-            return o;
-        }
-
-        CustomerJsonSerializer cjs = new CustomerJsonSerializer();
-        cjs.filter(json.type(), json.include(), json.filter());
-        try {
-            String res = cjs.toJson(o);
-            return res;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return o;
+        return new User();
+//        JSON json = methodParameter.getMethodAnnotation(JSON.class);
+//        if (json == null) {
+//            return o;
+//        }
+//
+//        CustomerJsonSerializer cjs = new CustomerJsonSerializer();
+//        cjs.filter(json.type(), json.include(), json.filter());
+//        try {
+//            String res = cjs.toJson(o);
+//            return res;
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
+//        return o;
     }
 }
