@@ -2,7 +2,8 @@ package com.aojiaoo.modules.sys.controller;
 
 import com.aojiaoo.core.annotations.Log;
 import com.aojiaoo.core.base.BaseController;
-import com.aojiaoo.core.json.annotation.JSON;
+import com.aojiaoo.core.common.ResponseCode;
+import com.aojiaoo.core.common.ServerResponse;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.service.TestService;
 import com.aojiaoo.modules.sys.service.UserService;
@@ -22,7 +23,6 @@ public class TestController extends BaseController<TestService> {
 
     @Log(desc = "sfdasd")
     @ResponseBody
-    @JSON(type = User.class, filter = "createDate")
     @RequestMapping("1")
     public List<User> test(User user) {
         return test1();
@@ -30,15 +30,14 @@ public class TestController extends BaseController<TestService> {
 
     @ResponseBody
     @RequestMapping("2")
-    @JSON(type = User.class, include = "id")
     public List<User> test1() {
         return userService.findList(new User());
     }
 
+
     @ResponseBody
     @RequestMapping("3")
-    public List<User> test3() {
-        List<User> list = userService.findList(new User());
-        return list;
+    public ServerResponse test3() {
+        return ServerResponse.createByResponseCode(ResponseCode.ILLEGAL_ARGUMENT);
     }
 }

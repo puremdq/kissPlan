@@ -4,7 +4,7 @@ import com.aojiaoo.core.annotations.Log;
 import com.aojiaoo.modules.sys.entity.OperateLog;
 import com.aojiaoo.modules.sys.service.OperateLogService;
 import com.aojiaoo.utils.ClassUtils;
-import com.aojiaoo.utils.GlobalProperties;
+import com.aojiaoo.core.common.GlobalProperties;
 import com.aojiaoo.utils.WebUntil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -17,12 +17,11 @@ import java.lang.reflect.Method;
 
 public class LogAop {
 
-
     @Autowired
     private OperateLogService logService;
 
-
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
+
         OperateLog operateLog = new OperateLog();
         Object object = null;
 
@@ -56,10 +55,10 @@ public class LogAop {
 
         try {
             object = pjp.proceed();
-            operateLog.setIsSuccess(String.valueOf(GlobalProperties.SUCCESS));
+            operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_TRUE));
         } catch (Throwable e) {
             e.printStackTrace();
-            operateLog.setIsSuccess(String.valueOf(GlobalProperties.FAIL));
+            operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_FALSE));
         } finally {
             long end = System.currentTimeMillis();
             operateLog.setExecuteTime(String.valueOf(end - start) + "ms");
