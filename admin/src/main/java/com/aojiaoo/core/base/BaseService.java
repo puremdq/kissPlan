@@ -100,28 +100,29 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
                 for (Field field : idFields) {
                     TableId tableId = field.getAnnotation(TableId.class);
                     if (tableId == null) {
-                        logger.warn("保存失败,传入的主键field 不包含主键注解");
+                        logger.warn("插入失败,传入的主键field 不包含主键注解");
                         return false;
                     }
                     switch (tableId.type()) {
                         case INPUT:
                             if (field.get(entity) == null || field.get(entity).toString().length() < 1) {
-                                logger.warn("保存失败,传入的entity的id类型为INPUT,但却未为其id指定值");
+                                logger.error("插入失败,传入的entity的id类型为INPUT,但却未为其id指定值");
                                 return false;
                             }
                             break;
                         case UUID:
                             field.setAccessible(true);
                             if (field.get(entity) != null && field.get(entity).toString().length() > 0) {
-                                logger.warn("保存失败,传入的entity{}的id类型为UUID,但却已为其id指定值", entity);
+                                logger.error("插入失败,传入的entity{}的id类型为UUID,但却已为其id指定值", entity);
                                 return false;
                             }
                             field.set(entity, IdGenerator.uuid());
                             break;
                         case AUTO:
-                            field.setAccessible(true);
-                            field.set(entity, null);
-                            break;
+                            if (field.get(entity) != null) {
+                                logger.error("插入失败,传入的entity{}的id类型为AUTO,但在插入时却已为其id指定值", entity);
+                                return false;
+                            }
                     }
                 }
             } catch (Exception e) {

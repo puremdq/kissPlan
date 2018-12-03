@@ -131,7 +131,6 @@
             <artifactId>aspectjrt</artifactId>
             <version>1.9.2</version>
         </dependency>
-
         <!--end aop-->
 
 
@@ -244,6 +243,15 @@
             <version>${jackson.version}</version>
         </dependency>
         <!--end json-->
+
+
+        <!--start hibernate-validator-->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.13.Final</version>
+        </dependency>
+        <!--end hibernate-validator-->
 
         <!--javax.servlet-api-->
         <dependency>

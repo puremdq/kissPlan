@@ -9,6 +9,9 @@ import org.apache.shiro.session.Session;
 
 import java.io.Serializable;
 
+/**
+ * 重写CachingSessionDAO 管理session
+ */
 public class CacheSessionDAO extends org.apache.shiro.session.mgt.eis.CachingSessionDAO {
 
 

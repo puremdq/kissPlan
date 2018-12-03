@@ -1,6 +1,7 @@
 package com.aojiaoo.core.common;
 
 public interface GlobalProperties {
+
     int IS_SUCCESS_TRUE = 1;
     int IS_SUCCESS_FALSE = 0;
 

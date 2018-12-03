@@ -1,8 +1,6 @@
 package com.aojiaoo.utils;
 
 
-import org.apache.tools.ant.taskdefs.LoadResource;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
