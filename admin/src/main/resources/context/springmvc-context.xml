@@ -43,7 +43,7 @@
     <!--end 配置shiro aop-->
 
     <!--配置切面的log aop -->
-    <bean id="logAop" class="com.aojiaoo.core.aop.LogAop"/>
+    <bean id="logAop" class="com.aojiaoo.core.aop.ControllerAop"/>
     <bean id="responseBodyAop" class="com.aojiaoo.core.advice.ResponseBodyAdvice"/>
     <!--<bean id="jsonFilterAop" class="com.aojiaoo.core.aop.LogAop"/>-->
     <aop:config proxy-target-class="true" expose-proxy="true">
@@ -73,7 +73,7 @@
 
 
     <!--配置 自动校验-->
-    <mvc:annotation-driven validator="validator" conversion-service="conversionService"/>
+    <mvc:annotation-driven validator="validator"/>
     <!-- 配置校验器 -->
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <!-- 校验器，使用hibernate校验器 -->
@@ -86,7 +86,7 @@
         <!-- 资源文件名 -->
         <property name="basenames">
             <list>
-                <value>classpath:org/hibernate/validator</value>
+                <value>classpath:repository/org/hibernate/validator/hibernate-validator/6.0.13.Final/hibernate-validator-6.0.13.Final.jar!/org/hibernate/validator/ValidationMessages_zh_CN.properties</value>
             </list>
         </property>
         <!-- 资源文件编码格式 -->

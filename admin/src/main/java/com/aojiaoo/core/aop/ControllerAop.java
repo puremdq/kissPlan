@@ -9,14 +9,18 @@ import com.aojiaoo.utils.WebUntil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
-public class LogAop {
+public class ControllerAop {
 
+    /**
+     * 拦截 @RequestMapping 注解的 controller
+     */
     @Autowired
     private OperateLogService logService;
 
@@ -24,7 +28,6 @@ public class LogAop {
 
         OperateLog operateLog = new OperateLog();
         Object object = null;
-
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
         //方法通知前获取时间,为什么要记录这个时间呢？当然是用来计算模块执行时间的
@@ -38,7 +41,7 @@ public class LogAop {
         MethodSignature msig = (MethodSignature) pjp.getSignature();
         Class[] parameterTypes = msig.getMethod().getParameterTypes();
 
-        Method  method = target.getClass().getMethod(methodName, parameterTypes);
+        Method method = target.getClass().getMethod(methodName, parameterTypes);
         // 判断是否包含自定义的注解，说明一下这里的SystemLog就是我自己自定义的注解
         if (method.isAnnotationPresent(Log.class)) {
             Log logAnnotation = method.getAnnotation(Log.class);
@@ -67,5 +70,22 @@ public class LogAop {
         return object;
     }
 
+    public Object handleValadata(ProceedingJoinPoint pjp) {
+        return null;
+    }
+
+    private boolean isNeedValid(Class[] parameterTypes) {
+
+        if (parameterTypes == null || parameterTypes.length < 1) {
+            return false;
+        }
+        
+        for (Class classz : parameterTypes) {
+            if (classz == BindingResult.class) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

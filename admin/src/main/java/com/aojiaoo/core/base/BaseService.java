@@ -119,6 +119,7 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
                             field.set(entity, IdGenerator.uuid());
                             break;
                         case AUTO:
+                            field.setAccessible(true);
                             if (field.get(entity) != null) {
                                 logger.error("插入失败,传入的entity{}的id类型为AUTO,但在插入时却已为其id指定值", entity);
                                 return false;

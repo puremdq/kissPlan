@@ -5,8 +5,11 @@ import com.aojiaoo.core.mybatis.annotations.TableId;
 import com.aojiaoo.core.mybatis.enums.IdType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Max;
 
+@EqualsAndHashCode(callSuper=true)
 @Data
 public class User extends BaseEntity {
 
@@ -31,7 +34,7 @@ public class User extends BaseEntity {
      * 用户名(登录名)
      * 表字段： sys_user.username
      */
-    @JsonIgnore
+    @Max(value = 10)
     private String username;
 
     /**

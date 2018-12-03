@@ -9,9 +9,12 @@ import com.aojiaoo.modules.sys.service.TestService;
 import com.aojiaoo.modules.sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -40,4 +43,22 @@ public class TestController extends BaseController<TestService> {
     public ServerResponse test3() {
         return ServerResponse.createByResponseCode(ResponseCode.ILLEGAL_ARGUMENT);
     }
+
+
+    @ResponseBody
+    @RequestMapping("5")
+    public ServerResponse test5(@Valid User user, BindingResult result) {
+
+        if (result.hasErrors()) {
+            for (ObjectError error : result.getAllErrors()) {
+                System.out.println(error.getDefaultMessage());
+            }
+        }
+
+
+
+        return ServerResponse.createByResponseCode(ResponseCode.ILLEGAL_ARGUMENT);
+    }
+
+
 }
