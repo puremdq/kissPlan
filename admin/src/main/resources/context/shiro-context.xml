@@ -37,13 +37,13 @@
     </bean>
 
 
-    <bean id="cacheManager" class="com.aojiaoo.utils.CacheUntil" factory-method="load">
+    <bean id="cacheManager" class="com.aojiaoo.utils.CacheUtils" factory-method="load">
         <constructor-arg value="classpath:ehcache.xml"/>
     </bean>
 
     <bean id="ehcacheShiroManager" class="com.aojiaoo.core.shiro.cache.EhcacheShiroManager">
         <property name="cacheManager" ref="cacheManager"/>
-        <property name="cacheConfiguration" value="#{T(com.aojiaoo.utils.CacheUntil).getXmlConfigurationr()}"/>
+        <property name="cacheConfiguration" value="#{T(com.aojiaoo.utils.CacheUtils).getXmlConfigurationr()}"/>
     </bean>
 
     <!--start配置记住我-->

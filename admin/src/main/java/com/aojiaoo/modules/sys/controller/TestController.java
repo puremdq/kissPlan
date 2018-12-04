@@ -55,8 +55,6 @@ public class TestController extends BaseController<TestService> {
             }
         }
 
-
-
         return ServerResponse.createByResponseCode(ResponseCode.ILLEGAL_ARGUMENT);
     }
 

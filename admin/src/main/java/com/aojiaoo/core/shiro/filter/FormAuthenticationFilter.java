@@ -2,10 +2,7 @@ package com.aojiaoo.core.shiro.filter;
 
 import com.aojiaoo.core.common.GlobalProperties;
 import com.aojiaoo.core.common.ServerResponse;
-import com.aojiaoo.utils.CacheUntil;
-import com.aojiaoo.utils.IdGenerator;
-import com.aojiaoo.utils.JsonUtil;
-import com.aojiaoo.utils.StringUtils;
+import com.aojiaoo.utils.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -15,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,16 +41,14 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 
             String sessionId = SecurityUtils.getSubject().getSession().getId().toString();
             String _token = IdGenerator.uuid();
-            CacheUntil.put(GlobalProperties.TOKEN_SESSION_CACHE_NAME, _token, sessionId);
+            CacheUtils.put(GlobalProperties.TOKEN_SESSION_CACHE_NAME, _token, sessionId);
 
             Map<String, String> resp = new HashMap<>();
             resp.put(GlobalProperties.TOKEN_NAME, _token);
             ServerResponse serverResponse = ServerResponse.createBySuccess(resp);
-            try {
-                response.getWriter().write(JsonUtil.toJson(serverResponse));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+            WebUtils.writeBody(response.getWriter(), JsonUtil.toJson(serverResponse));
+
             return false;
 
         } catch (AuthenticationException e) {

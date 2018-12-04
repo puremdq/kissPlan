@@ -1,14 +1,17 @@
 package com.aojiaoo.core.aop;
 
 import com.aojiaoo.core.annotations.Log;
+import com.aojiaoo.core.common.GlobalProperties;
+import com.aojiaoo.core.common.ResponseCode;
+import com.aojiaoo.core.common.ServerResponse;
 import com.aojiaoo.modules.sys.entity.OperateLog;
 import com.aojiaoo.modules.sys.service.OperateLogService;
 import com.aojiaoo.utils.ClassUtils;
-import com.aojiaoo.core.common.GlobalProperties;
-import com.aojiaoo.utils.WebUntil;
+import com.aojiaoo.utils.WebUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -24,11 +27,12 @@ public class ControllerAop {
     @Autowired
     private OperateLogService logService;
 
+
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
 
+        HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
         OperateLog operateLog = new OperateLog();
         Object object = null;
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
         //方法通知前获取时间,为什么要记录这个时间呢？当然是用来计算模块执行时间的
         long start = System.currentTimeMillis();
@@ -53,8 +57,24 @@ public class ControllerAop {
         operateLog.setParameters(ClassUtils.getParameterStringMap(pjp.getArgs()).toString());
         operateLog.setRequestType(request.getMethod());
         operateLog.setUrl(request.getRequestURI());
-        operateLog.setIp(WebUntil.getIp(request));
-        operateLog.setExecuteTime(WebUntil.getIp(request));
+        operateLog.setIp(WebUtils.getIp(request));
+        operateLog.setExecuteTime(WebUtils.getIp(request));
+
+
+        //校验参数  如果错误抛出异常
+        try {
+            assertHasNoError(pjp.getArgs());
+
+        } catch (BindException e) {
+
+            ServerResponse serverResponse = ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), e.getAllErrors().toString());
+            long end = System.currentTimeMillis();
+            operateLog.setExecuteTime(String.valueOf(end - start) + "ms");
+            operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_FALSE));
+            logService.save(operateLog);
+            return serverResponse;
+        }
+
 
         try {
             object = pjp.proceed();
@@ -70,22 +90,22 @@ public class ControllerAop {
         return object;
     }
 
-    public Object handleValadata(ProceedingJoinPoint pjp) {
-        return null;
-    }
 
-    private boolean isNeedValid(Class[] parameterTypes) {
+    private void assertHasNoError(Object[] args) throws BindException {
 
-        if (parameterTypes == null || parameterTypes.length < 1) {
-            return false;
+        if (args == null || args.length < 1) {
+            return;
         }
 
-        for (Class classz : parameterTypes) {
-            if (classz == BindingResult.class) {
-                return true;
+        for (Object arg : args) {
+            if (arg instanceof BindingResult) {
+                BindingResult bindingResult = (BindingResult) arg;
+                if (bindingResult.hasErrors()) {
+                    throw new BindException((BindingResult) arg);
+                }
             }
         }
-        return false;
     }
+
 
 }

@@ -19,7 +19,7 @@
 package com.aojiaoo.core.shiro.session;
 
 import com.aojiaoo.core.common.GlobalProperties;
-import com.aojiaoo.utils.CacheUntil;
+import com.aojiaoo.utils.CacheUtils;
 import com.aojiaoo.utils.StringUtils;
 
 import javax.servlet.ServletRequest;
@@ -32,8 +32,6 @@ import java.io.Serializable;
  */
 public class WebSessionManager extends org.apache.shiro.web.session.mgt.DefaultWebSessionManager {
 
-    public static String token_name = "kiss_plan_token";
-
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
 
@@ -41,7 +39,7 @@ public class WebSessionManager extends org.apache.shiro.web.session.mgt.DefaultW
         String token = request.getParameter(GlobalProperties.TOKEN_NAME);
 
         if (StringUtils.isNotBlank(request.getParameter(GlobalProperties.TOKEN_NAME))) {
-            Object temp = CacheUntil.get(GlobalProperties.TOKEN_SESSION_CACHE_NAME, token);
+            Object temp = CacheUtils.get(GlobalProperties.TOKEN_SESSION_CACHE_NAME, token);
             sessionId = temp == null ? null : temp.toString();
         }
 

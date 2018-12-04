@@ -2,7 +2,6 @@ package com.aojiaoo.utils;
 
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
-
     //实现类似mysql的find_in_set
     public static Boolean findInSet(String str, String strList) {
         if (isBlank(str) || isBlank(strList)) {

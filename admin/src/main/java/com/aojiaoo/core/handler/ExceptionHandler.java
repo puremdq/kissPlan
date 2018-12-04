@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ExceptionHandler implements HandlerExceptionResolver {
 
     @Override
-    public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
+    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object o, Exception e) {
 
         ModelAndView modelAndView = new ModelAndView();
         if (e instanceof org.apache.shiro.authz.UnauthorizedException || e instanceof org.apache.shiro.authz.UnauthenticatedException) {
@@ -18,9 +18,12 @@ public class ExceptionHandler implements HandlerExceptionResolver {
             modelAndView.setStatus(HttpStatus.FORBIDDEN);
             return modelAndView;
         }
+
         e.printStackTrace();
         modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         modelAndView.setViewName("redirect:/static/500.html");
         return modelAndView;
     }
+
+
 }
