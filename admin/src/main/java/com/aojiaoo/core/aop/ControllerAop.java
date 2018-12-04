@@ -79,7 +79,7 @@ public class ControllerAop {
         if (parameterTypes == null || parameterTypes.length < 1) {
             return false;
         }
-        
+
         for (Class classz : parameterTypes) {
             if (classz == BindingResult.class) {
                 return true;
