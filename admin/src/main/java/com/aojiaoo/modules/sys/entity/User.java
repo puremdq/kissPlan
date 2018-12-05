@@ -3,6 +3,7 @@ package com.aojiaoo.modules.sys.entity;
 import com.aojiaoo.core.base.BaseEntity;
 import com.aojiaoo.core.mybatis.annotations.TableId;
 import com.aojiaoo.core.mybatis.enums.IdType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -51,6 +52,7 @@ public class User extends BaseEntity {
      * 加salt mid5后的密码
      * 表字段： sys_user.password
      */
+    @JsonIgnore
     private String password;
 
     /**

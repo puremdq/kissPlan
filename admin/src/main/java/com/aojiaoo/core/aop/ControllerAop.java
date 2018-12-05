@@ -11,7 +11,6 @@ import com.aojiaoo.utils.WebUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -62,14 +61,12 @@ public class ControllerAop {
 
 
         //校验参数  如果错误抛出异常
-        try {
-            assertHasNoError(pjp.getArgs());
-
-        } catch (BindException e) {
-
-            ServerResponse serverResponse = ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), e.getAllErrors().toString());
+        BindingResult bindingResult = assertHasNoError(pjp.getArgs());
+        if (bindingResult != null) {
+            ServerResponse serverResponse = ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
             long end = System.currentTimeMillis();
             operateLog.setExecuteTime(String.valueOf(end - start) + "ms");
+            operateLog.setOperateDesc("非法的参数:" + bindingResult.getAllErrors().get(0).getDefaultMessage());
             operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_FALSE));
             logService.save(operateLog);
             return serverResponse;
@@ -91,20 +88,21 @@ public class ControllerAop {
     }
 
 
-    private void assertHasNoError(Object[] args) throws BindException {
+    private BindingResult assertHasNoError(Object[] args) {
 
         if (args == null || args.length < 1) {
-            return;
+            return null;
         }
 
         for (Object arg : args) {
             if (arg instanceof BindingResult) {
                 BindingResult bindingResult = (BindingResult) arg;
                 if (bindingResult.hasErrors()) {
-                    throw new BindException((BindingResult) arg);
+                    return (BindingResult) arg;
                 }
             }
         }
+        return null;
     }
 
 
