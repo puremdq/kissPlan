@@ -17,9 +17,9 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 export function createAPI ({client}){
-    // axios.defaults.timeout = client.timeout
-    // axios.defaults.baseURL = client.baseURL
-    // axios.defaults.withCredentials = false;
+    axios.defaults.timeout = client.timeout
+    axios.defaults.baseURL = client.baseURL
+    axios.defaults.withCredentials = false;
     return {
         get (url,params = {}){
             return new Promise((resolve,reject) => {
