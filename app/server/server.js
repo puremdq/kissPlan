@@ -12,7 +12,6 @@ var mongoStore = require('connect-mongo')(session);
 var mongoUrl = 'mongodb://localhost:27017/missu'
 // import a from "./module/user/model.js"
 // console.log(User);
-console.log(11111111111111);
 // console.log(mongoStore);
 // mongoose.connect(mongoUrl);
 // mongoose.connection.on('connected', function () {    
@@ -81,123 +80,7 @@ if (isProd) {
   })
  
 }
-app.use('/api',function(req, res,next){
-  console.log('req.session.user:');
-  console.log(req.session.user);
-  if(req.session.user){
-    next();
-  }else{
-    res.json({
-      code:'-2',
-      result:[],
-      ressage:'sesson user err'
-    })
-  }
- 
-})
-app.get('/api/userLists/:id',(req, res) =>{
-  console.log(req.params);
-  // res.download('/index.html');
-  User.fetch(function(err,users){
-    if(err){
-      res.json({
-        code:'-1',
-        result:[],
-        message:'err'
-      })
-    }
-    // res.sendStatus(200);
-    res.status(200).json({
-      code:'0',
-      result:users,
-      message:'succ'
-    })
-  })
-})
-app.get('/signout',(req, res) => {
-  delete req.session.user;
-  res.json({
-    code:'0',
-    message:'succ'
-  })
-})
-app.post('/signup',function(req, res){
-  var data = req.body;
-  var dataObject = qs.parse(data);
- 
-  var user =new User({
-    name:dataObject.name,
-    password:dataObject.password
-  })
-  user.save((err,userRes) => {
-    if(err){
-      res.json({
-        code:-1,
-        result:err,
-        message:'err'
-      })
-    }else{
-      req.session.user = userRes;
-      res.json({
-        code:0,
-        result:{
-          name:userRes.name,
-          createDate:userRes.meta.createAt
-        },
-        message:'succ'
-      })
-    
-      
-    }
-  })
-  
-})
-app.post('/signin',function(req, res){
-    var data = req.body;
-    var dataObject = qs.parse(data);
-    User.findOne({name:dataObject.name},function(err,userName){
-      if(err){
-        res.json({
-          code:'-1',
-          result:[],
-          message:'err'
-        })
-      }
-      if(!userName){
-        res.json({
-          code:'-1',
-          result:[],
-          message:'err'
-        })
-      }else{
-        userName.comparePassword(dataObject.password,function(err,isMatch){
-          if(err){
-            console.log(err);
-          }
-          if(isMatch){
-            res.locals.userName = userName.name;
-            req.session.user = userName;
-            res.json({
-              code:'0',
-              result:{
-                name:userName.name,
-                createDate:userName.meta.createAt
-              },
-              message:'succ'
-            })
-          }else{
-            res.json({
-              code:'-1',
-              result:[],
-              message:'err'
-            })
-          }  
-        })
 
-      }
-    })
-  
-})
 app.get('*', (req, res) => {
     if (!renderer) {
       return res.end('waiting for compilation... refresh in a moment.')
@@ -210,8 +93,6 @@ app.get('*', (req, res) => {
       } else {
         // 页面渲染错误
         res.status(500).end('500 - Internal Server Error')
-        console.error(`error during render : ${req.url}`)
-        console.error(err)
       }
     }
   
@@ -232,6 +113,6 @@ app.get('*', (req, res) => {
   
 const port = process.env.PORT || 3000
 app.listen(port, () => {
-console.log(`server started at http://localhost:${port}`)
+  console.log(`server started at http://localhost:${port}`)
 })
   
