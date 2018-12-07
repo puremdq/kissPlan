@@ -4,7 +4,9 @@ package com.aojiaoo.utils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 
@@ -25,5 +27,17 @@ public class ClassUtils extends org.apache.commons.lang3.ClassUtils {
 
     public static Field[] getFields(String fullClassName) throws ClassNotFoundException {
         return getClass(fullClassName).getFields();
+    }
+
+    public static Map<String, String> getParameterStringMap(Object[] parameters) {
+        if (parameters == null) {
+            return null;
+        }
+
+        Map<String, String> parametersMap = new LinkedHashMap<>();
+        for (int i = 0; i < parameters.length; i++) {
+            parametersMap.put("arg" + i, parameters[i].toString());
+        }
+        return parametersMap;
     }
 }

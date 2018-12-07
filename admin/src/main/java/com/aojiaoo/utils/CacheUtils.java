@@ -14,13 +14,13 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Set;
 
-public class CacheUntil {
+public class CacheUtils {
 
 
     private static EhcacheManager ehcacheManager = null;
     private static XmlConfiguration xmlConfiguration = null;
 
-    private CacheUntil() {
+    private CacheUtils() {
     }
 
     /*start cacheManager相关*/
@@ -39,7 +39,7 @@ public class CacheUntil {
     }
 
     public static void setEhcacheManager(EhcacheManager ehcacheManager) {
-        CacheUntil.ehcacheManager = ehcacheManager;
+        CacheUtils.ehcacheManager = ehcacheManager;
     }
 
     public static void setEhcacheManager(String resource) {

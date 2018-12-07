@@ -6,25 +6,34 @@
 package com.aojiaoo.core.shiro.session;
 
 import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
 
 import java.io.Serializable;
 
-public class CacheSessionDAO extends CachingSessionDAO {
+/**
+ * 重写CachingSessionDAO 管理session
+ */
+public class CacheSessionDAO extends org.apache.shiro.session.mgt.eis.CachingSessionDAO {
+
 
     protected Serializable doCreate(Session session) {
-        Serializable sessionId = this.generateSessionId(session);
-        this.assignSessionId(session, sessionId);
+        Serializable sessionId = generateSessionId(session);
+        assignSessionId(session, sessionId);
         return sessionId;
     }
 
+    @Override
     protected Session doReadSession(Serializable sessionId) {
         return null;
     }
 
+
+    @Override
     protected void doUpdate(Session session) {
+
     }
 
+    @Override
     protected void doDelete(Session session) {
+
     }
 }

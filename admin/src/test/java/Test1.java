@@ -1,17 +1,23 @@
 import com.aojiaoo.core.mybatis.annotations.TableId;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.utils.DbInfoUtil;
-import com.aojiaoo.utils.FileUtils;
 import com.aojiaoo.utils.PropertiesUtil;
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.apache.commons.lang3.ClassUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.Test;
-import org.springframework.util.ReflectionUtils;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.net.URL;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.UUID;
 
 public class Test1 {
 
@@ -71,10 +77,46 @@ public class Test1 {
 
     @Test
     public void test3b() {
-        FileUtils.getFilePathByClasspathOrSelf("");
-        URL url = ClassLoader.getSystemResource("ehcache.xml");
-//        URL url =   EhcacheShiroManager.class.getClass().getResource("ehcache.xml");
-        System.out.println(url);
+        try {
+
+            JsonFactory jfactory = new JsonFactory();
+
+            /*** write to file ***/
+
+            OutputStream os = System.out;
+//            os.write("[{name='pure',age=10},{name='mdq',age=10}]".getBytes());
+            JsonGenerator jGenerator = jfactory.createJsonGenerator(os, JsonEncoding.UTF8);
+            jGenerator.writeStartObject(); // {
+
+            jGenerator.writeStringField("name", "mkyong"); // "name" : "mkyong"
+            jGenerator.writeNumberField("age", 29); // "age" : 29
+
+            jGenerator.writeFieldName("messages"); // "messages" :
+            jGenerator.writeStartArray(); // [
+
+            jGenerator.writeString("msg 1"); // "msg 1"
+            jGenerator.writeString("msg 2"); // "msg 2"
+            jGenerator.writeString("msg 3"); // "msg 3"
+
+            jGenerator.writeEndArray(); // ]
+
+            jGenerator.writeEndObject(); // }
+
+            jGenerator.close();
+
+        } catch (JsonGenerationException e) {
+
+            e.printStackTrace();
+
+        } catch (JsonMappingException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        }
 
     }
 
@@ -84,8 +126,8 @@ public class Test1 {
         Properties properties = PropertiesUtil.getProperties("classpath:extra/generatorCode.properties");
         Field[] fields = ClassUtils.getClass(properties.getProperty("generatorCode.baseEntity")).getDeclaredFields();
 
-        for(Field field:fields){
-            System.out.println(  Modifier.toString(field.getModifiers()));
+        for (Field field : fields) {
+            System.out.println(Modifier.toString(field.getModifiers()));
         }
     }
 

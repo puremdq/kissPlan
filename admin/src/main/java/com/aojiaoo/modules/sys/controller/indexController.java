@@ -17,22 +17,7 @@ public class indexController {
         return "index";
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String login() {
-        if (SecurityUtils.getSubject().isAuthenticated()) {
-            return "redirect:/";
-        }
-        return "login";
-    }
 
-
-    //登录失败
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String doLogin() {
-        System.out.println("登录失败");
-        return "login";
-//
-    }
 
 
     @ResponseBody

@@ -1,37 +1,37 @@
 package com.aojiaoo.core.aop;
 
 import com.aojiaoo.core.annotations.Log;
+import com.aojiaoo.core.common.GlobalProperties;
+import com.aojiaoo.core.common.ResponseCode;
+import com.aojiaoo.core.common.ServerResponse;
 import com.aojiaoo.modules.sys.entity.OperateLog;
 import com.aojiaoo.modules.sys.service.OperateLogService;
-import com.aojiaoo.utils.GlobalProperties;
-import com.aojiaoo.utils.WebUntil;
+import com.aojiaoo.utils.ClassUtils;
+import com.aojiaoo.utils.WebUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
-public class LogAop {
+public class ControllerAop {
 
-
+    /**
+     * 拦截 @RequestMapping 注解的 controller
+     */
     @Autowired
     private OperateLogService logService;
 
 
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
+
+        HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
         OperateLog operateLog = new OperateLog();
         Object object = null;
-        // 获得被拦截的方法
-        Method method = null;
-
-        //常见日志实体对象
-        //获取登录用户账户
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
         //方法通知前获取时间,为什么要记录这个时间呢？当然是用来计算模块执行时间的
         long start = System.currentTimeMillis();
@@ -44,7 +44,7 @@ public class LogAop {
         MethodSignature msig = (MethodSignature) pjp.getSignature();
         Class[] parameterTypes = msig.getMethod().getParameterTypes();
 
-        method = target.getClass().getMethod(methodName, parameterTypes);
+        Method method = target.getClass().getMethod(methodName, parameterTypes);
         // 判断是否包含自定义的注解，说明一下这里的SystemLog就是我自己自定义的注解
         if (method.isAnnotationPresent(Log.class)) {
             Log logAnnotation = method.getAnnotation(Log.class);
@@ -53,18 +53,32 @@ public class LogAop {
         }
 
         operateLog.setMethodName(methodName);
-        operateLog.setParameters(getParameterString(pjp.getArgs()));
+        operateLog.setParameters(ClassUtils.getParameterStringMap(pjp.getArgs()).toString());
         operateLog.setRequestType(request.getMethod());
         operateLog.setUrl(request.getRequestURI());
-        operateLog.setIp(WebUntil.getIp(request));
-        operateLog.setExecuteTime(WebUntil.getIp(request));
+        operateLog.setIp(WebUtils.getIp(request));
+        operateLog.setExecuteTime(WebUtils.getIp(request));
+
+
+        //校验参数  如果错误抛出异常
+        BindingResult bindingResult = assertHasNoError(pjp.getArgs());
+        if (bindingResult != null) {
+            ServerResponse serverResponse = ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
+            long end = System.currentTimeMillis();
+            operateLog.setExecuteTime(String.valueOf(end - start) + "ms");
+            operateLog.setOperateDesc("非法的参数:" + bindingResult.getAllErrors().get(0).getDefaultMessage());
+            operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_FALSE));
+            logService.save(operateLog);
+            return serverResponse;
+        }
+
 
         try {
             object = pjp.proceed();
-            operateLog.setIsSuccess(String.valueOf(GlobalProperties.SUCCESS));
+            operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_TRUE));
         } catch (Throwable e) {
             e.printStackTrace();
-            operateLog.setIsSuccess(String.valueOf(GlobalProperties.FAIL));
+            operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_FALSE));
         } finally {
             long end = System.currentTimeMillis();
             operateLog.setExecuteTime(String.valueOf(end - start) + "ms");
@@ -73,16 +87,23 @@ public class LogAop {
         return object;
     }
 
-    private String getParameterString(Object[] parameters) {
-        if (parameters == null) {
+
+    private BindingResult assertHasNoError(Object[] args) {
+
+        if (args == null || args.length < 1) {
             return null;
         }
 
-        Map<String, String> parametersMap = new LinkedHashMap<>();
-        for (int i = 0; i < parameters.length; i++) {
-            parametersMap.put("arg" + i, parameters[i].toString());
+        for (Object arg : args) {
+            if (arg instanceof BindingResult) {
+                BindingResult bindingResult = (BindingResult) arg;
+                if (bindingResult.hasErrors()) {
+                    return (BindingResult) arg;
+                }
+            }
         }
-        return parametersMap.toString();
+        return null;
     }
+
 
 }

@@ -21,7 +21,7 @@
         <property name="cacheManager" ref="ehcacheShiroManager"/>
     </bean>
 
-    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+    <bean id="sessionManager" class="com.aojiaoo.core.shiro.session.WebSessionManager">
         <property name="sessionIdCookie" ref="sessionIdCookie"/>
         <property name="sessionIdCookieEnabled" value="true"/>
 
@@ -37,13 +37,13 @@
     </bean>
 
 
-    <bean id="cacheManager" class="com.aojiaoo.utils.CacheUntil" factory-method="load">
+    <bean id="cacheManager" class="com.aojiaoo.utils.CacheUtils" factory-method="load">
         <constructor-arg value="classpath:ehcache.xml"/>
     </bean>
 
     <bean id="ehcacheShiroManager" class="com.aojiaoo.core.shiro.cache.EhcacheShiroManager">
         <property name="cacheManager" ref="cacheManager"/>
-        <property name="cacheConfiguration" value="#{T(com.aojiaoo.utils.CacheUntil).getXmlConfigurationr()}"/>
+        <property name="cacheConfiguration" value="#{T(com.aojiaoo.utils.CacheUtils).getXmlConfigurationr()}"/>
     </bean>
 
     <!--start配置记住我-->
@@ -88,6 +88,7 @@
         <property name="securityManager" ref="securityManager"/>
         <!-- 身份认证失败，则跳转到登录页面的配置 -->
         <property name="loginUrl" value="/login"/>
+        <property name="successUrl" value="/"/>
         <!-- 权限认证失败，则跳转到指定页面 -->
         <!--<property name="unauthorizedUrl" value="/nopower.jsp"/>-->
         <!-- Shiro连接约束配置,即过滤链的定义 -->
