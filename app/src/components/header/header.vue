@@ -38,11 +38,7 @@ export default {
         //     this.$router.push('/login')
         // }
     },
-    mounted(){
-        var message_noRead_box = document.getElementById('message_noRead_box');
-        message_noRead_box.style.height=(window.innerHeight-120)+'px';
-        
-    },
+   
     methods:{
         ...mapMutations(['setUser']),
        
