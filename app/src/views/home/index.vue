@@ -2,12 +2,6 @@
     <div class="home">
         <div class="header">
             <yx-header  @click="open = !open">
-                <template slot="header">
-                    <yx-search ></yx-search>  
-                </template>
-                <template slot="footer">
-                    <yx-search ></yx-search>  
-                </template>  
             </yx-header>
         </div>
         <mu-container fluid class="body">
