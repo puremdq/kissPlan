@@ -12,7 +12,7 @@ import 'muse-ui/dist/muse-ui.css';
 Vue.use(MuseUI);
 require('babel-polyfill')
 
-
+import "@/components/Button"
 Date.prototype.getChinaTime = function(){
     var year = this.getFullYear();
     var month = this.getMonth()+1;

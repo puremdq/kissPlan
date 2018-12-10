@@ -3,14 +3,18 @@
         <mu-row class="header_container">
             <mu-col span="12" sm="12" md="1" class="header_left">
                 <mu-row>
-                    <span class="logo">KissPlan</span>
-                    <div class="container"></div>
+                    <span class="logo baseColor">KissPlan</span>
                 </mu-row>
                 
             </mu-col>
-            <mu-col span="12" sm="12" md="6" class="header_right">
-               
-            </mu-col>
+            <div class="container">
+                <span class="baseColor h60 ptr10 pointer">首页</span>
+                <span class="h60 ptr10 pointer">下载App</span>
+                <mu-text-field v-model="search" placeholder="搜索" style="margin-left:20px;margin-bottom: 0px;" >
+                    <i class="iconfont icon-search pointer" style="font-size:25px;"></i>
+                </mu-text-field>
+                <k-button>sdsd</k-button>
+            </div>
         </mu-row>
        
     </div>
@@ -24,7 +28,7 @@ export default {
         return {
             open:false,
             phone_menu:false,
-            
+            search:''
         }
     },
     computed:{
@@ -39,8 +43,7 @@ export default {
         // }
     },
     mounted(){
-        var message_noRead_box = document.getElementById('message_noRead_box');
-        message_noRead_box.style.height=(window.innerHeight-120)+'px';
+        
         
     },
     methods:{
@@ -55,6 +58,7 @@ export default {
         height:62px;
         border-bottom:1px solid #ddd;
         background-color:#fff;
+        font-size: 16px;
         .header_container{
             border-top:none;
             padding:0 16px;
