@@ -1,22 +1,27 @@
 <template>
     <div class="header">
-        <mu-row class="header_container">
-            <mu-col span="12" sm="12" md="1" class="header_left">
-                <mu-row>
+        <mu-container class="header_container">
+            <mu-row gutter>
+                <mu-col span="12" sm="12" md="2" class="header_left">
                     <span class="logo baseColor">KissPlan</span>
-                </mu-row>
-                
-            </mu-col>
-            <div class="container">
-                <span class="baseColor h60 ptr10 pointer">首页</span>
-                <span class="h60 ptr10 pointer">下载App</span>
-                <mu-text-field v-model="search" placeholder="搜索" style="margin-left:20px;margin-bottom: 0px;" >
-                    <i class="iconfont icon-search pointer" style="font-size:25px;"></i>
-                </mu-text-field>
-                <k-button>sdsd</k-button>
-            </div>
-        </mu-row>
-       
+                </mu-col>
+                <mu-col span="12" sm="12" md="6" >
+                    <span class="baseColor h60 ptr10 pointer">首页</span>
+                    <span class="h60 ptr10 pointer">下载App</span>
+                    <mu-text-field v-model="search" placeholder="搜索" style="margin-left:20px;margin-bottom: 0px;" >
+                        <i class="iconfont icon-search pointer" style="font-size:25px;"></i>
+                    </mu-text-field>
+                </mu-col>
+                <mu-col span="12" sm="12" md="4" class="tar">
+                    <mu-button flat color="primary" class="h60">登录</mu-button>    
+                    <mu-button large color="#ea6f5a">
+                        <mu-icon left value=""></mu-icon>
+                        写文章
+                    </mu-button>
+                </mu-col>
+            </mu-row>
+        </mu-container>
+        <!-- <k-button>sdsd</k-button> -->
     </div>
 </template>
 <script>
@@ -84,7 +89,11 @@ export default {
             }
         
         }
-        
+        @media (max-width: 891px){
+            .mu-input {
+                width: 190px;
+            }
+        }
     }
     
 </style>

@@ -9,6 +9,7 @@ module.exports = {
         path : path.join(__dirname,'../dist'),
         filename:'js/[name]-[chunkhash:8].js',
         chunkFilename :'js/[name]-[chunkhash:8].js',
+        publicPath:'/public/'
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'],
@@ -43,8 +44,8 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000000,
-                    name: 'img/[name].[hash:7].[ext]'
+                    limit: 10000,
+                    name: 'img/[name]-[hash:7].[ext]'
                 }
             },
             {
@@ -52,7 +53,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 10000,
-                    name: 'media/[name].[hash:7].[ext]'
+                    name: 'media/[name]-[hash:7].[ext]'
                 }
             },
             {
@@ -60,7 +61,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 10000,
-                    name: 'fonts/[name].[hash:7].[ext]'
+                    name: 'fonts/[name]-[hash:7].[ext]'
                 }
             }
         ]

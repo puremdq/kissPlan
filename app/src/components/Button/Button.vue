@@ -1,5 +1,6 @@
 <template>
     <span class="my-button">
+        <solt></solt>
     </span>
 </template>
 <script>
