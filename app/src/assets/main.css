@@ -81,6 +81,7 @@
     .box {
         width: 750px;
     }
+    
 }
 @media (min-width: 992px){
     .box {
@@ -92,8 +93,8 @@
         width: 960px;
     }
 }
-@media (min-width: 992px){
-    .box {
-        width: 960px;
+@media (max-width: 768px){
+    .phone_hide{
+        display:none;
     }
 }

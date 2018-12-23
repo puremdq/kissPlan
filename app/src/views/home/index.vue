@@ -3,10 +3,12 @@
         <yx-header></yx-header>
         <div class="box mt20">
             <mu-row gutter>
-                <mu-col span="8" sm="12" md="8" style="height:270px;">
+                <mu-col span="12" sm="12" md="8">
                     <carousel></carousel>
                 </mu-col>
-                <mu-col span="4" sm="12" md="4" style="height:270px;">2</mu-col>
+                <mu-col span="12" sm="12" md="4">
+                    
+                </mu-col>
             </mu-row>
         </div>
     </div>

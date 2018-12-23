@@ -12,6 +12,10 @@ import 'muse-ui/dist/muse-ui.css';
 Vue.use(MuseUI);
 require('babel-polyfill')
 
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+
 import "@/components/Button"
 Date.prototype.getChinaTime = function(){
     var year = this.getFullYear();
