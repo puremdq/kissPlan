@@ -346,6 +346,15 @@
             <version>1.18.2</version>
             <scope>provided</scope>
         </dependency>
+
+
+
+        <!-- https://mvnrepository.com/artifact/tk.mybatis/mapper -->
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper</artifactId>
+            <version>4.1.2</version>
+        </dependency>
     </dependencies>
 
 
