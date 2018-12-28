@@ -7,7 +7,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.Table;
 
+
+@Table(name = "sys_user")
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class User extends BaseEntity {
