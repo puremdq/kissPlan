@@ -2,7 +2,6 @@ import com.aojiaoo.core.mybatis.plugins.paging.Page;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.mapper.UserMapperTest;
 import com.aojiaoo.modules.sys.service.RoleService;
-import com.aojiaoo.modules.sys.service.TestService;
 import com.aojiaoo.modules.sys.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,9 +24,6 @@ public class SpringTest {
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    TestService testService;
 
     @Resource
     UserMapperTest userMapperTest;
