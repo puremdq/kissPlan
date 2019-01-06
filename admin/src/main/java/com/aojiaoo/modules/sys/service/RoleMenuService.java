@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class RoleMenuService extends BaseService<RoleMenu, RoleMenuMapper> {
 
     public RoleMenu get(Integer roleId, Integer menuId) {
-        return this.mapper.selectByPrimaryKey(roleId, menuId);
+        return null;
     }
 
     public boolean delete(Integer roleId, Integer menuId) {
-        return this.mapper.deleteByPrimaryKey(roleId, menuId) > 0;
+        return this.mapper.deleteByPrimaryKey(roleId) > 0;
     }
 }

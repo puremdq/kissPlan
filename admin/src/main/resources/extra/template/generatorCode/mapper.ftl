@@ -17,12 +17,12 @@ import org.apache.ibatis.annotations.Param;
 public interface ${mapperName} <#if StringUtils.isNotBlank(baseMapperFullName)>extends ${StringUtils.substringAfterLast(baseMapperFullName,".")}<${entityName}></#if> {
 
 
-<#if (idLength>0)>
-    ${entityName} selectByPrimaryKey(${idAndTypeStrList?substring(0,(idAndTypeStrList?length)-1)});
-</#if>
+<#--<#if (idLength>0)>-->
+    <#--${entityName} selectByPrimaryKey(${idAndTypeStrList?substring(0,(idAndTypeStrList?length)-1)});-->
+<#--</#if>-->
 
-<#if (idLength>0)>
-    int deleteByPrimaryKey(${idAndTypeStrList?substring(0,(idAndTypeStrList?length)-1)});
-</#if>
+<#--<#if (idLength>0)>-->
+    <#--int deleteByPrimaryKey(${idAndTypeStrList?substring(0,(idAndTypeStrList?length)-1)});-->
+<#--</#if>-->
 
 }

@@ -9,8 +9,5 @@ import org.apache.ibatis.annotations.Param;
 public interface OperateLogMapper extends BaseMapper<OperateLog> {
 
 
-    OperateLog selectByPrimaryKey(@Param("id") Long id);
-
-    int deleteByPrimaryKey(@Param("id") Long id);
 
 }

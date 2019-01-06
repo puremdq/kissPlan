@@ -1,6 +1,10 @@
 import com.aojiaoo.core.mybatis.plugins.paging.Page;
+import com.aojiaoo.modules.sys.entity.St;
 import com.aojiaoo.modules.sys.entity.User;
+import com.aojiaoo.modules.sys.entity.UserRole;
+import com.aojiaoo.modules.sys.mapper.StMapper;
 import com.aojiaoo.modules.sys.mapper.UserMapper;
+import com.aojiaoo.modules.sys.mapper.UserRoleMapper;
 import com.aojiaoo.modules.sys.service.RoleService;
 import com.aojiaoo.modules.sys.service.UserService;
 import org.junit.Test;
@@ -8,6 +12,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 //告诉spring容器运行在虚拟机中
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,9 +31,14 @@ public class SpringTest {
     @Autowired
     UserService userService;
 
-    @Autowired
+    @Resource
     UserMapper userMapper;
 
+    @Resource
+    StMapper stMapper;
+
+    @Resource
+    UserRoleMapper userRoleMapper;
 
     //自动装配
     @Test
@@ -47,7 +60,17 @@ public class SpringTest {
 
     @Test
     public void test3() {
-        userMapper.selectByPrimaryKey(1);
+//        User user=new User();
+//        user.setUsername("");
+//        user.setId(4);
+//        userMapper.selectByPrimaryKey(user);
+        St st = new St();
+        st.setName("sdfsdfsd");
+
+//        UserRole userRole = new UserRole();
+//        Map map = new HashMap();
+
+        System.out.println(stMapper.insert(st));
     }
 
 

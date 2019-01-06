@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.aojiaoo.modules.sys.mapper.UserRoleMapper">
+<mapper namespace="com.aojiaoo.modules.sys.mapper.StMapper">
 
 
 
     <sql id="Base_Column_List">
-            a.user_id as userId,a.role_id as roleId
+            a.id as id,a.name as name
     </sql>
 
     <sql id="Base_select_table">
-        sys_user_role a
+        a_test a
     </sql>
 
 
 
-    <select id="selectBySelective" resultType="com.aojiaoo.modules.sys.entity.UserRole">
+    <select id="selectBySelective" resultType="com.aojiaoo.modules.sys.entity.St">
         select
         <include refid="Base_Column_List"/>
         from <include refid="Base_select_table"/>
         <where>
-               <if test="userId != null">
-                   and a.user_id = #{userId,jdbcType=INTEGER}
+               <if test="id != null and id != ''">
+                   and a.id = #{id,jdbcType=CHAR}
                </if>
-               <if test="roleId != null">
-                   and a.role_id = #{roleId,jdbcType=INTEGER}
+               <if test="name != null and name != ''">
+                   and a.name = #{name,jdbcType=VARCHAR}
                </if>
         </where>
     </select>

@@ -3,38 +3,39 @@ package com.aojiaoo.modules.sys.entity;
 import com.aojiaoo.core.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
+
 import com.aojiaoo.core.mybatis.enums.IdType;
 import com.aojiaoo.core.mybatis.annotations.TableId;
 
 @EqualsAndHashCode(callSuper=true)
 @Data
-@Table(name = "sys_role")
-public class Role extends BaseEntity {
+@Table(name = "a_test")
+public class St extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    public Role() {
+    public St() {
     }
 
-    public Role(Integer id) {
+    public St(String id) {
         this.id=id;
     }
 
     /**
-     * 
-     * 表字段： sys_role.id
+     * 1
+     * 表字段： a_test.id
      */
     @Id
+    @GeneratedValue(generator = "UUID")
     @Column(name = "id")
-    private Integer id;
+    private String id;
     /**
-     * 角色名称
-     * 表字段： sys_role.role_name
+     * 1
+     * 表字段： a_test.name
      */
-    @Column(name = "role_name")
-    private String roleName;
+    @Column(name = "name")
+    private String name;
 
 }

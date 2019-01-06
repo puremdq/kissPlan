@@ -25,7 +25,7 @@
     </sql>
 
 
-    <#if (idLength>0)>
+   <#-- <#if (idLength>0)>
     <select id="selectByPrimaryKey" resultType="${entityPackage}.${entityName}">
         select
         <include refid="Base_Column_List"/>
@@ -38,7 +38,19 @@
         </#list>
         </where>
     </select>
-    </#if>
+
+
+    <delete id="deleteByPrimaryKey">
+        delete from ${tableName}
+        <where>
+            <#list columnList as columnMap>
+                <#if columnMap.isId=='true'>
+                    and  ${columnMap.col} = ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}}
+                </#if>
+            </#list>
+        </where>
+    </delete>
+    </#if>-->
 
     <select id="selectBySelective" resultType="${entityPackage}.${entityName}">
         select
@@ -54,95 +66,86 @@
     </select>
 
 
-    <#assign insertStrList>
-        <#list columnList as columnMap>
-            ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}},
-        </#list>
-    </#assign>
-    <#assign insertStrList="${StringUtils.trimToEmpty(insertStrList)}"/>
+    <#--<#assign insertStrList>-->
+        <#--<#list columnList as columnMap>-->
+            <#--${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}},-->
+        <#--</#list>-->
+    <#--</#assign>-->
+    <#--<#assign insertStrList="${StringUtils.trimToEmpty(insertStrList)}"/>-->
 
-    <insert id="insert" parameterType="${entityPackage}.${entityName}">
-        insert into ${tableName} (
-            ${columnStrListNoAs?substring(0,columnStrListNoAs?length-1)}
-        )
-        values (
-            ${insertStrList?substring(0,insertStrList?length-1)}
-        )
-    </insert>
+    <#--<insert id="insert" parameterType="${entityPackage}.${entityName}">-->
+        <#--insert into ${tableName} (-->
+            <#--${columnStrListNoAs?substring(0,columnStrListNoAs?length-1)}-->
+        <#--)-->
+        <#--values (-->
+            <#--${insertStrList?substring(0,insertStrList?length-1)}-->
+        <#--)-->
+    <#--</insert>-->
 
 
-    <insert id="insertSelective" parameterType="${entityPackage}.${entityName}">
+    <#--<insert id="insertSelective" parameterType="${entityPackage}.${entityName}">-->
 
-        insert into ${tableName}
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-                <#list columnList as columnMap>
-                    <if test="${StringUtils.underlineToCamelCase(columnMap.col)} != null">
-                        ${columnMap.col},
-                    </if>
-                </#list>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-               <#list columnList as columnMap>
-                   <if test="${StringUtils.underlineToCamelCase(columnMap.col)} != null">
-                       ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}},
-                   </if>
-               </#list>
-        </trim>
-    </insert>
+        <#--insert into ${tableName}-->
+        <#--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+                <#--<#list columnList as columnMap>-->
+                    <#--<if test="${StringUtils.underlineToCamelCase(columnMap.col)} != null">-->
+                        <#--${columnMap.col},-->
+                    <#--</if>-->
+                <#--</#list>-->
+        <#--</trim>-->
+        <#--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+               <#--<#list columnList as columnMap>-->
+                   <#--<if test="${StringUtils.underlineToCamelCase(columnMap.col)} != null">-->
+                       <#--${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}},-->
+                   <#--</if>-->
+               <#--</#list>-->
+        <#--</trim>-->
+    <#--</insert>-->
 
-        <#if (idLength>0 && (idLength<columnList.size()))>
-    <update id="updateByPrimaryKeySelective" parameterType="${entityPackage}.${entityName}">
-        update ${tableName}
-        <set>
-            <#list columnList as columnMap>
-               <#if columnMap.isId=='false'>
-                 <if test="${StringUtils.underlineToCamelCase(columnMap.col)} != null">
-                     ${columnMap.col} = ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}},
-                 </if>
-               </#if>
-            </#list>
-        </set>
+        <#--<#if (idLength>0 && (idLength<columnList.size()))>-->
+    <#--<update id="updateByPrimaryKeySelective" parameterType="${entityPackage}.${entityName}">-->
+        <#--update ${tableName}-->
+        <#--<set>-->
+            <#--<#list columnList as columnMap>-->
+               <#--<#if columnMap.isId=='false'>-->
+                 <#--<if test="${StringUtils.underlineToCamelCase(columnMap.col)} != null">-->
+                     <#--${columnMap.col} = ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}},-->
+                 <#--</if>-->
+               <#--</#if>-->
+            <#--</#list>-->
+        <#--</set>-->
 
-        <where>
-           <#list columnList as columnMap>
-              <#if columnMap.isId=='true'>
-              and  ${columnMap.col} = ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}}
-              </#if>
-           </#list>
-        </where>
-    </update>
-        </#if>
+        <#--<where>-->
+           <#--<#list columnList as columnMap>-->
+              <#--<#if columnMap.isId=='true'>-->
+              <#--and  ${columnMap.col} = ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}}-->
+              <#--</#if>-->
+           <#--</#list>-->
+        <#--</where>-->
+    <#--</update>-->
+        <#--</#if>-->
 
-<#if (idLength>0 && (idLength<columnList.size()))>
-    <update id="updateByPrimaryKey" parameterType="${entityPackage}.${entityName}">
-        update ${tableName}
-        <set>
-            <#list columnList as columnMap>
-               <#if columnMap.isId=='false'>
-                   ${columnMap.col} = ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}},
-               </#if>
-            </#list>
-        </set>
+<#--<#if (idLength>0 && (idLength<columnList.size()))>-->
+    <#--<update id="updateByPrimaryKey" parameterType="${entityPackage}.${entityName}">-->
+        <#--update ${tableName}-->
+        <#--<set>-->
+            <#--<#list columnList as columnMap>-->
+               <#--<#if columnMap.isId=='false'>-->
+                   <#--${columnMap.col} = ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}},-->
+               <#--</#if>-->
+            <#--</#list>-->
+        <#--</set>-->
 
-        <where>
-           <#list columnList as columnMap>
-              <#if columnMap.isId=='true'>
-              and  ${columnMap.col} = ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}}
-              </#if>
-           </#list>
-        </where>
-    </update>
-</#if>
+        <#--<where>-->
+           <#--<#list columnList as columnMap>-->
+              <#--<#if columnMap.isId=='true'>-->
+              <#--and  ${columnMap.col} = ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}}-->
+              <#--</#if>-->
+           <#--</#list>-->
+        <#--</where>-->
+    <#--</update>-->
+<#--</#if>-->
 
-    <delete id="deleteByPrimaryKey">
-        delete from ${tableName}
-        <where>
-        <#list columnList as columnMap>
-            <#if columnMap.isId=='true'>
-              and  ${columnMap.col} = ${r'#{'}${StringUtils.underlineToCamelCase(columnMap.col)},jdbcType=${columnMap.jdbcType}}
-            </#if>
-        </#list>
-        </where>
-    </delete>
+
 
 </mapper>

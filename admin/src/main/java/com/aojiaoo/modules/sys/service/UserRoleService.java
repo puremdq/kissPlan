@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class UserRoleService extends BaseService<UserRole, UserRoleMapper> {
 
     public UserRole get(Integer userId, Integer roleId) {
-        return this.mapper.selectByPrimaryKey(userId, roleId);
+        return this.mapper.selectByPrimaryKey(null);
     }
 
     public boolean delete(Integer userId, Integer roleId) {
-        return this.mapper.deleteByPrimaryKey(userId, roleId) > 0;
+        return this.mapper.deleteByPrimaryKey(null) > 0;
     }
 }
