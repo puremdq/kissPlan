@@ -19,7 +19,7 @@
         <shiro.version>1.4.0</shiro.version>
         <mybatis.version>3.4.6</mybatis.version>
         <freemarker.version>2.3.28</freemarker.version>
-        <jackson.version>2.9.6</jackson.version>
+        <jackson.version>[2.9.8,)</jackson.version>
     </properties>
     <!--end properties-->
 
