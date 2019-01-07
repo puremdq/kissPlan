@@ -43,8 +43,8 @@
     <select id="selectByUserName" resultType="com.aojiaoo.modules.sys.entity.User">
         select
         <include refid="Base_Column_List"/>
-        from sys_user
-        where username = #{username}
+        from sys_user a
+        where a.username = #{username}
     </select>
 
 
