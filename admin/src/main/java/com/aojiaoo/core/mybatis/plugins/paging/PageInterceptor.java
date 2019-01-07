@@ -205,7 +205,7 @@ public class PageInterceptor implements Interceptor {
     public String getMySqlPageSql(String sql, Page page, CacheKey pageKey) {
         StringBuilder sqlBuilder = new StringBuilder(sql.length() + 14);
         sqlBuilder.append(sql);
-        sqlBuilder.append(" LIMIT ").append((page.getPageNo() - 1) * page.getPageSize() + page.getOffset())
+        sqlBuilder.append(" LIMIT ").append(page.getOffset())
                 .append(",")
                 .append(page.getPageSize());
         pageKey.update(sql);

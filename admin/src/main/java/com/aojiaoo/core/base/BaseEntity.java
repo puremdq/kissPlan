@@ -1,6 +1,5 @@
 package com.aojiaoo.core.base;
 
-import com.aojiaoo.core.mybatis.annotations.TableId;
 import com.aojiaoo.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
@@ -56,7 +55,7 @@ public abstract class BaseEntity implements Serializable {
         List<Field> idFields = new ArrayList<>();
         Field[] fields = this.getClass().getDeclaredFields();
         for (Field field : fields) {
-            if (field.getAnnotation(TableId.class) != null) {
+            if (field.getAnnotation(javax.persistence.Id.class) != null) {
                 idFields.add(field);
             }
         }

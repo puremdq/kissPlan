@@ -1,7 +1,6 @@
 import com.aojiaoo.core.mybatis.plugins.paging.Page;
 import com.aojiaoo.modules.sys.entity.St;
 import com.aojiaoo.modules.sys.entity.User;
-import com.aojiaoo.modules.sys.entity.UserRole;
 import com.aojiaoo.modules.sys.mapper.StMapper;
 import com.aojiaoo.modules.sys.mapper.UserMapper;
 import com.aojiaoo.modules.sys.mapper.UserRoleMapper;
@@ -14,8 +13,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
 //告诉spring容器运行在虚拟机中
 @RunWith(SpringJUnit4ClassRunner.class)

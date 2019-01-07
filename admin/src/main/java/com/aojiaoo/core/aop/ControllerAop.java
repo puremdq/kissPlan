@@ -81,7 +81,7 @@ public class ControllerAop {
             operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_FALSE));
         } finally {
             long end = System.currentTimeMillis();
-            operateLog.setExecuteTime(String.valueOf(end - start) + "ms");
+            operateLog.setExecuteTime((end - start) + "ms");
             logService.save(operateLog);
         }
         return object;
