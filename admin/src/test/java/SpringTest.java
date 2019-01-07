@@ -66,11 +66,10 @@ public class SpringTest {
 //        userMapper.selectByPrimaryKey(user);
         St st = new St();
         st.setName("sdfsdfsd");
-
+        st.setId("5b2f193a7d1f4fbaa3b056fc0dfa6e46");
 //        UserRole userRole = new UserRole();
 //        Map map = new HashMap();
 
-        System.out.println(stMapper.insert(st));
     }
 
 

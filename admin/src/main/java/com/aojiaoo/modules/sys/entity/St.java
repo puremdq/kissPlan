@@ -1,13 +1,14 @@
 package com.aojiaoo.modules.sys.entity;
 
 import com.aojiaoo.core.base.BaseEntity;
+import com.aojiaoo.core.mybatis.UUIdGenId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import tk.mybatis.mapper.annotation.KeySql;
 
-import javax.persistence.*;
-
-import com.aojiaoo.core.mybatis.enums.IdType;
-import com.aojiaoo.core.mybatis.annotations.TableId;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @EqualsAndHashCode(callSuper=true)
 @Data
@@ -28,7 +29,7 @@ public class St extends BaseEntity {
      * 表字段： a_test.id
      */
     @Id
-    @GeneratedValue(generator = "UUID")
+    @KeySql(genId = UUIdGenId.class)
     @Column(name = "id")
     private String id;
     /**
