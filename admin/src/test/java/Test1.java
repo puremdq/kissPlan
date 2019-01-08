@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.google.common.primitives.Ints;
 import org.apache.commons.lang3.ClassUtils;
 import org.junit.Test;
 
@@ -14,10 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
+import java.util.*;
 
 public class Test1 {
 
@@ -129,6 +127,14 @@ public class Test1 {
         for (Field field : fields) {
             System.out.println(Modifier.toString(field.getModifiers()));
         }
+    }
+
+
+    @Test
+    public void testA() throws Exception {
+        int[] arr = new int[5];
+        List<Integer> list = Ints.asList(new int[5]);
+        System.out.println(list);
     }
 
 
