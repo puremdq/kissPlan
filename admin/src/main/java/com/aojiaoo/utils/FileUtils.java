@@ -75,4 +75,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             return classpathResource;
         }
     }
+
+    public static void main(String[] args) {
+        System.out.println(getFilePathByClasspathOrSelf("classpath:ehcache.xml"));
+    }
 }

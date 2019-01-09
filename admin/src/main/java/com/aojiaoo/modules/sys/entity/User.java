@@ -3,6 +3,7 @@ package com.aojiaoo.modules.sys.entity;
 import com.aojiaoo.core.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -10,6 +11,7 @@ import javax.persistence.Table;
 
 @EqualsAndHashCode(callSuper=true)
 @Data
+@ToString(callSuper = true)
 @Table(name = "sys_user")
 public class User extends BaseEntity {
 

@@ -3,6 +3,7 @@ package com.aojiaoo.core.base;
 import com.aojiaoo.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@ToString
 @EqualsAndHashCode
 public abstract class BaseEntity implements Serializable {
     public static final String DEL_FLAG_NORMAL = "0";

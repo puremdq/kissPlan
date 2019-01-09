@@ -40,10 +40,9 @@ public class SpringTest {
     //自动装配
     @Test
     public void test1() {
-//        Role role = new Role();
-//        Page page = new Page();
-//        System.out.println(roleService.getMapper().selectBySelective(role, page));
-        System.out.println(roleService.getMapper().selectByPrimaryKey(1));
+        User user = userService.get(1);
+        System.out.println(user);
+
     }
 
     @Test
