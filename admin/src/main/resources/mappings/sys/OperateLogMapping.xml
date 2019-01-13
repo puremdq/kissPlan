@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aojiaoo.modules.sys.mapper.OperateLogMapper">
+
+
+
+    <sql id="Base_Column_List">
+            a.id as id,a.operate_name as operateName,a.operate_desc as operateDesc,a.ip as ip,a.url as url,a.request_type as requestType,a.method_name as methodName,a.parameters as parameters,a.execute_time as executeTime,a.create_by as createBy,a.create_date as createDate,a.update_by as updateBy,a.update_date as updateDate,a.del_flag as delFlag,a.is_success as isSuccess
+    </sql>
+
+    <sql id="Base_select_table">
+        sys_operate_log a
+    </sql>
+
+
+
+    <select id="selectBySelective" resultType="com.aojiaoo.modules.sys.entity.OperateLog">
+        select
+        <include refid="Base_Column_List"/>
+        from <include refid="Base_select_table"/>
+        <where>
+               <if test="id != null">
+                   and a.id = #{id,jdbcType=BIGINT}
+               </if>
+               <if test="operateName != null and operateName != ''">
+                   and a.operate_name = #{operateName,jdbcType=VARCHAR}
+               </if>
+               <if test="operateDesc != null and operateDesc != ''">
+                   and a.operate_desc = #{operateDesc,jdbcType=VARCHAR}
+               </if>
+               <if test="ip != null and ip != ''">
+                   and a.ip = #{ip,jdbcType=VARCHAR}
+               </if>
+               <if test="url != null and url != ''">
+                   and a.url = #{url,jdbcType=LONGVARCHAR}
+               </if>
+               <if test="requestType != null and requestType != ''">
+                   and a.request_type = #{requestType,jdbcType=VARCHAR}
+               </if>
+               <if test="methodName != null and methodName != ''">
+                   and a.method_name = #{methodName,jdbcType=VARCHAR}
+               </if>
+               <if test="parameters != null and parameters != ''">
+                   and a.parameters = #{parameters,jdbcType=LONGVARCHAR}
+               </if>
+               <if test="executeTime != null and executeTime != ''">
+                   and a.execute_time = #{executeTime,jdbcType=VARCHAR}
+               </if>
+               <if test="createBy != null and createBy != ''">
+                   and a.create_by = #{createBy,jdbcType=CHAR}
+               </if>
+               <if test="createDate != null">
+                   and a.create_date = #{createDate,jdbcType=TIMESTAMP}
+               </if>
+               <if test="updateBy != null and updateBy != ''">
+                   and a.update_by = #{updateBy,jdbcType=CHAR}
+               </if>
+               <if test="updateDate != null">
+                   and a.update_date = #{updateDate,jdbcType=TIMESTAMP}
+               </if>
+               <if test="delFlag != null and delFlag != ''">
+                   and a.del_flag = #{delFlag,jdbcType=CHAR}
+               </if>
+               <if test="isSuccess != null and isSuccess != ''">
+                   and a.is_success = #{isSuccess,jdbcType=CHAR}
+               </if>
+        </where>
+    </select>
+
+
+
+</mapper>

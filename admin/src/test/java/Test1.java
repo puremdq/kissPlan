@@ -132,4 +132,47 @@ public class Test1 {
     }
 
 
+    @Test
+    public void testA() throws Exception {
+      String str="{\n" +
+              "    title: {\n" +
+              "        text: '本周热点新闻摘要'\n" +
+              "       \n" +
+              "    },\n" +
+              "    tooltip: {\n" +
+              "        trigger: 'axis',\n" +
+              "        axisPointer: {\n" +
+              "            type: 'shadow'\n" +
+              "        }\n" +
+              "    },\n" +
+              "    legend: {\n" +
+              "        data: ['发布数']\n" +
+              "    },\n" +
+              "    grid: {\n" +
+              "        left: '3%',\n" +
+              "        right: '4%',\n" +
+              "        bottom: '3%',\n" +
+              "        containLabel: true\n" +
+              "    },\n" +
+              "    xAxis: {\n" +
+              "        type: 'value',\n" +
+              "        boundaryGap: [0, 0.01]\n" +
+              "    },\n" +
+              "    yAxis: {\n" +
+              "        type: 'category',\n" +
+              "        data: ['巴西','印尼','美国','印度','中国','世界人口(万)']\n" +
+              "    },\n" +
+              "    series: [\n" +
+              "        {\n" +
+              "            name: '发布数',\n" +
+              "            type: 'bar',\n" +
+              "            data: [18203, 23489, 29034, 104970, 131744, 630230]\n" +
+              "        } \n" +
+              "    ]\n" +
+              "}";
+
+        System.out.println(str.replace(" ", "").replaceAll("[\r\n\t]", ""));
+    }
+
+
 }

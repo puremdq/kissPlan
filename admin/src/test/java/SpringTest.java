@@ -1,8 +1,10 @@
 import com.aojiaoo.core.mybatis.plugins.paging.Page;
+import com.aojiaoo.modules.sys.entity.St;
 import com.aojiaoo.modules.sys.entity.User;
-import com.aojiaoo.modules.sys.mapper.UserMapperTest;
+import com.aojiaoo.modules.sys.mapper.StMapper;
+import com.aojiaoo.modules.sys.mapper.UserMapper;
+import com.aojiaoo.modules.sys.mapper.UserRoleMapper;
 import com.aojiaoo.modules.sys.service.RoleService;
-import com.aojiaoo.modules.sys.service.TestService;
 import com.aojiaoo.modules.sys.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,19 +28,21 @@ public class SpringTest {
     @Autowired
     UserService userService;
 
-    @Autowired
-    TestService testService;
+    @Resource
+    UserMapper userMapper;
 
     @Resource
-    UserMapperTest userMapperTest;
+    StMapper stMapper;
+
+    @Resource
+    UserRoleMapper userRoleMapper;
 
     //自动装配
     @Test
     public void test1() {
-//        Role role = new Role();
-//        Page page = new Page();
-//        System.out.println(roleService.getMapper().selectBySelective(role, page));
-        System.out.println(roleService.getMapper().selectByPrimaryKey(1));
+        User user = userService.get(1);
+        System.out.println(user);
+
     }
 
     @Test
@@ -52,7 +56,16 @@ public class SpringTest {
 
     @Test
     public void test3() {
-        System.out.println(userMapperTest.selectAll());
+//        User user=new User();
+//        user.setUsername("");
+//        user.setId(4);
+//        userMapper.selectByPrimaryKey(user);
+        St st = new St();
+        st.setName("sdfsdfsd");
+        st.setId("5b2f193a7d1f4fbaa3b056fc0dfa6e46");
+//        UserRole userRole = new UserRole();
+//        Map map = new HashMap();
+
     }
 
 

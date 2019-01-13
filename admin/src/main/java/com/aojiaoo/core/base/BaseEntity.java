@@ -1,9 +1,10 @@
 package com.aojiaoo.core.base;
 
-import com.aojiaoo.core.mybatis.annotations.TableId;
 import com.aojiaoo.utils.StringUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.Serializable;
@@ -12,12 +13,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@ToString
 @EqualsAndHashCode
 public abstract class BaseEntity implements Serializable {
     public static final String DEL_FLAG_NORMAL = "0";
     public static final String DEL_FLAG_DELETED = "1";
-
     protected Date createDate;
+
     protected Date updateDate;
 
 
@@ -56,14 +58,14 @@ public abstract class BaseEntity implements Serializable {
         List<Field> idFields = new ArrayList<>();
         Field[] fields = this.getClass().getDeclaredFields();
         for (Field field : fields) {
-            if (field.getAnnotation(TableId.class) != null) {
+            if (field.getAnnotation(javax.persistence.Id.class) != null) {
                 idFields.add(field);
             }
         }
         return idFields;
     }
 
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getCreateDate() {
         return createDate;
     }
@@ -72,6 +74,7 @@ public abstract class BaseEntity implements Serializable {
         this.createDate = createDate;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getUpdateDate() {
         return updateDate;
     }

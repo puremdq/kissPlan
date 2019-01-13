@@ -9,18 +9,18 @@ import java.util.List;
  */
 public class Page<T> {
 
-    private int offset = 0;//增加偏移量
+    private int extraOffset = 0;//手动设置 额外的偏移量
     private int pageSize = 10;
     private int pageNo = 1;
     private int total;//在查询后自动绑定进去
     private List<T> list;
 
-    public int getOffset() {
-        return offset;
+    public int getExtraOffset() {
+        return extraOffset;
     }
 
-    public void setOffset(int offset) {
-        this.offset = offset;
+    public void setExtraOffset(int extraOffset) {
+        this.extraOffset = extraOffset;
     }
 
     public int getPageSize() {
@@ -63,10 +63,17 @@ public class Page<T> {
         this.list = list;
     }
 
+
+    //得到该分页总的偏移量
+    public int getOffset() {
+        return (this.pageNo - 1) * pageSize + extraOffset;
+    }
+
+
     @Override
     public String toString() {
         return "Page{" +
-                "offset=" + offset +
+                "extraOffset=" + extraOffset +
                 ", pageSize=" + pageSize +
                 ", pageNo=" + pageNo +
                 ", total=" + total +

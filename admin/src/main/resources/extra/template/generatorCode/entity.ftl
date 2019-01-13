@@ -12,13 +12,17 @@ import ${baseEntityFullName};
 </#if>
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 <#if (idNum>0)>
 import com.aojiaoo.core.mybatis.enums.IdType;
 import com.aojiaoo.core.mybatis.annotations.TableId;
 </#if>
+
 @EqualsAndHashCode(callSuper=true)
 @Data
+@Table(name = "${tableName}")
 public class ${entityName} <#if StringUtils.isNotBlank(baseEntityFullName)>extends ${StringUtils.substringAfterLast(baseEntityFullName,".")}</#if> {
 
     private static final long serialVersionUID = 1L;
@@ -56,8 +60,9 @@ public class ${entityName} <#if StringUtils.isNotBlank(baseEntityFullName)>exten
                     <#assign idType="UUID"/>
                 </#if>
             </#if>
-    @TableId(type = IdType.${idType}, value = "${columnMap.col}")
+    @Id
         </#if>
+    @Column(name = "${columnMap.col}")
     private ${columnMap.javaType} ${StringUtils.underlineToCamelCase(columnMap.col)};
 </#if>
 </#list>
