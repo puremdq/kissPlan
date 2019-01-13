@@ -1,0 +1,136 @@
+<template>
+    <div class="login-container">
+        <div class="logo" @click="goHome">KissPlan</div>
+        <div class="login_box">
+            <mu-tabs :value.sync="active" inverse color="secondary" text-color="rgba(0, 0, 0, .54)"  center>
+                <mu-tab>登陆</mu-tab>
+                <mu-tab>注册</mu-tab>
+            </mu-tabs>
+            <div class="login_input_box mt20">
+                <mu-icon class="toggle-icon iconfont " size="25" value=":icon-addressbook"></mu-icon>
+                <input class="input" id="userName" v-model="validateForm.userName" type="text">
+            </div>
+            <div class="login_input_box">
+                <mu-icon class="toggle-icon iconfont " size="25" value=":icon-lock"></mu-icon>
+                <input class="input"  id="password" v-model="validateForm.password" type="password">
+            </div>
+            <div class="mb10">
+                <mu-checkbox label="记住密码" v-model="validateForm.isAgree"></mu-checkbox>
+            </div>
+            <mu-row gutter class="btn_box">
+                <mu-col span="24">
+                    <mu-button color="success" class="login_button" @click="login">登陆</mu-button>
+                </mu-col>
+            </mu-row >
+        </div>
+    </div>
+</template>
+<script>
+import axios from 'axios'
+var Qs = require('qs');
+import { mapMutations ,mapState} from 'vuex'
+export default {
+    name:'login',
+    data:function(){
+        return {
+            active:0,
+            validateForm:{
+                userName:'',
+                password:'',
+                isAgree:false,
+            }
+        }
+    },
+    computed:{
+        ...mapState(['user'])
+    },
+    methods:{
+        login() {
+
+        },
+        goHome() {
+            this.$router.push('/')
+        }
+    },
+    watch:{
+        active(newValue) {
+            if(newValue==0){
+                this.$router.push('/login')
+            }else{
+                this.$router.push('/register')
+            }
+        }
+    }
+}
+</script>
+<style lang="less" scoped>
+    .login-container{
+        .logo{
+            position: absolute;
+            top:5%;
+            left:5%;
+            line-height: 60px;
+            height: 60px;
+            font-size: 25px;
+            cursor: pointer;
+            color: #ea6f5a;
+            font-weight: bold;
+        }
+        .login_box{
+            background-color: #fff;
+            padding:10px 30px 30px 30px;
+            border-radius: 5px;
+            box-shadow: 0px 3px 13px #666;
+            width:350px;
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            .login_title{
+                text-align: center;
+                font-weight: bold;
+                padding:20px;
+                color:#333;
+                font-size: 20px;
+            }
+            .login_input_box{
+                position: relative;
+                .iconfont{
+                    position: absolute;
+                    top:2px;
+                    left:8px;
+                }
+            }
+            .input{
+                width: 100%;
+                height:40px;
+                padding:5px 5px 5px 35px;
+                margin-bottom:15px;
+                outline: none;
+                border-radius: 5px;
+                border:1px solid #ddd;
+            }
+            .btn_box{
+                margin-left: 0px;
+                .login_button{
+                    width:100%;
+                }
+            }
+            
+        }
+        @media (max-width: 768px){
+            .login_box{
+                width:100vw;
+                border-radius: 0px;
+                position: absolute;
+                top:0;
+                left:0;
+                right:0;
+                bottom:0;
+                transform: translate(0%,0%);
+                box-shadow: none;
+            }
+        }
+    }
+</style>
+
