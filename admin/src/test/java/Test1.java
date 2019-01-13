@@ -7,7 +7,6 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.google.common.primitives.Ints;
 import org.apache.commons.lang3.ClassUtils;
 import org.junit.Test;
 
@@ -15,7 +14,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.UUID;
 
 public class Test1 {
 
@@ -132,9 +134,44 @@ public class Test1 {
 
     @Test
     public void testA() throws Exception {
-        int[] arr = new int[5];
-        List<Integer> list = Ints.asList(new int[5]);
-        System.out.println(list);
+      String str="{\n" +
+              "    title: {\n" +
+              "        text: '本周热点新闻摘要'\n" +
+              "       \n" +
+              "    },\n" +
+              "    tooltip: {\n" +
+              "        trigger: 'axis',\n" +
+              "        axisPointer: {\n" +
+              "            type: 'shadow'\n" +
+              "        }\n" +
+              "    },\n" +
+              "    legend: {\n" +
+              "        data: ['发布数']\n" +
+              "    },\n" +
+              "    grid: {\n" +
+              "        left: '3%',\n" +
+              "        right: '4%',\n" +
+              "        bottom: '3%',\n" +
+              "        containLabel: true\n" +
+              "    },\n" +
+              "    xAxis: {\n" +
+              "        type: 'value',\n" +
+              "        boundaryGap: [0, 0.01]\n" +
+              "    },\n" +
+              "    yAxis: {\n" +
+              "        type: 'category',\n" +
+              "        data: ['巴西','印尼','美国','印度','中国','世界人口(万)']\n" +
+              "    },\n" +
+              "    series: [\n" +
+              "        {\n" +
+              "            name: '发布数',\n" +
+              "            type: 'bar',\n" +
+              "            data: [18203, 23489, 29034, 104970, 131744, 630230]\n" +
+              "        } \n" +
+              "    ]\n" +
+              "}";
+
+        System.out.println(str.replace(" ", "").replaceAll("[\r\n\t]", ""));
     }
 
 

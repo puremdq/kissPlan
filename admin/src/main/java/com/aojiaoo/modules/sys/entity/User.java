@@ -55,11 +55,5 @@ public class User extends BaseEntity {
      */
     @Column(name = "password")
     private String password;
-    /**
-     * 是否是管理员 0不是 1是
-     * 表字段： sys_user.is_admin
-     */
-    @Column(name = "is_admin")
-    private String isAdmin;
 
 }

@@ -1,6 +1,7 @@
 package com.aojiaoo.core.base;
 
 import com.aojiaoo.utils.StringUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -17,8 +18,8 @@ import java.util.List;
 public abstract class BaseEntity implements Serializable {
     public static final String DEL_FLAG_NORMAL = "0";
     public static final String DEL_FLAG_DELETED = "1";
-
     protected Date createDate;
+
     protected Date updateDate;
 
 
@@ -64,7 +65,7 @@ public abstract class BaseEntity implements Serializable {
         return idFields;
     }
 
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getCreateDate() {
         return createDate;
     }
@@ -73,6 +74,7 @@ public abstract class BaseEntity implements Serializable {
         this.createDate = createDate;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getUpdateDate() {
         return updateDate;
     }
