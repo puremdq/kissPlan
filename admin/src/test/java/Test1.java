@@ -136,17 +136,13 @@ public class Test1 {
     public void testA() throws Exception {
       String str="{\n" +
               "    title: {\n" +
-              "        text: '本周热点新闻摘要'\n" +
-              "       \n" +
+              "        text: '折线图堆叠'\n" +
               "    },\n" +
               "    tooltip: {\n" +
-              "        trigger: 'axis',\n" +
-              "        axisPointer: {\n" +
-              "            type: 'shadow'\n" +
-              "        }\n" +
+              "        trigger: 'axis'\n" +
               "    },\n" +
               "    legend: {\n" +
-              "        data: ['发布数']\n" +
+              "        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']\n" +
               "    },\n" +
               "    grid: {\n" +
               "        left: '3%',\n" +
@@ -154,20 +150,55 @@ public class Test1 {
               "        bottom: '3%',\n" +
               "        containLabel: true\n" +
               "    },\n" +
+              "    toolbox: {\n" +
+              "        feature: {\n" +
+              "            saveAsImage: {}\n" +
+              "        }\n" +
+              "    },\n" +
               "    xAxis: {\n" +
-              "        type: 'value',\n" +
-              "        boundaryGap: [0, 0.01]\n" +
+              "        type: 'category',\n" +
+              "        boundaryGap: false,\n" +
+              "        data: ['周一','周二','周三','周四','周五','周六','周日']\n" +
               "    },\n" +
               "    yAxis: {\n" +
-              "        type: 'category',\n" +
-              "        data: ['巴西','印尼','美国','印度','中国','世界人口(万)']\n" +
+              "        type: 'value'\n" +
               "    },\n" +
               "    series: [\n" +
               "        {\n" +
-              "            name: '发布数',\n" +
-              "            type: 'bar',\n" +
-              "            data: [18203, 23489, 29034, 104970, 131744, 630230]\n" +
-              "        } \n" +
+              "            name:'邮件营销',\n" +
+              "            type:'line',\n" +
+              "            stack: '总量',\n" +
+              "            data:[120, 132, 101, 134, 90, 230, 210],\n" +
+              "             smooth: true\n" +
+              "        },\n" +
+              "        {\n" +
+              "            name:'联盟广告',\n" +
+              "            type:'line',\n" +
+              "            stack: '总量',\n" +
+              "            data:[220, 182, 191, 234, 290, 330, 310],\n" +
+              "             smooth: true\n" +
+              "        },\n" +
+              "        {\n" +
+              "            name:'视频广告',\n" +
+              "            type:'line',\n" +
+              "            stack: '总量',\n" +
+              "            data:[150, 232, 201, 154, 190, 330, 410],\n" +
+              "             smooth: true\n" +
+              "        },\n" +
+              "        {\n" +
+              "            name:'直接访问',\n" +
+              "            type:'line',\n" +
+              "            stack: '总量',\n" +
+              "            data:[320, 332, 301, 334, 390, 330, 320],\n" +
+              "             smooth: true\n" +
+              "        },\n" +
+              "        {\n" +
+              "            name:'搜索引擎',\n" +
+              "            type:'line',\n" +
+              "            stack: '总量',\n" +
+              "            data:[820, 932, 901, 934, 1290, 1330, 1320],\n" +
+              "             smooth: true\n" +
+              "        }\n" +
               "    ]\n" +
               "}";
 
