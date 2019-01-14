@@ -18,7 +18,7 @@
                     </mu-text-field>
                 </mu-col>
                 <mu-col span="12" sm="12" md="4" class="tar phone_hide">
-                    <mu-button flat color="primary" class="h60">登录</mu-button>    
+                    <mu-button flat color="primary" class="h60" @click="signIn">登录</mu-button>    
                     <mu-button large color="#ea6f5a">
                         <mu-icon left value=""></mu-icon>
                         写文章
@@ -55,11 +55,11 @@
                     </mu-list-item-action>
                     <mu-list-item-title>写文章</mu-list-item-title>
                 </mu-list-item>
-                <mu-list-item button >
+                <mu-list-item button  @click="signIn">
                     <mu-list-item-action class="tac">
                         <i class="iconfont icon-bi"></i>
                     </mu-list-item-action>
-                    <mu-list-item-title>登录</mu-list-item-title>
+                    <mu-list-item-title >登录</mu-list-item-title>
                 </mu-list-item>
             </mu-list>
         </div>
@@ -99,6 +99,10 @@ export default {
                 }
             }
         },
+        //登录
+        signIn() { 
+            this.$router.push('/login')
+        },
         click_phone_menu() {
             this.phone_menu = !this.phone_menu;
             if(this.phone_menu){
@@ -117,6 +121,7 @@ export default {
                 $(this.$refs['header_conterl_span1']).css({
                     'transform': 'rotate(0deg)',
                 })
+                
                 window.setTimeout(()=>{
                     $(this.$refs['header_conterl_span2']).css({
                         'visibility': 'initial',
@@ -135,10 +140,12 @@ export default {
 <style lang="less" >
     .header{
         height:62px;
-        border-bottom:1px solid #ddd;
+        
         background-color:#fff;
         font-size: 16px;
         .header_container{
+            background-color:#fff;
+            border-bottom:1px solid #ddd;
             border-top:none;
             padding:0 16px;
             position: fixed;
@@ -193,6 +200,9 @@ export default {
             overflow: hidden;
             .active{
                 border-bottom:0.5px solid #ddd;
+            }
+            .iconfont{
+                color:#ea6f5a;
             }
         }
         @media (max-width: 891px){
