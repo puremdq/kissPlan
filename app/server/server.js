@@ -1,15 +1,15 @@
 const express = require('express');
 const fs = require('fs')
 const path = require('path')
-var mongodb = require('mongodb');
-var mongoose = require('mongoose')
-var qs = require('qs')
-var User = require('./module/user/model.js')
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser')
-const session = require('express-session');
-var mongoStore = require('connect-mongo')(session);
-var mongoUrl = 'mongodb://localhost:27017/missu'
+// var mongodb = require('mongodb');
+// var mongoose = require('mongoose')
+// var qs = require('qs')
+// var User = require('./module/user/model.js')
+// var cookieParser = require('cookie-parser');
+// var bodyParser = require('body-parser')
+// const session = require('express-session');
+// var mongoStore = require('connect-mongo')(session);
+// var mongoUrl = 'mongodb://localhost:27017/missu'
 // import a from "./module/user/model.js"
 // console.log(User);
 // console.log(mongoStore);
@@ -45,8 +45,8 @@ app.set('trust proxy', function (ip) {
 app.use('/public',express.static(path.join(__dirname, '../dist'),{
   maxAge:31536000
 }))
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser())
 // app.use(session({
 //   secret:'ssr',

@@ -1,26 +1,23 @@
 <template>
     <div class="home">
-        <div class="header">
-            <yx-header  @click="open = !open">
-                <template slot="header">
-                    <yx-search ></yx-search>  
-                </template>
-                <template slot="footer">
-                    <yx-search ></yx-search>  
-                </template>  
-            </yx-header>
+        <yx-header></yx-header>
+        <div class="box mt20">
+            <mu-row gutter>
+                <mu-col span="12" sm="12" md="8">
+                    <carousel></carousel>
+                </mu-col>
+                <mu-col span="12" sm="12" md="4">
+                    
+                </mu-col>
+            </mu-row>
         </div>
-        <mu-container fluid class="body">
-           
-        </mu-container>
-        
     </div>
 </template>
 <script>
 import { createNamespacedHelpers } from 'vuex';
 const { mapState, mapActions } = createNamespacedHelpers('home');
 import header from '@/components/header/header.vue'
-import search from "@/components/search/search"
+import carousel from "./components/carousel.vue"
 export default {
     name:'home',
     asyncData({store}){
@@ -34,7 +31,7 @@ export default {
     },
     components:{
         'yx-header':header,
-        'yx-search':search
+        carousel
     },
     
     destroyed(){
