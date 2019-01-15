@@ -18,8 +18,24 @@
                     </mu-text-field>
                 </mu-col>
                 <mu-col span="12" sm="12" md="4" class="tar phone_hide">
-                    <mu-button flat color="primary" class="h60" @click="signIn">登录</mu-button>    
-                    <mu-button large color="#ea6f5a">
+                    <mu-button v-if="!user || !user.kiss_plan_token" flat color="primary" class="h60" @click="signIn">登录</mu-button>    
+                    <mu-avatar v-else size="36" style="vertical-align: middle;margin-right:5px;cursor:pointer;"  ref="button" @click="open = !open">
+                        <img src="../../assets/images/head.jpg">
+                    </mu-avatar>
+                    <mu-popover placement="bottom"  :open.sync="open" :trigger="trigger">
+                        <mu-list>
+                            <mu-list-item button>
+                            <mu-list-item-title>个人中心</mu-list-item-title>
+                            </mu-list-item>
+                            <mu-list-item button>
+                            <mu-list-item-title>设置</mu-list-item-title>
+                            </mu-list-item>
+                            <mu-list-item button  @click="signOut">
+                            <mu-list-item-title>退出登录</mu-list-item-title>
+                            </mu-list-item>
+                        </mu-list>
+                    </mu-popover>
+                    <mu-button large color="#ea6f5a" style="margin-top:5px;">
                         <mu-icon left value=""></mu-icon>
                         写文章
                     </mu-button>
@@ -55,12 +71,33 @@
                     </mu-list-item-action>
                     <mu-list-item-title>写文章</mu-list-item-title>
                 </mu-list-item>
-                <mu-list-item button  @click="signIn">
+                <mu-list-item button  @click="signIn"  v-if="!user || !user.kiss_plan_token">
                     <mu-list-item-action class="tac">
                         <i class="iconfont icon-bi"></i>
                     </mu-list-item-action>
                     <mu-list-item-title >登录</mu-list-item-title>
                 </mu-list-item>
+                <div v-else>
+                    <mu-list-item button >
+                        <mu-list-item-action class="tac">
+                            <i class="iconfont icon-bi"></i>
+                        </mu-list-item-action>
+                        <mu-list-item-title >个人中心</mu-list-item-title>
+                    </mu-list-item>
+                    <mu-list-item button >
+                        <mu-list-item-action class="tac">
+                            <i class="iconfont icon-bi"></i>
+                        </mu-list-item-action>
+                        <mu-list-item-title >设置</mu-list-item-title>
+                    </mu-list-item>
+                    <mu-list-item button  @click="signOut" >
+                        <mu-list-item-action class="tac">
+                            <i class="iconfont icon-bi"></i>
+                        </mu-list-item-action>
+                        <mu-list-item-title >退出登录</mu-list-item-title>
+                    </mu-list-item>
+                    
+                </div>
             </mu-list>
         </div>
     </div>
@@ -74,14 +111,20 @@ export default {
         return {
             phone_menu_height:"0px",
             phone_menu:false,
-            search:''
+            search:'',
+            user:{},
+            open: false,
+            trigger: null
         }
     },
     computed:{
-        ...mapState(['unreadMessage','user'])
     },
     mounted(){
-        
+        this.isLogin();
+        this.$nextTick(()=>{
+            this.trigger = (this.$refs.button && this.$refs.button.$el)
+        })
+       
     },
     methods:{
         ...mapMutations(['setUser']),
@@ -102,6 +145,16 @@ export default {
         //登录
         signIn() { 
             this.$router.push('/login')
+        },
+        signOut() {
+            this.$axios.instance({
+                url:'/logout',
+                method:'get',
+            })
+            .then((res)=>{
+                window.localStorage.clear();
+                this.$router.push('/login')
+            })
         },
         click_phone_menu() {
             this.phone_menu = !this.phone_menu;
@@ -135,6 +188,10 @@ export default {
                 })
             }
             
+        },
+        isLogin() {
+            var user = JSON.parse(window.localStorage.getItem('user'));
+            this.user = user;
         }
         
     }

@@ -96,7 +96,7 @@ export default {
 <style lang="less" scoped>
     .login-container{
         .logo{
-            position: absolute;
+            position: fixed;
             top:5%;
             left:5%;
             line-height: 60px;
@@ -112,7 +112,7 @@ export default {
             border-radius: 5px;
             box-shadow: 0px 3px 13px #666;
             width:350px;
-            position: absolute;
+            position: fixed;
             top:50%;
             left:50%;
             transform: translate(-50%,-50%);

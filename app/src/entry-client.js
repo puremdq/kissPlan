@@ -18,15 +18,21 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 router.beforeEach((to, from, next) => {
+    var hasUser = JSON.parse(window.localStorage.getItem('user'))
     if(to.meta.requiresAuth){
-        if(app.$store.state.user){
-            next();
+        
+        if(hasUser){
+            return next();
         }else{
-            next({ path: '/login' });
+            return next({ path: '/login' });
         }
     }else{
-
-        next();
+        if(to.path=='/login' || to.path=='/register' ){
+            if(hasUser){
+               return next({path:'/'})
+            } 
+        }
+        return next();
     }
   // if (to.matched.some(record => record.meta.requiresAuth)) {
   //   // this route requires auth, check if logged in
