@@ -1,8 +1,9 @@
 package com.aojiaoo.utils;
 
-import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class FileUtils extends org.apache.commons.io.FileUtils {
     private FileUtils() {
@@ -32,6 +33,36 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         return path1 + path2;
     }
 
+
+    public static boolean createPath(String filePath, boolean isFolder) {
+
+        if (StringUtils.isBlank(filePath)) {
+            return false;
+        }
+        filePath = StringUtils.trimToEmpty(filePath);
+        File file = new File(filePath);
+        if (file.exists()) {
+            return true;//文件存在 不需要创建
+        }
+
+        if (isFolder) {
+            //文件夹 直接创建
+            return file.mkdirs();
+        }
+
+        if (!file.getParentFile().exists()) {
+            //所在文件夹不存在创建文件夹
+            file.getParentFile().mkdirs();
+        }
+
+        try {
+            return file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
 
     public static String spliceFilePath(String... pathArr) {
         if (pathArr.length < 2) {
@@ -74,5 +105,10 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         } else {
             return classpathResource;
         }
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println(createPath("C:\\project\\kissPlan\\admin\\src\\main\\java\\com\\aojiaoo\\modules\\kissPlan\\entity\\Article.java", false));
     }
 }

@@ -18,6 +18,7 @@ public class ResourceUtil {
         try {
             cl = Thread.currentThread().getContextClassLoader();
         } catch (Throwable ex) {
+            ex.printStackTrace();
             // Cannot access thread context ClassLoader - falling back...
         }
         if (cl == null) {
@@ -28,6 +29,7 @@ public class ResourceUtil {
                 try {
                     cl = ClassLoader.getSystemClassLoader();
                 } catch (Throwable ex) {
+                    ex.printStackTrace();
                     // Cannot access system ClassLoader - oh well, maybe the caller can live with null...
                 }
             }

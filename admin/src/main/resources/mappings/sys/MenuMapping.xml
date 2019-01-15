@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aojiaoo.modules.sys.mapper.MenuMapper">
+
+
+
+    <sql id="Base_Column_List">
+            a.id as id,a.menu_name as menuName,a.menu_url as menuUrl,a.parent_id as parentId,a.permission_name as permissionName,a.is_show as isShow,a.sort as sort
+    </sql>
+
+    <sql id="Base_select_table">
+        sys_menu a
+    </sql>
+
+
+
+    <select id="selectBySelective" resultType="com.aojiaoo.modules.sys.entity.Menu">
+        select
+        <include refid="Base_Column_List"/>
+        from <include refid="Base_select_table"/>
+        <where>
+               <if test="id != null">
+                   and a.id = #{id,jdbcType=INTEGER}
+               </if>
+               <if test="menuName != null and menuName != ''">
+                   and a.menu_name = #{menuName,jdbcType=VARCHAR}
+               </if>
+               <if test="menuUrl != null and menuUrl != ''">
+                   and a.menu_url = #{menuUrl,jdbcType=VARCHAR}
+               </if>
+               <if test="parentId != null">
+                   and a.parent_id = #{parentId,jdbcType=INTEGER}
+               </if>
+               <if test="permissionName != null">
+                   and a.permission_name = #{permissionName,jdbcType=INTEGER}
+               </if>
+               <if test="isShow != null and isShow != ''">
+                   and a.is_show = #{isShow,jdbcType=CHAR}
+               </if>
+               <if test="sort != null">
+                   and a.sort = #{sort,jdbcType=INTEGER}
+               </if>
+        </where>
+    </select>
+
+
+
+</mapper>

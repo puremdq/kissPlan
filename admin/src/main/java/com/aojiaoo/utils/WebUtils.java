@@ -1,5 +1,8 @@
 package com.aojiaoo.utils;
 
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Writer;
@@ -27,6 +30,34 @@ public class WebUtils {
             return ip;
         }
         return request.getRemoteAddr();
+    }
+
+    public static String getUrl() {
+        return getUrl(false);
+    }
+
+
+    public static String getUrl(boolean isNeedParameter) {
+
+        HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
+        String url = request.getScheme() + "://" + request.getServerName()
+                + ":" + request.getServerPort()
+                + request.getServletPath();
+
+        if (isNeedParameter && request.getQueryString() != null) {
+            url = url + "?" + request.getQueryString();
+        }
+
+        return url;
+    }
+
+
+    public static String spliceUrl(String url1, String url2) {
+        return FileUtils.spliceFilePath(url1, url2);
+    }
+
+    public static String spliceUrl(String... url) {
+        return FileUtils.spliceFilePath(url);
     }
 
 

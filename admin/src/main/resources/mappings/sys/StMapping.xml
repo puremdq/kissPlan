@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aojiaoo.modules.sys.mapper.StMapper">
+
+
+
+    <sql id="Base_Column_List">
+            a.id as id,a.name as name
+    </sql>
+
+    <sql id="Base_select_table">
+        a_test a
+    </sql>
+
+
+
+    <select id="selectBySelective" resultType="com.aojiaoo.modules.sys.entity.St">
+        select
+        <include refid="Base_Column_List"/>
+        from <include refid="Base_select_table"/>
+        <where>
+               <if test="id != null and id != ''">
+                   and a.id = #{id,jdbcType=CHAR}
+               </if>
+               <if test="name != null and name != ''">
+                   and a.name = #{name,jdbcType=VARCHAR}
+               </if>
+        </where>
+    </select>
+
+
+
+
+
+</mapper>

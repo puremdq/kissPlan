@@ -11,6 +11,16 @@ export function createRouter(){
                 name:'home',
                 component:()=>import(/* webpackChunkName: "home" */'@/views/home/index.vue')
             },
+            {
+                path:'/login',
+                name:'login',
+                component:()=>import(/* webpackChunkName: "login" */'@/views/login/index.vue')
+            },
+            {
+                path:'/register',
+                name:'register',
+                component:()=>import(/* webpackChunkName: "register" */'@/views/register/index.vue')
+            }
         ]
     })
 }

@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import static com.aojiaoo.utils.FileUtils.createPath;
+
 public class GeneratorCode {
 
     public static void startGeneratorCode() throws Exception {
@@ -26,8 +28,8 @@ public class GeneratorCode {
                 String currentEntityName = GeneratorCode.generatorEntity(tableName, resMap.get(tableName), cfg, generatorProperties);
                 GeneratorCode.generatorMapper(tableName, currentEntityName, resMap.get(tableName), cfg, generatorProperties);
                 GeneratorCode.generatorMapping(tableName, currentEntityName, resMap.get(tableName), cfg, generatorProperties);
-//                GeneratorCode.generatorService(currentEntityName, resMap.get(tableName), cfg, generatorProperties);
-//                GeneratorCode.generatorController(currentEntityName, cfg, generatorProperties);
+                GeneratorCode.generatorService(currentEntityName, resMap.get(tableName), cfg, generatorProperties);
+                GeneratorCode.generatorController(currentEntityName, cfg, generatorProperties);
             }
         }
     }
@@ -52,8 +54,8 @@ public class GeneratorCode {
         templateMap.put("columnList", columnList);
 
         String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtils.replaceAll(entityPackage, "\\.", "/"), entityName + ".java");
-        Template template = cfg.getTemplate("entity.ftl");
-        template.process(templateMap, new FileWriter(filePath));
+        Files.createParentDirs(new File(filePath));
+        cfg.getTemplate("entity.ftl").process(templateMap, new FileWriter(filePath));
         return entityName;
     }
 
@@ -75,9 +77,8 @@ public class GeneratorCode {
         templateMap.put("columnList", columnList);
 
         String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtils.replaceAll(mapperPackage, "\\.", "/"), mapperName + ".java");
-        Template template = cfg.getTemplate("mapper.ftl");
         Files.createParentDirs(new File(filePath));
-        template.process(templateMap, new FileWriter(filePath));
+        cfg.getTemplate("mapper.ftl").process(templateMap, new FileWriter(filePath));
     }
 
     public static void generatorMapping(String tableName, String entityName, List<Map<String, String>> columnList, Configuration cfg, Properties properties) throws Exception {
@@ -95,6 +96,7 @@ public class GeneratorCode {
         String mappingName = entityName + "Mapping";
         String filePath = FileUtils.spliceFilePath(getMappingResourceRootPath(properties), StringUtils.replaceAll(mappingPackage, "\\.", "/"), mappingName + ".xml");
         Template template = cfg.getTemplate("mapping.ftl");
+        Files.createParentDirs(new File(filePath));
         template.process(templateMap, new FileWriter(filePath));
     }
 
@@ -112,6 +114,7 @@ public class GeneratorCode {
 
         String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtils.replaceAll(servicePackage, "\\.", "/"), serviceName + ".java");
         Template template = cfg.getTemplate("service.ftl");
+        Files.createParentDirs(new File(filePath));
         template.process(templateMap, new FileWriter(filePath));
     }
 
@@ -128,6 +131,7 @@ public class GeneratorCode {
         String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtils.replaceAll(controllerPackage, "\\.", "/"), controllerName + ".java");
 
         Template template = cfg.getTemplate("controller.ftl");
+        Files.createParentDirs(new File(filePath));
         template.process(templateMap, new FileWriter(filePath));
     }
 

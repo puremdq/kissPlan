@@ -65,7 +65,7 @@ public class ControllerAop {
         if (bindingResult != null) {
             ServerResponse serverResponse = ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), bindingResult.getAllErrors().get(0).getDefaultMessage());
             long end = System.currentTimeMillis();
-            operateLog.setExecuteTime(String.valueOf(end - start) + "ms");
+            operateLog.setExecuteTime((end - start) + "ms");
             operateLog.setOperateDesc("非法的参数:" + bindingResult.getAllErrors().get(0).getDefaultMessage());
             operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_FALSE));
             logService.save(operateLog);
@@ -81,7 +81,7 @@ public class ControllerAop {
             operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_FALSE));
         } finally {
             long end = System.currentTimeMillis();
-            operateLog.setExecuteTime(String.valueOf(end - start) + "ms");
+            operateLog.setExecuteTime((end - start) + "ms");
             logService.save(operateLog);
         }
         return object;

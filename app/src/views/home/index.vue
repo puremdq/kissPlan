@@ -5,9 +5,15 @@
             <mu-row gutter>
                 <mu-col span="12" sm="12" md="8">
                     <carousel></carousel>
+                    <div class="contentItem-box">
+                        <contentItem class="mt20 bb1 pb10" v-for="(item,idx) in arr" :key="idx"></contentItem>
+                    </div>
                 </mu-col>
-                <mu-col span="12" sm="12" md="4">
-                    
+                <mu-col class="phone_hide" span="12" sm="12" md="4">
+                    <hotEnter></hotEnter>
+                    <download class="mt20"></download>
+                    <Advertisement class="mt20"></Advertisement>
+                    <author  class="mt20"></author>
                 </mu-col>
             </mu-row>
         </div>
@@ -18,6 +24,11 @@ import { createNamespacedHelpers } from 'vuex';
 const { mapState, mapActions } = createNamespacedHelpers('home');
 import header from '@/components/header/header.vue'
 import carousel from "./components/carousel.vue"
+import contentItem from "@/components/contentItem/index.vue"
+import Advertisement from "@/components/Advertisement/index.vue"
+import hotEnter from "./components/hotEnter.vue"
+import download from "./components/download.vue"
+import author from "./components/author.vue"
 export default {
     name:'home',
     asyncData({store}){
@@ -26,12 +37,18 @@ export default {
     },
     data(){
         return {
-            open:true
+            open:true,
+            arr:10
         }
     },
     components:{
         'yx-header':header,
-        carousel
+        carousel,
+        contentItem,
+        hotEnter,
+        download,
+        Advertisement,
+        author
     },
     
     destroyed(){
@@ -45,41 +62,14 @@ export default {
 </script>
 <style lang="less" scoped>
     .home{
-        .header{
-        }
-        .body{
-             margin-top:70px;
-            .banner_left{
-                margin-bottom:8px;
-                
-            }
-            .phone_banner_left{
-                position: fixed;
-                top:60px;
-                left:8px;
-                right:8px;
-                z-index: 1;
-            }
-           .content_right{
-                margin-top:60px;
-            }
-        }
+        .contentItem-box{
+            border-top:1px solid #ddd;
+            padding-top:10px;
+            margin-top: 30px;
+        }   
+        
         
     }
-    @media screen and (min-width: 768px){
-        .home{
-
-            .body{
-               
-                .banner_left{
-                    min-height:100vh;
-                    position: static;
-                }
-                .content_right{
-                    margin-top:0px;
-                }
-            }
-        }      
-    }
+    
 </style>
 
