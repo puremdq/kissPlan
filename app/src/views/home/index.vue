@@ -32,7 +32,6 @@ import author from "./components/author.vue"
 export default {
     name:'home',
     asyncData({store}){
-        //store.registerModule('home',homeModule);
         return store.dispatch('home/a_getCount',16,{root:true})
     },
     data(){

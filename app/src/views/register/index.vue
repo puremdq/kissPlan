@@ -6,18 +6,25 @@
                 <mu-tab>登陆</mu-tab>
                 <mu-tab>注册</mu-tab>
             </mu-tabs>
-            <div class="login_input_box mt20">
-                <mu-icon class="toggle-icon iconfont " size="25" value=":icon-addressbook"></mu-icon>
-                <input class="input" id="userName" v-model="validateForm.userName" type="text">
-            </div>
-            <div class="login_input_box">
-                <mu-icon class="toggle-icon iconfont " size="25" value=":icon-lock"></mu-icon>
-                <input class="input"  id="password" v-model="validateForm.password" type="password">
-            </div>
-           
+            <mu-tooltip :content="userMessage" placement="top" :open="userRepeat">
+                <div class="login_input_box mt20">
+                    <mu-icon class="toggle-icon iconfont icon" size="25" value=":icon-addressbook"></mu-icon>
+                    <input class="input" id="userName" placeholder="请输入账号" v-model="validateForm.userName" @input="userNameInput" type="text" autocomplete="off">
+                
+                        <i class="iconfont icon-gantanhao passwordErr" :class="[userErr?'icon-duigoutianchong- colorG':'icon-gantanhao colorR']"></i>
+                    
+                </div>
+            </mu-tooltip>
+            <mu-tooltip content="不能为空" placement="top">
+                <div class="login_input_box">
+                    <mu-icon class="toggle-icon iconfont icon" size="25" value=":icon-lock"></mu-icon>
+                    <input class="input"  id="password" placeholder="密码长度为6-12之间，只能是字母、数字和下划线" v-model="validateForm.password" @input="passwordInput" type="password" autocomplete="off">
+                    <i class="iconfont icon-gantanhao passwordErr" :class="[passwordErr?'icon-duigoutianchong- colorG':'icon-gantanhao colorR']"></i>
+                </div>
+           </mu-tooltip>
             <mu-row gutter class="btn_box">
                 <mu-col span="24">
-                    <mu-button color="success" class="login_button" @click="register">注册</mu-button>
+                    <mu-button color="success" class="login_button" :disabled="(userErr && passwordErr)?false:true" @click="register">注册</mu-button>
                 </mu-col>
             </mu-row >
         </div>
@@ -31,11 +38,14 @@ export default {
     name:'login',
     data:function(){
         return {
+            userRepeat:false,
             active:1,
+            userErr:false,
+            userMessage:'不能为空',
+            passwordErr:false,
             validateForm:{
                 userName:'',
                 password:'',
-                isAgree:false,
             }
         }
     },
@@ -48,6 +58,25 @@ export default {
         },
         goHome() {
             this.$router.push('/')
+        },
+        userNameInput() {
+            var userName = this.validateForm.userName;
+            this.userErr = false;
+            this.userRepeat = false;
+            if(userName.trim()){
+                this.userMessage = '用户名重复';
+            }else{
+                this.userMessage = '不能为空';
+            }
+        },
+        passwordInput() {
+            var password = this.validateForm.password; 
+            var reg = /^[\w]{6,12}$/;
+            if(new RegExp(reg).test(password)){
+                this.passwordErr = true;
+            }else{
+                this.passwordErr = false;
+            }
         }
     },
     watch:{
@@ -93,20 +122,29 @@ export default {
             }
             .login_input_box{
                 position: relative;
-                .iconfont{
+                
+                .icon{
                     position: absolute;
                     top:2px;
                     left:8px;
                 }
-            }
-            .input{
-                width: 100%;
-                height:40px;
-                padding:5px 5px 5px 35px;
-                margin-bottom:15px;
-                outline: none;
-                border-radius: 5px;
-                border:1px solid #ddd;
+                .passwordErr{
+                    position: absolute;
+                    right:15px;
+                    top:8px;
+                   
+                }
+                .input{
+                    width: 100%;
+                    height:40px;
+                    padding:5px 5px 5px 35px;
+                    margin-bottom:15px;
+                    outline: none;
+                    border-radius: 5px;
+                    border:1px solid #ddd;
+                    padding-right:40px;
+                    box-sizing: border-box;
+                }
             }
             .btn_box{
                 margin-left: 0px;

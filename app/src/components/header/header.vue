@@ -106,6 +106,8 @@ export default {
         click_phone_menu() {
             this.phone_menu = !this.phone_menu;
             if(this.phone_menu){
+                $("body").scrollTop(1);
+                $('body').css('overflow','hidden')
                 this.phone_menu_height = document.body.scrollHeight  -62+'px'
                 $(this.$refs['header_conterl_span1']).css({
                     'transform': 'rotate(-45deg)',
@@ -117,6 +119,7 @@ export default {
                     'transform': 'rotate(45deg)',
                 })
             }else{
+                $('body').css('overflow','auto')
                 this.phone_menu_height = '0px'
                 $(this.$refs['header_conterl_span1']).css({
                     'transform': 'rotate(0deg)',
@@ -189,10 +192,10 @@ export default {
             
         }
         .phone_menu{
-            position: absolute;
+            position: fixed;
             left:0;
             right:0;
-            top:62px;
+            top:60px;
             z-index: 1000;
             background-color: #fff;
             padding:0 10px;

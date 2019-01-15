@@ -30,6 +30,15 @@
 .bgf{
     background-color: #fff;
 }
+.bgg{
+    background-color: #4dad51;
+}
+.colorG{
+    color:#4dad51;
+}
+.colorR{
+    color:#f44539;
+}
 .bdr10{
     border-radius: 10px;
 }

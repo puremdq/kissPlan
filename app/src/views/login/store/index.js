@@ -6,17 +6,12 @@ export default {
         count : 1
     }),
     actions : {
-        a_setCount: ({commit},n)=>{
-            commit('m_setCont',n)
-            
-        },
-        a_getCount({commit},n){
-            console.log(api);
-            api.get('https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts-en.common.js')
+       
+        a_getCount({commit},data){
+            api.post('https://http://aojiaoo.com:8080',data)
                 .then((res) => {
-                    commit('m_setCont',n)
+                    console.log(res);
                 })
-          
         }
     },
     mutations:{

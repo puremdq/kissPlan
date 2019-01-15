@@ -3,19 +3,20 @@ import { createAPI } from 'create-api'
 
 const isProd = process.env.NODE_ENV === 'production'
 
-const proUrl = 'https://news-at.zhihu.com' // 生产环境api地址
-const devUrl = 'https://news-at.zhihu.com' // 开发api地址
+const proUrl = 'http://aojiaoo.com:8080' // 生产环境api地址
+const devUrl = 'http://aojiaoo.com:8080' // 开发api地址
 
 const FaceUrl = isProd ? proUrl : devUrl
-
 var config = {
-  baseUrl: FaceUrl,
+  baseURL: FaceUrl,
   client: {
-    baseurl: '/api/4',
-    timeout: 10000
+    baseURL: isProd?FaceUrl:'/api',
+    timeout: 10000,
+    hasMessage:true,
+    hasLoading:true,
   },
   server: {
-    baseurl: FaceUrl + '/api/4',
+    baseURL: FaceUrl,
     timeout: 10000
   }
 }

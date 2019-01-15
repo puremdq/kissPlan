@@ -1,36 +1,7 @@
 const express = require('express');
 const fs = require('fs')
 const path = require('path')
-// var mongodb = require('mongodb');
-// var mongoose = require('mongoose')
-// var qs = require('qs')
-// var User = require('./module/user/model.js')
-// var cookieParser = require('cookie-parser');
-// var bodyParser = require('body-parser')
-// const session = require('express-session');
-// var mongoStore = require('connect-mongo')(session);
-// var mongoUrl = 'mongodb://localhost:27017/missu'
-// import a from "./module/user/model.js"
-// console.log(User);
-// console.log(mongoStore);
-// mongoose.connect(mongoUrl);
-// mongoose.connection.on('connected', function () {    
-//     console.log('Mongoose connection open to ' );  
-// });    
-
-// /**
-//  * 连接异常
-//  */
-// mongoose.connection.on('error',function (err) {    
-//     console.log('Mongoose connection error: ' + err);  
-// });    
- 
-// /**
-//  * 连接断开
-//  */
-// mongoose.connection.on('disconnected', function () {    
-//     console.log('Mongoose connection disconnected');  
-// });
+const proxyMiddleware = require('http-proxy-middleware');//引入代理中间件
 const { createBundleRenderer } = require('vue-server-renderer')
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -45,19 +16,24 @@ app.set('trust proxy', function (ip) {
 app.use('/public',express.static(path.join(__dirname, '../dist'),{
   maxAge:31536000
 }))
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(cookieParser())
-// app.use(session({
-//   secret:'ssr',
-//   cookie: {maxAge: 1000 },
-//   resave: true,
-//   saveUninitialized: true,
-//   store:new mongoStore({
-//     url:mongoUrl,
-//     collection:'sessions'
-//   })
-// }))
+
+var proxyTable = {
+  '/api': {
+      target: 'http://aojiaoo.com:8080',
+      pathRewrite: {
+          '^/api': '/'
+      }
+  },
+}
+var arr = [];
+for(var key in proxyTable){
+arr.push(
+  proxyMiddleware([key], proxyTable[key]),
+)
+}
+app.middleware = arr
+app.use(arr);
+
 app.locals.reload = true;
 let renderer
 function createRenderer(bundle, template) {

@@ -8,11 +8,11 @@
             </mu-tabs>
             <div class="login_input_box mt20">
                 <mu-icon class="toggle-icon iconfont " size="25" value=":icon-addressbook"></mu-icon>
-                <input class="input" id="userName" v-model="validateForm.userName" type="text">
+                <input class="input" id="userName" placeholder="请输入账号" v-model="validateForm.userName" type="text"  autocomplete="off">
             </div>
             <div class="login_input_box">
                 <mu-icon class="toggle-icon iconfont " size="25" value=":icon-lock"></mu-icon>
-                <input class="input"  id="password" v-model="validateForm.password" type="password">
+                <input class="input"  id="password" placeholder="请输入密码" v-model="validateForm.password" type="password"  autocomplete="off">
             </div>
             <div class="mb10">
                 <mu-checkbox label="记住密码" v-model="validateForm.isAgree"></mu-checkbox>
@@ -26,7 +26,7 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
+
 var Qs = require('qs');
 import { mapMutations ,mapState} from 'vuex'
 export default {
@@ -35,8 +35,8 @@ export default {
         return {
             active:0,
             validateForm:{
-                userName:'',
-                password:'',
+                userName:'pure',
+                password:'luckluck',
                 isAgree:false,
             }
         }
@@ -46,7 +46,37 @@ export default {
     },
     methods:{
         login() {
-
+            if(!this.validateForm.userName || !this.validateForm.password){
+                this.$message({
+                    message: '用户名密码不能为空',
+                    showClose: true,
+                    type: 'warning'
+                });
+                return false;
+            }
+            var data = {
+                username:this.validateForm.userName,
+                password:this.validateForm.password,
+                is_need_token:1
+            }
+            this.$axios.instance({
+                url:'/login',
+                method:'post',
+                data:Qs.stringify(data)
+            })
+            .then((res) => {
+                if(res.status == 200){
+                    this.$message({
+                        message: '登陆成功',
+                        showClose: true,
+                        type: 'success'
+                    });
+                    window.localStorage.setItem('user',JSON.stringify(res.data))
+                    setTimeout(()=>{
+                        this.$router.push('/')
+                    },300)
+                }
+            })
         },
         goHome() {
             this.$router.push('/')
