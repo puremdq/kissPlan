@@ -7,6 +7,8 @@ import java.io.Serializable;
 public class ServerResponse implements Serializable {
 
     private int status;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String msg;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

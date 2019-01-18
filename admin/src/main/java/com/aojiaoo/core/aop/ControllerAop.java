@@ -67,7 +67,7 @@ public class ControllerAop {
             long end = System.currentTimeMillis();
             operateLog.setExecuteTime((end - start) + "ms");
             operateLog.setOperateDesc("非法的参数:" + bindingResult.getAllErrors().get(0).getDefaultMessage());
-            operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_FALSE));
+            operateLog.setIsSuccess(String.valueOf(GlobalProperties.FAIL));
             logService.save(operateLog);
             return serverResponse;
         }
@@ -75,10 +75,10 @@ public class ControllerAop {
 
         try {
             object = pjp.proceed();
-            operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_TRUE));
+            operateLog.setIsSuccess(String.valueOf(GlobalProperties.TRUE));
         } catch (Throwable e) {
             e.printStackTrace();
-            operateLog.setIsSuccess(String.valueOf(GlobalProperties.IS_SUCCESS_FALSE));
+            operateLog.setIsSuccess(String.valueOf(GlobalProperties.FAIL));
         } finally {
             long end = System.currentTimeMillis();
             operateLog.setExecuteTime((end - start) + "ms");

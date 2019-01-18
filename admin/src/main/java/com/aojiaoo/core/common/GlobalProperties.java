@@ -2,8 +2,8 @@ package com.aojiaoo.core.common;
 
 public interface GlobalProperties {
 
-    int IS_SUCCESS_TRUE = 1;
-    int IS_SUCCESS_FALSE = 0;
+    int SUCCESS = 1;//成功
+    int FAIL = 0;//失败
 
     int TRUE = 1;
     int FALSE = 0;
