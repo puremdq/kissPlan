@@ -71,11 +71,11 @@ app.get('*', (req, res) => {
         res.status(500).end('500 - Internal Server Error')
       }
     }
-  
+   
     const context = { 
       url: req.url ,
       title:'hello',
-      cookies: req.cookies
+      cookies: req.headers['cookie']
     }
     renderer.renderToString(context, (err, html) => {
       if (err) {

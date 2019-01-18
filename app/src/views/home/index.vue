@@ -31,9 +31,7 @@ import download from "./components/download.vue"
 import author from "./components/author.vue"
 export default {
     name:'home',
-    asyncData({store}){
-        return store.dispatch('home/a_getCount',16,{root:true})
-    },
+    
     data(){
         return {
             open:true,
@@ -55,7 +53,6 @@ export default {
     },
     
     computed:{
-        ...mapState(['count'])
     }
 }
 </script>

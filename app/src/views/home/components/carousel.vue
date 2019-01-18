@@ -3,7 +3,9 @@
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide" v-for="(item,idx) in imgs" :key="idx">
-                    <img :src="item" ref="imgs">
+                    <a :href="item.url">
+                        <img :src="item.img" ref="imgs">
+                    </a>
                 </div>
             </div>
             <!-- 如果需要分页器 -->
@@ -18,25 +20,32 @@
     </div>
 </template>
 <script>
+const Qs = require('qs');
 import Swiper  from 'swiper'
 import "swiper/dist/css/swiper.css"
-import banner1 from '@/assets/images/banner1.jpg';
-import banner2 from '@/assets/images/banner2.jpg';
-import banner3 from '@/assets/images/banner3.jpg';
+
 export default {
     name:'carousel',
+    asyncData({store}){
+        console.log(1)
+        return store.dispatch('home/getCarousel')
+    },
     data:function(){
         return {
-            imgs:[
-                banner1,banner2,banner3
-            ],
+            // imgs:[],
             width:'0',
             
+        }
+    },
+    computed:{
+        imgs() {
+            return this.$store.state.home.imgs
         }
     },
     mounted(){
        this.renderSwper()
        this.getIsPhone()
+    //    this.getImages()
     },
     methods:{
         getIsPhone() {
@@ -62,6 +71,23 @@ export default {
                 },
                 
             })     
+        },
+        getImages() {
+            this.$axios.instance({
+                url:'/slideshow',
+                method:'get',
+                hasLoading:false,
+            })
+            .then((res)=>{
+                console.log(res);
+                if(res.status==200){
+                    if(res.data && res.data.slideshow){
+                        this.imgs = res.data.slideshow;
+                    }else{
+                        this.imgs = [];
+                    }
+                }
+            })
         }
     }
 }

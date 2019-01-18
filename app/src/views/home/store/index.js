@@ -3,14 +3,26 @@ export default {
     name:'home',
     namespaced:true,
     state:() => ({
-        count : 1,
+        imgs : [],
     }),
     actions : {
-        a_getCount({commit},n){
-           
+        getCarousel({commit},n){
+            return api.get('http://aojiaoo.com:8080/slideshow')
+                .then((res)=>{
+                    if(res.status==200){
+                        if(res.data && res.data.slideshow){
+                            commit('setCarousel',res.data.slideshow)
+                        }else{
+                            commit('setCarousel',[])
+                        }
+                    }
+                    return res
+                })
         }
     },
     mutations:{
-        m_setCont: (state,n) => { state.count=n }
+        setCarousel: (state,data) => {
+            state.imgs=data 
+        }
     }
 }

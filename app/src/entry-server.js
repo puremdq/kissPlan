@@ -13,14 +13,29 @@ export default context => {
             if (!matchedComponents.length) {
                 return reject({ code: 404 })
             }
-            Promise.all(matchedComponents.map(compoent => {
-                if(compoent.asyncData){
-                    compoent.asyncData({
+            var arr = [];
+            
+            matchedComponents.forEach((item)=>{
+                if(item.asyncData){
+                    arr.push( item.asyncData({
                         store,
                         router:router.currentRoute
+                    }))
+                }
+                if(item.components){
+                    Object.keys(item.components).forEach((key)=>{
+                        item.components[key]
+                        if(item.components[key] && item.components[key].asyncData){
+                            arr.push(item.components[key].asyncData({
+                                store,
+                                router:router.currentRoute
+                            })) 
+                        }
                     })
                 }
-            })).then(()=>{
+            })
+            console.log(arr);
+            Promise.all(arr).then((data)=>{
                 context.state = store.state
                 resolve(app)
             }).catch(reject)

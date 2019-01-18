@@ -74,7 +74,7 @@ export default {
                     window.localStorage.setItem('user',JSON.stringify(res.data))
                     setTimeout(()=>{
                         this.$router.push('/')
-                    },300)
+                    },1300)
                 }
             })
         },
