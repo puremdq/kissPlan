@@ -1,6 +1,7 @@
 package com.aojiaoo.core.shiro.filter;
 
 import com.aojiaoo.core.common.GlobalProperties;
+import com.aojiaoo.core.common.ResponseCode;
 import com.aojiaoo.core.common.ServerResponse;
 import com.aojiaoo.utils.*;
 import org.apache.shiro.SecurityUtils;
@@ -30,11 +31,12 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
                     "must be created in order to execute a login attempt.";
             throw new IllegalStateException(msg);
         }
+
+        String isNeedToken = request.getParameter(GlobalProperties.IS_NEED_TOKEN_NAME);//如果需要token 直接返回实体
         try {
             Subject subject = getSubject(request, response);
             subject.login(token);
 
-            String isNeedToken = request.getParameter(GlobalProperties.IS_NEED_TOKEN_NAME);
             if (!StringUtils.equals("1", isNeedToken)) {
                 return onLoginSuccess(token, subject, request, response);
             }
@@ -46,14 +48,17 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
             Map<String, String> resp = new HashMap<>();
             resp.put(GlobalProperties.TOKEN_NAME, _token);
             ServerResponse serverResponse = ServerResponse.createBySuccess(resp);
-
             WebUtils.writeBody(response.getWriter(), JsonUtil.toJson(serverResponse));
-
             return false;
 
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            return onLoginFailure(token, e, request, response);
+            if (!StringUtils.equals("1", isNeedToken)) {
+                return onLoginFailure(token, e, request, response);
+            }
+            ServerResponse serverResponse = ServerResponse.createByErrorMessage("登录失败");
+            WebUtils.writeBody(response.getWriter(), JsonUtil.toJson(serverResponse));
+            return false;//不在继续到下一个fitter
         }
     }
 

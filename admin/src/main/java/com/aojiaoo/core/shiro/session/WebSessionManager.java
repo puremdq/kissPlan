@@ -24,6 +24,7 @@ import com.aojiaoo.utils.StringUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
 /**
@@ -36,11 +37,13 @@ public class WebSessionManager extends org.apache.shiro.web.session.mgt.DefaultW
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
 
         Serializable sessionId = null;
-        String token = request.getParameter(GlobalProperties.TOKEN_NAME);
 
-        if (StringUtils.isNotBlank(request.getParameter(GlobalProperties.TOKEN_NAME))) {
-            Object temp = CacheUtils.get(GlobalProperties.TOKEN_SESSION_CACHE_NAME, token);
-            sessionId = temp == null ? null : temp.toString();
+        if (request instanceof HttpServletRequest) {
+            String token = ((HttpServletRequest) request).getHeader(GlobalProperties.TOKEN_NAME);
+            if (StringUtils.isNotBlank(token)) {
+                Object temp = CacheUtils.get(GlobalProperties.TOKEN_SESSION_CACHE_NAME, token);
+                sessionId = temp == null ? null : temp.toString();
+            }
         }
 
         if (sessionId == null) {
