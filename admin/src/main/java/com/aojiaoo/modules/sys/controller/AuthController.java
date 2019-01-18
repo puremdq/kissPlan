@@ -22,7 +22,6 @@ public class AuthController {
         if (SecurityUtils.getSubject().isAuthenticated()) {
             return "redirect:/";
         }
-
         WebUtils.writeBody(response, JsonUtil.toJson(ServerResponse.createByResponseCode(ResponseCode.NEED_LOGIN)));
         return null;
     }
