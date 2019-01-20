@@ -8,6 +8,11 @@ export function createRouter(){
         routes:[
             {
                 path:'/',
+                name:'首页',
+                redirect:'/home'
+            },
+            {
+                path:'/home',
                 name:'home',
                 component:()=>import(/* webpackChunkName: "home" */'@/views/home/index.vue')
             },

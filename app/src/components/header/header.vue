@@ -18,11 +18,21 @@
                     </mu-text-field>
                 </mu-col>
                 <mu-col span="12" sm="12" md="4" class="tar phone_hide">
-                    <mu-button v-if="!user || !user.kiss_plan_token" flat color="primary" class="h60" @click="signIn">登录</mu-button>    
-                    <mu-avatar v-else size="36" style="vertical-align: middle;margin-right:5px;cursor:pointer;"  ref="button" @click="open = !open">
-                        <img src="../../assets/images/head.jpg">
-                    </mu-avatar>
-                    <mu-popover placement="bottom"  :open.sync="open" :trigger="trigger">
+                    <el-dropdown  @command="handleCommand">
+                        <span  class="el-dropdown-link">
+                            <mu-button v-if="!user || !user.kiss_plan_token" flat color="primary" class="h60" @click="signIn">登录</mu-button>    
+                            <mu-avatar v-else size="36" style="vertical-align: middle;margin-right:5px;cursor:pointer;"  ref="button" @click="open = !open">
+                                <img src="../../assets/images/head.jpg">
+                            </mu-avatar>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="个人中心">个人中心</el-dropdown-item>
+                            <el-dropdown-item command="设置">设置</el-dropdown-item>
+                            <el-dropdown-item command="退出登录" >退出登录</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                    
+                    <!-- <mu-popover placement="bottom"  :open.sync="open" :trigger="trigger">
                         <mu-list>
                             <mu-list-item button>
                             <mu-list-item-title>个人中心</mu-list-item-title>
@@ -34,7 +44,7 @@
                             <mu-list-item-title>退出登录</mu-list-item-title>
                             </mu-list-item>
                         </mu-list>
-                    </mu-popover>
+                    </mu-popover> -->
                     <mu-button large color="#ea6f5a" style="margin-top:5px;">
                         <mu-icon left value=""></mu-icon>
                         写文章
@@ -128,6 +138,11 @@ export default {
     },
     methods:{
         ...mapMutations(['setUser']),
+        handleCommand(command) {
+            if(command=='退出登录'){
+                this.signOut();
+            }
+        },
         keypress(e) {
             var keycode = e.keyCode;
             //获取搜索框的值
