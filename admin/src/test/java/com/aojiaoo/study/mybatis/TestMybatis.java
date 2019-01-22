@@ -1,4 +1,4 @@
-package study.mybatis;
+package com.aojiaoo.study.mybatis;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -11,7 +11,7 @@ import java.io.InputStream;
 public class TestMybatis {
 
     public static void main(String[] args) throws IOException {
-        String resource = "study/mybatis/mybatis.xml";
+        String resource = "com/aojiaoo/study/mybatis/mybatis.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession session = sqlSessionFactory.openSession();

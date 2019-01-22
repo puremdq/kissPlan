@@ -1,4 +1,4 @@
-package study.mybatis;
+package com.aojiaoo.study.mybatis;
 
 public class SelectMethodProvider {
     public String select(Object params) {

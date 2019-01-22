@@ -1,4 +1,4 @@
-package study.mybatis;
+package com.aojiaoo.study.mybatis;
 
 import com.aojiaoo.core.mybatis.annotations.MyBatisDao;
 import org.apache.ibatis.annotations.SelectProvider;

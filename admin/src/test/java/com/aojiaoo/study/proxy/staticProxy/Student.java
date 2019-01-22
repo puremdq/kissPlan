@@ -1,4 +1,4 @@
-package study.proxy.staticProxy;
+package com.aojiaoo.study.proxy.staticProxy;
 
 public class Student implements Person {
 

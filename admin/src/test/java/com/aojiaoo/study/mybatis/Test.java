@@ -1,4 +1,4 @@
-package study.mybatis;
+package com.aojiaoo.study.mybatis;
 
 import com.aojiaoo.core.base.BaseEntity;
 import com.aojiaoo.core.mybatis.UUIdGenId;

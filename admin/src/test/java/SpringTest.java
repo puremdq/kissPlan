@@ -1,7 +1,7 @@
 import com.aojiaoo.core.mybatis.plugins.paging.Page;
-import study.mybatis.Test;
+import com.aojiaoo.study.mybatis.Test;
 import com.aojiaoo.modules.sys.entity.User;
-import study.mybatis.TestMapper;
+import com.aojiaoo.study.mybatis.TestMapper;
 import com.aojiaoo.modules.sys.mapper.UserMapper;
 import com.aojiaoo.modules.sys.mapper.UserRoleMapper;
 import com.aojiaoo.modules.sys.service.RoleService;
