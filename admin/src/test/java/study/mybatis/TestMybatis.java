@@ -16,7 +16,7 @@ public class TestMybatis {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession session = sqlSessionFactory.openSession();
         TestMapper mapper = session.getMapper(TestMapper.class);
-        mapper.select(new Test());
+        System.out.println(mapper.select(new Test()));
 //        mapper.selectByPrimaryKey(1);
     }
 
