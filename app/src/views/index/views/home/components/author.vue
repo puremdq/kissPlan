@@ -5,7 +5,7 @@
             <mu-list-item avatar v-for="(item,idx) in 5" :key="idx">
                 <mu-list-item-action avatar>
                     <mu-avatar>
-                        <img src="../../../assets/images/head.jpg" alt="">
+                        <img :src="head" alt="">
                     </mu-avatar>
                 </mu-list-item-action>
                 <mu-list-item-content>
@@ -20,10 +20,13 @@
     </div>
 </template>
 <script>
+var head = require('@/assets/images/head.jpg')
 export default {
     name:'author',
     data(){
-        return {}
+        return {
+            head
+        }
     }
 }
 </script>

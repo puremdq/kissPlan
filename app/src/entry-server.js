@@ -34,9 +34,7 @@ export default context => {
                     })
                 }
             })
-            
             Promise.all(arr).then((data)=>{
-                console.log(data);
                 context.state = store.state
                 resolve(app)
             }).catch(reject)

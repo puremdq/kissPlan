@@ -6,15 +6,24 @@ export function createRouter(){
     return new VueRouter({
         mode:'history',
         routes:[
+           
             {
                 path:'/',
-                name:'首页',
-                redirect:'/home'
-            },
-            {
-                path:'/home',
-                name:'home',
-                component:()=>import(/* webpackChunkName: "home" */'@/views/home/index.vue')
+                name:'index',
+                redirect:'/home',
+                component:()=>import(/* webpackChunkName: "index" */'@/views/index/index.vue'),
+                children:[
+                    {
+                        path:'/home',
+                        name:'home',
+                        component:()=>import(/* webpackChunkName: "home" */'@/views/index/views/home/index.vue')
+                    },
+                    {
+                        path:'/news/:id',
+                        name:'news',
+                        component:()=>import(/* webpackChunkName: "news" */'@/views/index/views/news/index.vue')
+                    },
+                ]
             },
             {
                 path:'/login',

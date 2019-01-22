@@ -8,8 +8,6 @@ const isProd = process.env.NODE_ENV === 'production'
 const resolve = file => path.resolve(__dirname, file)
 const app = express()
 app.set('trust proxy', function (ip) {
-  console.log('ip:');
-  console.log(ip);
   if (ip === '127.0.0.1' || ip === '123.123.123.123') return true; // trusted IPs
   else return false;
 })
@@ -71,7 +69,6 @@ app.get('*', (req, res) => {
         res.status(500).end('500 - Internal Server Error')
       }
     }
-    console.log(req.url);
     const context = { 
       url: req.url ,
       title:'KissPlan',

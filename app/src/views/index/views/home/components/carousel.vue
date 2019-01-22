@@ -27,7 +27,6 @@ import "swiper/dist/css/swiper.css"
 export default {
     name:'carousel',
     asyncData({store}){
-        console.log(1)
         return store.dispatch('home/getCarousel')
     },
     data:function(){

@@ -74,7 +74,7 @@ export default {
                     window.localStorage.setItem('user',JSON.stringify(res.data))
                     setTimeout(()=>{
                         // this.$router.push('/')
-                        location.href='/home'
+                        location.href='/'
                     },1300)
                 }
             })

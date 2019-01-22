@@ -1,12 +1,13 @@
 <template>
     <div class="home">
-        <yx-header></yx-header>
         <div class="box mt20">
             <mu-row gutter>
                 <mu-col span="12" sm="12" md="8">
                     <carousel></carousel>
                     <div class="contentItem-box">
-                        <contentItem class="mt20 bb1 pb10" v-for="(item,idx) in arr" :key="idx"></contentItem>
+                        <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load">
+                            <contentItem class="mt20 bb1 pb10" v-for="(item,idx) in (newItem && newItem.list)" :key="idx" :data="item"></contentItem>
+                        </mu-load-more>
                     </div>
                 </mu-col>
                 <mu-col class="phone_hide" span="12" sm="12" md="4">
@@ -22,7 +23,6 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 const { mapState, mapActions } = createNamespacedHelpers('home');
-import header from '@/components/header/header.vue'
 import carousel from "./components/carousel.vue"
 import contentItem from "@/components/contentItem/index.vue"
 import Advertisement from "@/components/Advertisement/index.vue"
@@ -31,15 +31,19 @@ import download from "./components/download.vue"
 import author from "./components/author.vue"
 export default {
     name:'home',
-    
+    asyncData({store}){
+        return store.dispatch('home/getNewItem');
+    },
     data(){
         return {
             open:true,
-            arr:10
+            arr:10,
+            refreshing: false,
+            loading: false,
         }
     },
     components:{
-        'yx-header':header,
+        
         carousel,
         contentItem,
         hotEnter,
@@ -47,12 +51,15 @@ export default {
         Advertisement,
         author
     },
-    
-    destroyed(){
-        //this.$store.unregisterModule('home');
+    computed:{ 
+        ...mapState(['newItem'])
+        
     },
-    
-    computed:{
+    methods:{
+        load() {
+
+        },
+        refresh() {}
     }
 }
 </script>

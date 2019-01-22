@@ -1,15 +1,15 @@
 <template>
     <div class="contentItem">
-        <a class="wrap-img" v-if="img" href="/p/58161c28e611" target="_blank">
-            <img class="  img-blur-done" src="https://upload-images.jianshu.io/upload_images/14625074-1f90f36c8128d0c8.png?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240" alt="120">
+        <a class="wrap-img" v-if="data.img" href="/news/58161c28e611" target="_blank">
+            <img class="img-blur-done" :src="data.img" alt="120">
         </a>
-        <div class="content" :class="{hasImg:img}">
-            <a class="title" target="_blank" href="/p/29559a644e68">30岁了，我为什么要转行？</a>
+        <div class="content" :class="{hasImg:data.img}">
+            <a class="title" target="_blank" href="/news/29559a644e68">{{data.title}}</a>
             <p class="abstract">
-                先简单的自我介绍一下我自己。 我2011年大学韩语专业毕业，在深圳一家外贸公司上班，负责韩国客户的贸易业务。这是我的第一份全职工作，一做就做了5...
+                {{data.content}}
             </p>
             <div class="meta">
-                <a class="nickname mr10" target="_blank" href="/u/362fd55c5949">小小荔枝妹</a>
+                <a class="nickname mr10" target="_blank" href="/news/362fd55c5949">小小荔枝妹</a>
                 <span class="mr10"><i class="iconfont icon-message"></i> 9</span>
                 <span><i class="iconfont icon-shoucang_xiantiao"></i> 1</span>
             </div>
@@ -25,9 +25,13 @@ export default {
         }
     },
     props:{
-        img:{
-            type:String
-        }
+        data:{
+            type:Object,
+            default:()=>{
+                return {}
+            }
+        },
+        
     }
 }
 </script>

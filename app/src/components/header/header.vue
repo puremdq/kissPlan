@@ -3,7 +3,7 @@
         <mu-container class="header_container">
             <mu-row gutter>
                 <mu-col span="12" sm="12" md="2" class="header_left">
-                    <span class="logo baseColor">KissPlan</span>
+                    <span class="logo baseColor" @click="goHome">KissPlan</span>
                     <span class="header_conterl" @click="click_phone_menu">
                         <span ref="header_conterl_span1"></span> 
                         <span ref="header_conterl_span2"></span> 
@@ -207,6 +207,9 @@ export default {
         isLogin() {
             var user = JSON.parse(window.localStorage.getItem('user'));
             this.user = user;
+        },
+        goHome() {
+            location.href = '/'
         }
         
     }

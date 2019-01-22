@@ -4,10 +4,11 @@ export default {
     namespaced:true,
     state:() => ({
         imgs : [],
+        newItem:{},
     }),
     actions : {
         getCarousel({commit},n){
-            return api.get('http://aojiaoo.com:8080/slideshow')
+            return api.get('/slideshow')
                 .then((res)=>{
                     if(res.status==200){
                         if(res.data && res.data.slideshow){
@@ -18,11 +19,30 @@ export default {
                     }
                     return res
                 })
+        },
+        getNewItem({commit},data) {
+            return api.get('/article',{
+                pageNo:1,
+                pageSize:10
+            })
+            .then((res)=>{
+                if(res.status==200){
+                    if(res.data){
+                        commit('setNewItem',res.data)
+                    }else{
+                        commit('setNewItem',[])
+                    }
+                }
+                return res
+            })
         }
     },
     mutations:{
         setCarousel: (state,data) => {
             state.imgs=data 
+        },
+        setNewItem:(state,data)=>{
+            state.newItem = data;
         }
     }
 }

@@ -8,17 +8,18 @@ export function createAPI({ server }) {
   
   let api
   axios.defaults.timeout = server.timeout
-  axios.defaults.baseURL = server.baseurl
+  axios.defaults.baseURL = server.baseURL
   axios.defaults.withCredentials = true
-
   if (process.__API__) {
     api = process.__API__
   } else {
     api = {
       get(url, params = {}) {
         return new Promise((resolve, reject) => {
+          params = qs.stringify(params);
+         
           axios({
-            url,
+            url:url+'?'+params,
             params,
             headers: {
               'X-Requested-With': 'XMLHttpRequest',
@@ -26,6 +27,7 @@ export function createAPI({ server }) {
             },
             method: 'get'
           }).then(res => {
+            console.log(res.data);
             resolve(res.data)
           }).catch(error => {
             reject(error)
@@ -44,6 +46,7 @@ export function createAPI({ server }) {
               'Cookie':  parseCookie(SSR.cookies || {})
             }
           }).then(res => {
+            console.log(res.data);
             resolve(res.data)
           }).catch(error => {
             reject(error)
