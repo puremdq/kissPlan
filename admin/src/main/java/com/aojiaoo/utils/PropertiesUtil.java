@@ -6,7 +6,10 @@ import java.util.Properties;
 public class PropertiesUtil {
 
     private static Properties properties = null;
+    private static String loadedPath = null;//已经加载的path
 
+
+    /********* start使用全局Properties 相关方法 **********/
     /**
      * 得到全局Properties
      *
@@ -27,8 +30,35 @@ public class PropertiesUtil {
      * @param path 要加载的文件的地址
      */
     public static void load(String path) {
-        loadProperties(PropertiesUtil.getProperties(), path);
+        if (loadedPath != null && loadedPath.equals(path)) {
+            //已经加载过直接返回
+            return;
+        }
+        System.out.println("-------------加载配置文件 [" + path + "] -------------");
+        load(PropertiesUtil.getProperties(), path);
+        loadedPath = path;
     }
+
+    /**
+     * 得到全局Properties 的某个值
+     *
+     * @return 得到全局Properties 的某个值
+     */
+    public static String get(String key) {
+        return PropertiesUtil.getProperties().getProperty(key);
+    }
+
+
+    /**
+     * 清空全局Properties
+     *
+     * @return 清空全局Properties
+     */
+    public static void clearProperties() {
+        PropertiesUtil.properties = null;
+    }
+
+    /*********  end 使用全局Properties 相关方法**********/
 
 
     /**
@@ -38,17 +68,19 @@ public class PropertiesUtil {
      */
     public static Properties getProperties(String path) {
         Properties currentProperties = new Properties();
-        loadProperties(currentProperties, path);
+        load(currentProperties, path);
         return currentProperties;
     }
 
 
     /**
+     * 为外部传入的 Properties 加载path
+     *
      * @param currentProperties 要加载进入的 Properties
      * @param path              要加载的文件 可以是classpath
      * @return 是否加载成功
      */
-    public static Boolean loadProperties(Properties currentProperties, String path) {
+    public static Boolean load(Properties currentProperties, String path) {
 
         if (currentProperties == null) {
             return false;
@@ -67,26 +99,4 @@ public class PropertiesUtil {
         }
     }
 
-
-    /**
-     * 得到全局Properties 的某个值
-     *
-     * @return 得到全局Properties
-     */
-    public static String get(String key) {
-        return PropertiesUtil.getProperties().getProperty(key);
-    }
-
-    public static void set(String key, String value) {
-        PropertiesUtil.getProperties().setProperty(key, value);
-    }
-
-    /**
-     * 清空全局Properties
-     *
-     * @return 清空全局Properties
-     */
-    public static void clearProperties() {
-        PropertiesUtil.properties = null;
-    }
 }

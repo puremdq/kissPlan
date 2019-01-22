@@ -1,4 +1,4 @@
-package study.proxy.staticProxy;
+package com.aojiaoo.study.proxy.dynamicProxy;
 
 /**
  * 创建Person接口

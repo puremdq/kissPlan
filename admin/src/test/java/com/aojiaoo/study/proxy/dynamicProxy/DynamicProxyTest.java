@@ -1,14 +1,12 @@
-package study.proxy.dynamicProxy;
+package com.aojiaoo.study.proxy.dynamicProxy;
 
-import org.junit.Test;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 public class DynamicProxyTest {
 
-    @Test
-    public void dynamicProxyTest() {
+    public static void main(String[] args) {
 
         //创建一个实例对象，这个对象是被代理的对象
         Student zhangsan = new Student("张三");

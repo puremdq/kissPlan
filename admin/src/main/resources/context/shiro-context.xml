@@ -98,6 +98,8 @@
                 authc表示需要认证 没有进行身份认证是不能进行访问的
                 -->
                 /favicon.ico = anon
+                /article/* = anon
+                /index/* = anon
                 /test/** = anon
                 /static/** = anon
                 /login = authc
