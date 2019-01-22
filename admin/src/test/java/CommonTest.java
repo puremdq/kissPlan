@@ -1,3 +1,4 @@
+import com.aojiaoo.core.common.GlobalProperties;
 import com.aojiaoo.core.mybatis.annotations.TableId;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.utils.DbInfoUtil;
@@ -17,9 +18,8 @@ import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.UUID;
 
-public class Test1 {
+public class CommonTest {
 
     @Test
     public void testGenerator() throws Exception {
@@ -46,21 +46,8 @@ public class Test1 {
 
     @Test
     public void test3() {
-        UUID uuid = UUID.randomUUID();
-        System.out.println(uuid + "  \n" + uuid.toString().length());
-
-        uuid = UUID.randomUUID();
-        System.out.println(uuid + "  \n" + uuid.toString().length());
-
-        uuid = UUID.randomUUID();
-        System.out.println(uuid + "  \n" + uuid.toString().length());
-
-        uuid = UUID.randomUUID();
-        System.out.println(uuid + "  \n" + uuid.toString().length());
-
-        uuid = UUID.randomUUID();
-        System.out.println(uuid + "  \n" + uuid.toString().length());
-
+        System.out.println(GlobalProperties.get("uploadPath"));
+        System.out.println(GlobalProperties.get("uploadPath"));
     }
 
 
@@ -134,73 +121,73 @@ public class Test1 {
 
     @Test
     public void testA() throws Exception {
-      String str="{\n" +
-              "    title: {\n" +
-              "        text: '折线图堆叠'\n" +
-              "    },\n" +
-              "    tooltip: {\n" +
-              "        trigger: 'axis'\n" +
-              "    },\n" +
-              "    legend: {\n" +
-              "        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']\n" +
-              "    },\n" +
-              "    grid: {\n" +
-              "        left: '3%',\n" +
-              "        right: '4%',\n" +
-              "        bottom: '3%',\n" +
-              "        containLabel: true\n" +
-              "    },\n" +
-              "    toolbox: {\n" +
-              "        feature: {\n" +
-              "            saveAsImage: {}\n" +
-              "        }\n" +
-              "    },\n" +
-              "    xAxis: {\n" +
-              "        type: 'category',\n" +
-              "        boundaryGap: false,\n" +
-              "        data: ['周一','周二','周三','周四','周五','周六','周日']\n" +
-              "    },\n" +
-              "    yAxis: {\n" +
-              "        type: 'value'\n" +
-              "    },\n" +
-              "    series: [\n" +
-              "        {\n" +
-              "            name:'邮件营销',\n" +
-              "            type:'line',\n" +
-              "            stack: '总量',\n" +
-              "            data:[120, 132, 101, 134, 90, 230, 210],\n" +
-              "             smooth: true\n" +
-              "        },\n" +
-              "        {\n" +
-              "            name:'联盟广告',\n" +
-              "            type:'line',\n" +
-              "            stack: '总量',\n" +
-              "            data:[220, 182, 191, 234, 290, 330, 310],\n" +
-              "             smooth: true\n" +
-              "        },\n" +
-              "        {\n" +
-              "            name:'视频广告',\n" +
-              "            type:'line',\n" +
-              "            stack: '总量',\n" +
-              "            data:[150, 232, 201, 154, 190, 330, 410],\n" +
-              "             smooth: true\n" +
-              "        },\n" +
-              "        {\n" +
-              "            name:'直接访问',\n" +
-              "            type:'line',\n" +
-              "            stack: '总量',\n" +
-              "            data:[320, 332, 301, 334, 390, 330, 320],\n" +
-              "             smooth: true\n" +
-              "        },\n" +
-              "        {\n" +
-              "            name:'搜索引擎',\n" +
-              "            type:'line',\n" +
-              "            stack: '总量',\n" +
-              "            data:[820, 932, 901, 934, 1290, 1330, 1320],\n" +
-              "             smooth: true\n" +
-              "        }\n" +
-              "    ]\n" +
-              "}";
+        String str = "{\n" +
+                "    title: {\n" +
+                "        text: '折线图堆叠'\n" +
+                "    },\n" +
+                "    tooltip: {\n" +
+                "        trigger: 'axis'\n" +
+                "    },\n" +
+                "    legend: {\n" +
+                "        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']\n" +
+                "    },\n" +
+                "    grid: {\n" +
+                "        left: '3%',\n" +
+                "        right: '4%',\n" +
+                "        bottom: '3%',\n" +
+                "        containLabel: true\n" +
+                "    },\n" +
+                "    toolbox: {\n" +
+                "        feature: {\n" +
+                "            saveAsImage: {}\n" +
+                "        }\n" +
+                "    },\n" +
+                "    xAxis: {\n" +
+                "        type: 'category',\n" +
+                "        boundaryGap: false,\n" +
+                "        data: ['周一','周二','周三','周四','周五','周六','周日']\n" +
+                "    },\n" +
+                "    yAxis: {\n" +
+                "        type: 'value'\n" +
+                "    },\n" +
+                "    series: [\n" +
+                "        {\n" +
+                "            name:'邮件营销',\n" +
+                "            type:'line',\n" +
+                "            stack: '总量',\n" +
+                "            data:[120, 132, 101, 134, 90, 230, 210],\n" +
+                "             smooth: true\n" +
+                "        },\n" +
+                "        {\n" +
+                "            name:'联盟广告',\n" +
+                "            type:'line',\n" +
+                "            stack: '总量',\n" +
+                "            data:[220, 182, 191, 234, 290, 330, 310],\n" +
+                "             smooth: true\n" +
+                "        },\n" +
+                "        {\n" +
+                "            name:'视频广告',\n" +
+                "            type:'line',\n" +
+                "            stack: '总量',\n" +
+                "            data:[150, 232, 201, 154, 190, 330, 410],\n" +
+                "             smooth: true\n" +
+                "        },\n" +
+                "        {\n" +
+                "            name:'直接访问',\n" +
+                "            type:'line',\n" +
+                "            stack: '总量',\n" +
+                "            data:[320, 332, 301, 334, 390, 330, 320],\n" +
+                "             smooth: true\n" +
+                "        },\n" +
+                "        {\n" +
+                "            name:'搜索引擎',\n" +
+                "            type:'line',\n" +
+                "            stack: '总量',\n" +
+                "            data:[820, 932, 901, 934, 1290, 1330, 1320],\n" +
+                "             smooth: true\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
 
         System.out.println(str.replace(" ", "").replaceAll("[\r\n\t]", ""));
     }

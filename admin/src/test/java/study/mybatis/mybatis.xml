@@ -2,7 +2,6 @@
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
-
 <configuration>
     <properties resource="jdbc.properties"/>
     <environments default="development">
@@ -17,6 +16,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mappings/kissPlan/sys/UserMapper.xml"/>
+        <mapper resource="study/mybatis/TestMapper.xml"/>
     </mappers>
 </configuration>

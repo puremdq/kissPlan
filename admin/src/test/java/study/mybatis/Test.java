@@ -1,4 +1,4 @@
-package com.aojiaoo.modules.sys.entity;
+package study.mybatis;
 
 import com.aojiaoo.core.base.BaseEntity;
 import com.aojiaoo.core.mybatis.UUIdGenId;
@@ -13,14 +13,14 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper=true)
 @Data
 @Table(name = "a_test")
-public class St extends BaseEntity {
+public class Test extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    public St() {
+    public Test() {
     }
 
-    public St(String id) {
+    public Test(String id) {
         this.id=id;
     }
 

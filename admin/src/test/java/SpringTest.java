@@ -1,12 +1,11 @@
 import com.aojiaoo.core.mybatis.plugins.paging.Page;
-import com.aojiaoo.modules.sys.entity.St;
+import study.mybatis.Test;
 import com.aojiaoo.modules.sys.entity.User;
-import com.aojiaoo.modules.sys.mapper.StMapper;
+import study.mybatis.TestMapper;
 import com.aojiaoo.modules.sys.mapper.UserMapper;
 import com.aojiaoo.modules.sys.mapper.UserRoleMapper;
 import com.aojiaoo.modules.sys.service.RoleService;
 import com.aojiaoo.modules.sys.service.UserService;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,20 +31,20 @@ public class SpringTest {
     UserMapper userMapper;
 
     @Resource
-    StMapper stMapper;
+    TestMapper stMapper;
 
     @Resource
     UserRoleMapper userRoleMapper;
 
     //自动装配
-    @Test
+    @org.junit.Test
     public void test1() {
         User user = userService.get(1);
         System.out.println(user);
 
     }
 
-    @Test
+    @org.junit.Test
     public void test2() {
 //        userService.
         Page<User> userPage = new Page<>();
@@ -54,13 +53,13 @@ public class SpringTest {
         System.out.println(userService.findPage(new User(), userPage));
     }
 
-    @Test
+    @org.junit.Test
     public void test3() {
 //        User user=new User();
 //        user.setUsername("");
 //        user.setId(4);
 //        userMapper.selectByPrimaryKey(user);
-        St st = new St();
+        Test st = new Test();
         st.setName("sdfsdfsd");
         st.setId("5b2f193a7d1f4fbaa3b056fc0dfa6e46");
 //        UserRole userRole = new UserRole();
