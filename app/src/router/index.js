@@ -6,9 +6,13 @@ export function createRouter(){
     return new VueRouter({
         mode:'history',
         routes:[
-           
             {
                 path:'/',
+                name:'main',
+                redirect:'/login',
+            },
+            {
+                path:'/index',
                 name:'index',
                 redirect:'/home',
                 component:()=>import(/* webpackChunkName: "index" */'@/views/index/index.vue'),

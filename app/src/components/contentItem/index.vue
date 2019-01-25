@@ -4,7 +4,7 @@
             <img class="img-blur-done" :src="data.img" alt="120">
         </a>
         <div class="content" :class="{hasImg:data.img}">
-            <a class="title" target="_blank" href="/news/29559a644e68">{{data.title}}</a>
+            <a class="title"  href="/news/29559a644e68">{{data.title}}</a>
             <p class="abstract">
                 {{data.content}}
             </p>

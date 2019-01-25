@@ -209,7 +209,7 @@ export default {
             this.user = user;
         },
         goHome() {
-            location.href = '/'
+            location.href = '/index'
         }
         
     }
