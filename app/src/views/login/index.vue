@@ -80,11 +80,12 @@ export default {
             })
         },
         goHome() {
-            this.$router.push('/')
+            this.$router.push('/index')
         }
     },
     watch:{
         active(newValue) {
+            debugger
             if(newValue==0){
                 this.$router.push('/login')
             }else{

@@ -81,6 +81,7 @@ export default {
     },
     watch:{
         active(newValue) {
+            debugger
             if(newValue==0){
                 this.$router.push('/login')
             }else{
