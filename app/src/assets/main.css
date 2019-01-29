@@ -79,6 +79,7 @@
 .pointer{
     cursor: pointer;
 }
+
 @media (min-width: 1600px){
     .container {
         max-width: 1440px !important;
@@ -114,5 +115,8 @@
 @media (max-width: 768px){
     .phone_hide{
         display:none;
+    }
+    .phoneTAC{
+        text-align: center !important;
     }
 }

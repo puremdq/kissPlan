@@ -7,6 +7,15 @@
                     <newsAutor></newsAutor>
                     <textPic></textPic>
                     <zanShang class="mt20"></zanShang>
+                    <mu-row gutter >
+                        <mu-col span="12" sm="12" md="6">
+                            <like class="phoneTAC mt20"></like>
+                        </mu-col>
+                        <mu-col span="12" sm="12" md="6">
+                            <zhuanZai class="phoneTAC mt20 tar"></zhuanZai>
+                        </mu-col>
+                    </mu-row>
+                    <pingLun style="margin-top:40px;"></pingLun>
                 </mu-col>
             </mu-row>
         </div>
@@ -16,6 +25,9 @@
 import newsAutor from "./components/newsAutor.vue"
 import textPic from "./components/textPic.vue"
 import zanShang from "./components/zanShang.vue"
+import like from "./components/like.vue"
+import zhuanZai from "@/components/zhuanZai/zhuanZai.vue"
+import pingLun from "@/components/pingLun/index.vue"
 export default {
     name:'news',
     data(){
@@ -25,7 +37,10 @@ export default {
     components:{
         newsAutor,
         textPic,
-        zanShang
+        zanShang,
+        like,
+        zhuanZai,
+        pingLun
     },
     mounted(){
         
