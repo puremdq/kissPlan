@@ -3,6 +3,7 @@ package com.aojiaoo.modules.kissPlan.controller;
 import com.aojiaoo.core.base.BaseController;
 import com.aojiaoo.core.common.ResponseCode;
 import com.aojiaoo.core.common.ServerResponse;
+import com.aojiaoo.core.mybatis.plugins.paging.Page;
 import com.aojiaoo.modules.kissPlan.entity.Article;
 import com.aojiaoo.modules.kissPlan.entity.ArticleView;
 import com.aojiaoo.modules.kissPlan.service.ArticleService;
@@ -16,6 +17,19 @@ public class ArticleController extends BaseController {
 
     @Autowired
     private ArticleService articleService;
+
+    /**
+     * 查看首页文章
+     *
+     * @param page
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("")
+    public ServerResponse articleList(Page<ArticleView> page) {
+        page = articleService.indexArticleList(page);
+        return ServerResponse.createBySuccess(page);
+    }
 
     @ResponseBody
     @GetMapping("{id}")

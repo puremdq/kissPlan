@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/${entityName?uncap_first}")
-public class ${controllerName} <#if StringUtils.isNotBlank(baseControllerFullName)>extends ${StringUtils.substringAfterLast(baseControllerFullName,".")}<${StringUtils.substringAfterLast(serviceFullName,".")}></#if> {
+public class ${controllerName} <#if StringUtils.isNotBlank(baseControllerFullName)>extends ${StringUtils.substringAfterLast(baseControllerFullName,".")}<#--<${StringUtils.substringAfterLast(serviceFullName,".")}>--></#if> {
 
 
 }

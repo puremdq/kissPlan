@@ -2,6 +2,7 @@ package com.aojiaoo.modules.sys.entity;
 
 import com.aojiaoo.core.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -9,7 +10,7 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ToString(callSuper = true)
@@ -44,6 +45,10 @@ public class User extends BaseEntity {
      */
     @Column(name = "email")
     private String email;
+
+    //头像
+    @Column(name = "avatars")
+    private String avatars;
     /**
      * 密码salt
      * 表字段： sys_user.salt
