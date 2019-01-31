@@ -1,15 +1,18 @@
 package com.aojiaoo.modules.kissPlan.service;
 
-import com.aojiaoo.modules.kissPlan.entity.Article;
 import com.aojiaoo.core.base.BaseService;
+import com.aojiaoo.core.mybatis.plugins.paging.Page;
+import com.aojiaoo.modules.kissPlan.entity.Article;
+import com.aojiaoo.modules.kissPlan.entity.ArticleView;
 import com.aojiaoo.modules.kissPlan.mapper.ArticleMapper;
-
+import com.aojiaoo.modules.kissPlan.mapper.ArticleViewMapper;
 import com.aojiaoo.utils.StringUtils;
 import com.aojiaoo.utils.UserUtil;
 import com.aojiaoo.utils.WebUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,14 +21,8 @@ import java.util.Map;
 @Service
 public class ArticleService extends BaseService<Article, ArticleMapper> {
 
-    public Article get(Integer id) {
-        return this.mapper.selectByPrimaryKey(id);
-    }
-
-    @Transactional
-    public boolean delete(Integer id) {
-        return this.mapper.deleteByPrimaryKey(id) > 0;
-    }
+    @Resource
+    private ArticleViewMapper articleViewMapper;
 
 
     @Transactional
@@ -40,11 +37,18 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
     }
 
 
+    /*得到文章详情*/
+    public ArticleView get(Integer id) {
+        if (id == null || id <= 0) {
+            return null;
+        }
+        return this.articleViewMapper.get(id);
+    }
+
     /*得到加入轮播图的 文章 */
     public List<Map<String, String>> getSlideshowArticle(int size) {
         size = (size < 2 || size > 6) ? 5 : size;
-        List<Article> list = this.mapper.getHotArticle(size);
-
+        List<ArticleView> list = this.articleViewMapper.getHotArticle(size);
         Map<String, String> map = new HashMap<>();
         List<Map<String, String>> resList = new ArrayList<>();
         list.forEach(article -> {
@@ -55,7 +59,15 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
         return resList;
     }
 
+
+    public Page<ArticleView> indexArticleList(Page<ArticleView> page) {
+        page.setList(this.articleViewMapper.indexArticleList(page));
+        return page;
+    }
+
     private String getArticleUrlById(Integer id) {
         return WebUtils.spliceUrl(WebUtils.getUrl(), "article", String.valueOf(id));
     }
+
+
 }

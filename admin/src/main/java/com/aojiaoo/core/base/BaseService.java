@@ -1,6 +1,7 @@
 package com.aojiaoo.core.base;
 
 import com.aojiaoo.core.mybatis.plugins.paging.Page;
+import com.aojiaoo.modules.kissPlan.entity.Article;
 import com.aojiaoo.utils.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>> {
 

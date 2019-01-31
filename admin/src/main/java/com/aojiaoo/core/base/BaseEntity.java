@@ -33,6 +33,7 @@ public abstract class BaseEntity implements Serializable {
     /**
      * @return boolean 判断当前记录的id是否有值 入过没有id 返回false
      */
+    @JsonIgnore
     public Boolean isAllIdHaveValue() {
 
         List<Field> fieldList = this.getIdFields();

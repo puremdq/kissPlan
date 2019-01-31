@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/u")
 public class UserController extends BaseController {
 
     @ResponseBody
@@ -17,5 +17,14 @@ public class UserController extends BaseController {
 //        return this.service.selectByPrimaryKey("1").toString();
     }
 
+
+
+    @ResponseBody
+    @RequestMapping("detail")
+    public String detail() {
+
+        return "";
+//        return this.service.selectByPrimaryKey("1").toString();
+    }
 
 }

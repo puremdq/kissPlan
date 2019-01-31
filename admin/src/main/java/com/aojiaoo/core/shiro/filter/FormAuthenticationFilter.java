@@ -45,8 +45,10 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
             String _token = IdGenerator.uuid();
             CacheUtils.put(GlobalProperties.TOKEN_SESSION_CACHE_NAME, _token, sessionId);
 
-            Map<String, String> resp = new HashMap<>();
+            Map<String, Object> resp = new HashMap<>();
             resp.put(GlobalProperties.TOKEN_NAME, _token);
+            resp.put("user", UserUtil.getCurrentUser());
+//            resp.put(GlobalProperties.TOKEN_NAME, _token);
             ServerResponse serverResponse = ServerResponse.createBySuccess(resp);
             WebUtils.writeBody(response.getWriter(), JsonUtil.toJson(serverResponse));
             return false;
