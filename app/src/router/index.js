@@ -9,7 +9,7 @@ export function createRouter(){
             {
                 path:'/',
                 name:'main',
-                redirect:'/login',
+                redirect:'/index',
             },
             {
                 path:'/index',

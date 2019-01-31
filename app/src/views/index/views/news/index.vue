@@ -16,23 +16,30 @@
                         </mu-col>
                     </mu-row>
                     <pingLun style="margin-top:40px;"></pingLun>
+                    <comment style="margin-top:40px;" :data="comment"></comment>
                 </mu-col>
             </mu-row>
         </div>
     </div>
 </template>
 <script>
+import { createNamespacedHelpers } from 'vuex';
+const { mapState, mapActions } = createNamespacedHelpers('news');
 import newsAutor from "./components/newsAutor.vue"
 import textPic from "./components/textPic.vue"
 import zanShang from "./components/zanShang.vue"
 import like from "./components/like.vue"
 import zhuanZai from "@/components/zhuanZai/zhuanZai.vue"
 import pingLun from "@/components/pingLun/index.vue"
+import comment from "@/components/comment/index.vue"
 export default {
     name:'news',
     data(){
         return {
         }
+    },
+    computed:{
+        ...mapState(['comment'])
     },
     components:{
         newsAutor,
@@ -40,7 +47,8 @@ export default {
         zanShang,
         like,
         zhuanZai,
-        pingLun
+        pingLun,
+        comment
     },
     mounted(){
         

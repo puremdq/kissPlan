@@ -8,7 +8,7 @@ export default {
     }),
     actions : {
         getCarousel({commit},n){
-            return api.get('/slideshow')
+            return api.get('/index/slideshow')
                 .then((res)=>{
                     if(res.status==200){
                         if(res.data && res.data.slideshow){

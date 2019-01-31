@@ -6,7 +6,9 @@
 //     modules[arr[1]] = require('@/views'+key.slice(1)).default
 // })
 import home from "../views/index/views/home/store"
+import news from "../views/index/views/news/store"
 var modules = {
-    home
+    home,
+    news
 }
 export default modules
