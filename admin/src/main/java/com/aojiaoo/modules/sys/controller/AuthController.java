@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -28,15 +27,14 @@ public class AuthController {
 
 
     //登录失败
+
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String doLogin() {
+    public String doLogin(HttpServletResponse response) {
         if (SecurityUtils.getSubject().isAuthenticated()) {
             return "redirect:/";
         }
-
-        System.out.println("登录失败");
-        return "login";
-//
+        WebUtils.writeBody(response, JsonUtil.toJson(ServerResponse.createByErrorMessage("登录失败")));
+        return null;
     }
 
 

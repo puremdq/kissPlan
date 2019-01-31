@@ -30,7 +30,8 @@ public class DbInfoUtil {
         try {
             conn = getConnection(driver, url, user, pwd);
             DatabaseMetaData databaseMetaData = conn.getMetaData();
-            ResultSet resultSet = databaseMetaData.getTables(conn.getCatalog(), conn.getSchema(), tableNamePattern, new String[]{"TABLE"});
+            ResultSet resultSet = databaseMetaData.getTables(conn.getCatalog(), conn.getSchema(),
+                    tableNamePattern, new String[]{"TABLE","VIEW"});
 
             while (resultSet.next()) {
                 /*某个表*/
@@ -207,7 +208,7 @@ public class DbInfoUtil {
 
     public static void main(String[] args) {
         //mysql
-        String table = "sys_log";
+        String table = "kp_article_view";
         PropertiesUtil.load("classpath:jdbc.properties");
         Map<String, List<Map<String, String>>> map = getTableInfo(PropertiesUtil.get("jdbc.driver"), PropertiesUtil.get("jdbc.url"), PropertiesUtil.get("jdbc.username"), PropertiesUtil.get("jdbc.password"), table);
         System.out.println(map);

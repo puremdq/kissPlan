@@ -11,19 +11,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 首页controller 首页下所有url不用登录
+ */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/index")
 public class indexController {
 
     @Autowired
     private ArticleService articleService;
 
+    /**
+     * 查看首页轮播图
+     *
+     * @return ServerResponse
+     */
     @ResponseBody
     @RequestMapping(value = "slideshow", method = RequestMethod.GET)
-    public ServerResponse index() {
+    public ServerResponse slideshow() {
         Map<String, Object> res = new HashMap<>();
         res.put("slideshow", articleService.getSlideshowArticle(5));
         return ServerResponse.createBySuccess(res);
     }
+
 
 }

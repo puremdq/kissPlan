@@ -151,8 +151,18 @@ public class PageInterceptor implements Interceptor {
     }
 
 
+    /**
+     * @param args 参数
+     * @return 得到分页对象 并且把它从参数中去掉
+     */
     private Page getPageParamAndRemoveFormArgs(Object[] args) {
         Object parameterObj = args[1];
+
+        if (parameterObj instanceof Page) {
+            args[1] = null;
+            return (Page) parameterObj;
+        }
+
         if (parameterObj instanceof HashMap) {
             HashMap<String, Object> parameterObjMap = (HashMap<String, Object>) parameterObj;
             if (parameterObjMap.keySet().contains("param2") && parameterObjMap.get("param2") instanceof Page) {

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aojiaoo.modules.kissPlan.mapper.AuthorMapper">
+
+
+
+    <sql id="Base_Column_List">
+            a.user_id as userId,a.follow_num as followNum,a.fans_num as fansNum,a.article_num as articleNum,a.words_num as wordsNum,a.be_like_num as beLikeNum
+    </sql>
+
+    <sql id="Base_select_table">
+        kp_author a
+    </sql>
+
+
+
+    <select id="selectBySelective" resultType="com.aojiaoo.modules.kissPlan.entity.Author">
+        select
+        <include refid="Base_Column_List"/>
+        from <include refid="Base_select_table"/>
+        <where>
+               <if test="userId != null">
+                   and a.user_id = #{userId,jdbcType=INTEGER}
+               </if>
+               <if test="followNum != null">
+                   and a.follow_num = #{followNum,jdbcType=INTEGER}
+               </if>
+               <if test="fansNum != null">
+                   and a.fans_num = #{fansNum,jdbcType=INTEGER}
+               </if>
+               <if test="articleNum != null">
+                   and a.article_num = #{articleNum,jdbcType=INTEGER}
+               </if>
+               <if test="wordsNum != null">
+                   and a.words_num = #{wordsNum,jdbcType=INTEGER}
+               </if>
+               <if test="beLikeNum != null">
+                   and a.be_like_num = #{beLikeNum,jdbcType=INTEGER}
+               </if>
+        </where>
+    </select>
+
+
+
+
+
+</mapper>

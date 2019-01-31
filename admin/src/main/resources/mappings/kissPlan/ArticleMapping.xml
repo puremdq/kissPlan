@@ -52,8 +52,7 @@
     </sql>
 
     <sql id="Base_select_table">
-        kp_article
-        a
+        kp_article  a
     </sql>
 
 
@@ -93,12 +92,7 @@
         </where>
     </select>
 
-    <select id="getHotArticle" resultType="com.aojiaoo.modules.kissPlan.entity.Article">
-        select a.id,a.first_img as firstImg  from
-        <include refid="Base_select_table"/>
-        where a.first_img is not null
-        order by a.create_date desc limit ${size}
-    </select>
+
 
 
 </mapper>
