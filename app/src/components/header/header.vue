@@ -45,7 +45,7 @@
                             </mu-list-item>
                         </mu-list>
                     </mu-popover> -->
-                    <mu-button large color="#ea6f5a" style="margin-top:5px;">
+                    <mu-button large color="#ea6f5a" style="margin-top:5px;" @click="writeArticle">
                         <mu-icon left value=""></mu-icon>
                         写文章
                     </mu-button>
@@ -210,7 +210,10 @@ export default {
         },
         goHome() {
             location.href = '/index'
-        }
+        },
+        writeArticle() {
+            this.$router.push('/writeArticle')
+        },
         
     }
 }
