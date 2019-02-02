@@ -13,30 +13,36 @@ export function createRouter(){
             },
             {
                 path:'/index',
-                name:'index',
+                name:'主页',
                 redirect:'/home',
                 component:()=>import(/* webpackChunkName: "index" */'@/views/index/index.vue'),
                 children:[
                     {
                         path:'/home',
-                        name:'home',
+                        name:'首页',
                         component:()=>import(/* webpackChunkName: "home" */'@/views/index/views/home/index.vue')
                     },
                     {
                         path:'/news/:id',
-                        name:'news',
+                        name:'文章详情',
                         component:()=>import(/* webpackChunkName: "news" */'@/views/index/views/news/index.vue')
                     },
+                    
                 ]
             },
             {
+                path:'/writeArticle',
+                name:'写文章',
+                component:()=>import(/* webpackChunkName: "writeArticle" */'@/views/index/views/writeArticle/index.vue')
+            },
+            {
                 path:'/login',
-                name:'login',
+                name:'登录',
                 component:()=>import(/* webpackChunkName: "login" */'@/views/login/index.vue')
             },
             {
                 path:'/register',
-                name:'register',
+                name:'注册',
                 component:()=>import(/* webpackChunkName: "register" */'@/views/register/index.vue')
             }
         ]
