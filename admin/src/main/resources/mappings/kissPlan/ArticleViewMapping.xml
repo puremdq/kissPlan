@@ -183,12 +183,4 @@
     </select>
 
 
-    <select id="get" resultType="com.aojiaoo.modules.kissPlan.entity.ArticleView">
-        select
-        <include refid="Base_Column_List"/>
-        from
-        <include refid="Base_select_table"/>
-        where a.id = #{id}
-    </select>
-
 </mapper>

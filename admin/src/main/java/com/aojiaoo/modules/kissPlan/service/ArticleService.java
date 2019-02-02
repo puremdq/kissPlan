@@ -37,13 +37,14 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
     }
 
 
-    /*得到文章详情*/
-    public ArticleView get(Integer id) {
+    public ArticleView getArticleView(Integer id) {
+
         if (id == null || id <= 0) {
             return null;
         }
-        return this.articleViewMapper.get(id);
+        return articleViewMapper.selectByPrimaryKey(id);
     }
+
 
     /*得到加入轮播图的 文章 */
     public List<Map<String, String>> getSlideshowArticle(int size) {

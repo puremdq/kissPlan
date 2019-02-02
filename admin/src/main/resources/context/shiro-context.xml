@@ -99,6 +99,7 @@
                 -->
                 /favicon.ico = anon
                 /article/* = anon
+                /u/* = anon
                 /index/slideshow = anon
                 /article = anon
                 /test/** = anon

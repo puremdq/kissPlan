@@ -16,6 +16,4 @@ public interface ArticleViewMapper extends BaseMapper<ArticleView> {
 
     List<ArticleView> getHotArticle(@Param("size") int size);
 
-    ArticleView get(int id);
-
 }

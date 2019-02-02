@@ -22,6 +22,7 @@ public class AuthorView extends BaseEntity {
      * id
      * 表字段： kp_author_view.id
      */
+    @Id
     @Column(name = "id")
     private Integer id;
     /**
