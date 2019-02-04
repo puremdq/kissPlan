@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.aojiaoo.modules.kissPlan.mapper.AuthorViewMapper">
+<mapper namespace="com.aojiaoo.modules.kissPlan.mapper.CommentViewMapper">
 
 
 
     <sql id="Base_Column_List">
-            a.id as id,a.author_name as authorName,a.email as email,a.author_avatars as authorAvatars,a.create_by as createBy,a.create_date as createDate,a.update_by as updateBy,a.update_date as updateDate,a.remarks as remarks,a.follow_num as followNum,a.fans_num as fansNum,a.article_num as articleNum,a.words_num as wordsNum,a.be_like_num as beLikeNum
+            a.id as id,a.author_id as authorId,a.author_name as authorName,a.author_avatars as authorAvatars,a.content as content,a.article_id as articleId,a.pid as pid,a.like_num as likeNum,a.reply_num as replyNum,a.create_by as createBy,a.create_date as createDate,a.update_by as updateBy,a.update_date as updateDate,a.remarks as remarks,a.del_flag as delFlag
     </sql>
 
     <sql id="Base_select_table">
-        kp_author_view a
+        kp_comment_view a
     </sql>
 
 
 
-    <select id="selectBySelective" resultType="com.aojiaoo.modules.kissPlan.entity.AuthorView">
+    <select id="selectBySelective" resultType="com.aojiaoo.modules.kissPlan.entity.CommentView">
         select
         <include refid="Base_Column_List"/>
         from <include refid="Base_select_table"/>
@@ -22,14 +22,29 @@
                <if test="id != null">
                    and a.id = #{id,jdbcType=INTEGER}
                </if>
+               <if test="authorId != null">
+                   and a.author_id = #{authorId,jdbcType=INTEGER}
+               </if>
                <if test="authorName != null and authorName != ''">
                    and a.author_name = #{authorName,jdbcType=VARCHAR}
                </if>
-               <if test="email != null and email != ''">
-                   and a.email = #{email,jdbcType=VARCHAR}
-               </if>
                <if test="authorAvatars != null and authorAvatars != ''">
                    and a.author_avatars = #{authorAvatars,jdbcType=VARCHAR}
+               </if>
+               <if test="content != null and content != ''">
+                   and a.content = #{content,jdbcType=VARCHAR}
+               </if>
+               <if test="articleId != null">
+                   and a.article_id = #{articleId,jdbcType=INTEGER}
+               </if>
+               <if test="pid != null">
+                   and a.pid = #{pid,jdbcType=INTEGER}
+               </if>
+               <if test="likeNum != null">
+                   and a.like_num = #{likeNum,jdbcType=INTEGER}
+               </if>
+               <if test="replyNum != null">
+                   and a.reply_num = #{replyNum,jdbcType=INTEGER}
                </if>
                <if test="createBy != null and createBy != ''">
                    and a.create_by = #{createBy,jdbcType=CHAR}
@@ -46,20 +61,8 @@
                <if test="remarks != null and remarks != ''">
                    and a.remarks = #{remarks,jdbcType=VARCHAR}
                </if>
-               <if test="followNum != null">
-                   and a.follow_num = #{followNum,jdbcType=INTEGER}
-               </if>
-               <if test="fansNum != null">
-                   and a.fans_num = #{fansNum,jdbcType=INTEGER}
-               </if>
-               <if test="articleNum != null">
-                   and a.article_num = #{articleNum,jdbcType=INTEGER}
-               </if>
-               <if test="wordsNum != null">
-                   and a.words_num = #{wordsNum,jdbcType=INTEGER}
-               </if>
-               <if test="beLikeNum != null">
-                   and a.be_like_num = #{beLikeNum,jdbcType=INTEGER}
+               <if test="delFlag != null and delFlag != ''">
+                   and a.del_flag = #{delFlag,jdbcType=CHAR}
                </if>
         </where>
     </select>

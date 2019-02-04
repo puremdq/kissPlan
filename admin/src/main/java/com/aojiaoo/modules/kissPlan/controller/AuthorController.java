@@ -25,7 +25,7 @@ public class AuthorController extends BaseController {
         if (id == null || id <= 0) {
             return ServerResponse.createByErrorMessage("非法参数");
         }
-        return this.createServerResponse(authorService.getAuthorView(id));
+        return this.createServerResponseNotFoundOrSuccess(authorService.getAuthorView(id));
     }
 
 }

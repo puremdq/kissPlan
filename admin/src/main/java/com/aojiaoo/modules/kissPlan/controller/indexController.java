@@ -34,5 +34,4 @@ public class indexController {
         return ServerResponse.createBySuccess(res);
     }
 
-
 }
