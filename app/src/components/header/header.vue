@@ -18,10 +18,13 @@
                     </mu-text-field>
                 </mu-col>
                 <mu-col span="12" sm="12" md="4" class="tar phone_hide">
-                    <el-dropdown  @command="handleCommand">
+                    <span  class="el-dropdown-link"  v-if="!user || !user.kiss_plan_token">
+                        <mu-button flat color="primary" class="h60" @click="signIn">登录</mu-button>    
+                    </span>
+                    <el-dropdown  @command="handleCommand"  v-if="user && user.kiss_plan_token">
+                        
                         <span  class="el-dropdown-link">
-                            <mu-button v-if="!user || !user.kiss_plan_token" flat color="primary" class="h60" @click="signIn">登录</mu-button>    
-                            <mu-avatar v-else size="36" style="vertical-align: middle;margin-right:5px;cursor:pointer;"  ref="button" @click="open = !open">
+                            <mu-avatar size="36" style="vertical-align: middle;margin-right:5px;cursor:pointer;"  ref="button" @click="open = !open">
                                 <img src="../../assets/images/head.jpg">
                             </mu-avatar>
                         </span>
@@ -209,7 +212,7 @@ export default {
             this.user = user;
         },
         goHome() {
-            location.href = '/index'
+            this.$router.push('/index')
         },
         writeArticle() {
             this.$router.push('/writeArticle')

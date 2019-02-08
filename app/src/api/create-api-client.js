@@ -10,23 +10,6 @@ export function createAPI ({client}){
         hasLoading:client.hasLoading,
     });
     instance.interceptors.request.use(function (config) {
-        var user = JSON.parse(window.localStorage.getItem('user'));
-        var kiss_plan_token = (user && user.kiss_plan_token);
-        if(kiss_plan_token){
-            if(config.method==="post"){
-                if(!config.data){
-                    config.data+="?kiss_plan_token="+kiss_plan_token;
-                }else{
-                    config.data+="&kiss_plan_token="+kiss_plan_token;
-                }
-            }else if(config.method==="get"){
-                if(config.url.indexOf('?')!=-1){
-                    config.url+="&kiss_plan_token="+kiss_plan_token
-                }else{
-                    config.url+="?kiss_plan_token="+kiss_plan_token
-                }
-            }
-        }
         if(config.hasLoading){
             hasLoading = Vue.prototype.$loading({
                 lock: true,

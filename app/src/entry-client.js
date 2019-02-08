@@ -1,22 +1,9 @@
 import {createApp} from './app.js'
-import axios from 'axios'
 const {app,router,store} = createApp();
 if (window.__INITIAL_STATE__) {
     store.replaceState(window.__INITIAL_STATE__)
 }
-// 添加响应拦截器
-axios.interceptors.response.use(function (response) {
-    if(response.data.code === '-2'){
-        window.localStorage.removeItem('user')
-        app.$router.push('login');
-    }
-    if (response.status >= 200 && response.status < 300) {
-        return response
-    }
-    return Promise.reject(response)
-}, function (error) {
-    return Promise.reject(error);
-});
+
 router.beforeEach((to, from, next) => {
     var hasUser = JSON.parse(window.localStorage.getItem('user'))
     if(to.meta.requiresAuth){
@@ -34,20 +21,7 @@ router.beforeEach((to, from, next) => {
         }
         return next();
     }
-  // if (to.matched.some(record => record.meta.requiresAuth)) {
-  //   // this route requires auth, check if logged in
-  //   // if not, redirect to login page.
-  //   if (!auth.loggedIn()) {
-  //     next({
-  //       path: '/login',
-  //       query: { redirect: to.fullPath }
-  //     })
-  //   } else {
-  //     next()
-  //   }
-  // } else {
-  //   next() // 确保一定要调用 next()
-  // }
+ 
 })
 router.onReady(() => {
     router.beforeResolve((to,from,next) => {
@@ -60,11 +34,27 @@ router.onReady(() => {
         if(!activated.length){
             return next()
         }
-        Promise.all(activated.map(c => {
-            if(c.asyncData){
-                c.asyncData({store,route:to})
+        var arr = [];
+        activated.forEach((item)=>{
+            if(item.asyncData){
+                arr.push( item.asyncData({
+                    store,
+                    router:router.currentRoute
+                }))
             }
-        })).then(()=>{
+            if(item.components){
+                Object.keys(item.components).forEach((key)=>{
+                    item.components[key]
+                    if(item.components[key] && item.components[key].asyncData){
+                        arr.push(item.components[key].asyncData({
+                            store,
+                            router:router.currentRoute
+                        })) 
+                    }
+                })
+            }
+        })
+        Promise.all(arr).then(()=>{
             next();
         }).catch(next)
     })

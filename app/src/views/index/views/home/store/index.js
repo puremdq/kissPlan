@@ -8,22 +8,25 @@ export default {
     }),
     actions : {
         getCarousel({commit},n){
-            return api.get('/index/slideshow')
-                .then((res)=>{
-                    if(res.status==200){
-                        if(res.data && res.data.slideshow){
-                            commit('setCarousel',res.data.slideshow)
-                        }else{
-                            commit('setCarousel',[])
-                        }
+            return api.instance({
+                method:'get',
+                url:'/index/slideshow'
+            })
+            .then((res)=>{
+                if(res.status==200){
+                    if(res.data && res.data.slideshow){
+                        commit('setCarousel',res.data.slideshow)
+                    }else{
+                        commit('setCarousel',[])
                     }
-                    return res
-                })
+                }
+                return res
+            })
         },
         getNewItem({commit},data) {
-            return api.get('/article',{
-                pageNo:1,
-                pageSize:10
+            return api.instance({
+                method:'get',
+                url:'/article?pageNo=1&pageSize=10'
             })
             .then((res)=>{
                 if(res.status==200){

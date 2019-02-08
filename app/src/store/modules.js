@@ -7,8 +7,10 @@
 // })
 import home from "../views/index/views/home/store"
 import news from "../views/index/views/news/store"
+import writeArticle from "../views/index/views/writeArticle/store"
 var modules = {
     home,
-    news
+    news,
+    writeArticle
 }
 export default modules
