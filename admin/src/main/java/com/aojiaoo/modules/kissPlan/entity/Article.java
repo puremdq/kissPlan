@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
@@ -80,11 +79,5 @@ public class Article extends BaseEntity {
     @Column(name = "read_num")
     private Integer readNum;
 
-
-    @Transient
-    private String authorName;
-
-    @Transient
-    private String authorAvatars;
 
 }

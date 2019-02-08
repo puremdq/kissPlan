@@ -1,7 +1,6 @@
 package com.aojiaoo.core.shiro.filter;
 
 import com.aojiaoo.core.common.GlobalProperties;
-import com.aojiaoo.core.common.ResponseCode;
 import com.aojiaoo.core.common.ServerResponse;
 import com.aojiaoo.utils.*;
 import org.apache.shiro.SecurityUtils;
@@ -42,7 +41,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
             }
 
             String sessionId = SecurityUtils.getSubject().getSession().getId().toString();
-            String _token = IdGenerator.uuid();
+            String _token = IdUtil.uuid();
             CacheUtils.put(GlobalProperties.TOKEN_SESSION_CACHE_NAME, _token, sessionId);
 
             Map<String, Object> resp = new HashMap<>();

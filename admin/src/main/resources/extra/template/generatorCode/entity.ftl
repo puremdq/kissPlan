@@ -15,11 +15,13 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonInclude;
 <#if (idNum>0)>
 import com.aojiaoo.core.mybatis.enums.IdType;
 import com.aojiaoo.core.mybatis.annotations.TableId;
 </#if>
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper=true)
 @Data
 @Table(name = "${tableName}")

@@ -1,7 +1,7 @@
 package com.aojiaoo.core.base;
 
 import com.aojiaoo.core.mybatis.plugins.paging.Page;
-import com.aojiaoo.modules.kissPlan.entity.Article;
+import com.aojiaoo.utils.StringUtils;
 import com.aojiaoo.utils.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>> {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     protected M mapper;
@@ -25,6 +24,22 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
 
     public E get(E entity) {
         return this.mapper.selectByPrimaryKey(entity);
+    }
+
+    public E get(Integer id) {
+        if (id == null || id <= 0) {
+            logger.warn("根据id查找失败传入的id不能为空或者小于0");
+            return null;
+        }
+        return this.mapper.selectByPrimaryKey(id);
+    }
+
+    public E get(String id) {
+        if (StringUtils.isBlank(id)) {
+            logger.warn("根据id查找失败传入的id不能为空");
+            return null;
+        }
+        return this.mapper.selectByPrimaryKey(id);
     }
 
     /**

@@ -6,9 +6,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "kp_article_view")
 public class ArticleView extends BaseEntity {
@@ -19,9 +21,9 @@ public class ArticleView extends BaseEntity {
     }
 
     /**
-     * 
      * 表字段： kp_article_view.id
      */
+    @Id
     @Column(name = "id")
     private Integer id;
     /**
@@ -84,11 +86,6 @@ public class ArticleView extends BaseEntity {
      */
     @Column(name = "author_avatars")
     private String authorAvatars;
-    /**
-     * 备注信息
-     * 表字段： kp_article_view.remarks
-     */
-    @Column(name = "remarks")
-    private String remarks;
+
 
 }

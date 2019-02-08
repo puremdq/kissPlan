@@ -4,11 +4,14 @@ import com.aojiaoo.core.base.BaseService;
 import com.aojiaoo.core.mybatis.plugins.paging.Page;
 import com.aojiaoo.modules.kissPlan.entity.Article;
 import com.aojiaoo.modules.kissPlan.entity.ArticleView;
+import com.aojiaoo.modules.kissPlan.entity.Comment;
+import com.aojiaoo.modules.kissPlan.entity.CommentView;
 import com.aojiaoo.modules.kissPlan.mapper.ArticleMapper;
 import com.aojiaoo.modules.kissPlan.mapper.ArticleViewMapper;
 import com.aojiaoo.utils.StringUtils;
 import com.aojiaoo.utils.UserUtil;
 import com.aojiaoo.utils.WebUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,9 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
     @Resource
     private ArticleViewMapper articleViewMapper;
 
+    @Autowired
+    private CommentService commentService;
+
 
     @Transactional
     public boolean save(Article article) {
@@ -37,13 +43,20 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
     }
 
 
-    /*得到文章详情*/
-    public ArticleView get(Integer id) {
+    /**
+     * 查看文章详情
+     *
+     * @param id
+     * @return
+     */
+    public ArticleView getArticleView(Integer id) {
+
         if (id == null || id <= 0) {
             return null;
         }
-        return this.articleViewMapper.get(id);
+        return articleViewMapper.selectByPrimaryKey(id);
     }
+
 
     /*得到加入轮播图的 文章 */
     public List<Map<String, String>> getSlideshowArticle(int size) {
@@ -65,9 +78,32 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
         return page;
     }
 
+
+    /**
+     * 发表评论
+     *
+     * @param entity
+     * @return
+     */
+    public boolean reply(Comment entity) {
+
+        if (this.get(entity.getArticleId()) == null) {
+            logger.warn("试图id为{}的文章不存在", entity.getArticleId());
+            return false;
+        }
+
+        entity.setAuthorId(UserUtil.getCurrentUser().getId());
+        return commentService.insert(entity);
+    }
+
+
+    public Page<CommentView> getCommentByArticleId(Integer id, Page<CommentView> page) {
+        return commentService.getCommentByArticleId(id, page);
+    }
+
+
     private String getArticleUrlById(Integer id) {
         return WebUtils.spliceUrl(WebUtils.getUrl(), "article", String.valueOf(id));
     }
-
 
 }

@@ -26,6 +26,8 @@ public abstract class BaseEntity implements Serializable {
     protected Integer createBy;
     protected Integer updateBy;
 
+    protected String remarks;//备注
+
 
     @JsonIgnore
     protected String delFlag = BaseEntity.DEL_FLAG_NORMAL;

@@ -22,14 +22,15 @@ public class AuthorView extends BaseEntity {
      * id
      * 表字段： kp_author_view.id
      */
+    @Id
     @Column(name = "id")
     private Integer id;
     /**
      * 用户名(登录名)
-     * 表字段： kp_author_view.username
+     * 表字段： kp_author_view.author_name
      */
-    @Column(name = "username")
-    private String username;
+    @Column(name = "author_name")
+    private String authorName;
     /**
      * 用户邮箱
      * 表字段： kp_author_view.email
@@ -40,8 +41,8 @@ public class AuthorView extends BaseEntity {
      * 头像
      * 表字段： kp_author_view.avatars
      */
-    @Column(name = "avatars")
-    private String avatars;
+    @Column(name = "author_avatars")
+    private String authorAvatars;
     /**
      * 备注信息
      * 表字段： kp_author_view.remarks
