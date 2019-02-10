@@ -78,7 +78,7 @@
                         <!-- <mu-button color="primary">搜索</mu-button> -->
                     </mu-list-item-title>
                 </mu-list-item>
-                <mu-list-item button >
+                <mu-list-item button @click="writeArticle">
                     <mu-list-item-action class="tac">
                         <i class="iconfont icon-bi"></i>
                     </mu-list-item-action>

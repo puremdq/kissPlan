@@ -5,7 +5,7 @@
         <div class="leftFooter tac">
             <el-dropdown @command="dropdownHandle">
                 <el-button type="primary">
-                    {{editorType}}<i class="el-icon-arrow-down el-icon--right"></i>
+                    {{_editorType}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="富文本编辑器">富文本编辑器</el-dropdown-item>
@@ -26,18 +26,18 @@ export default {
         }
     },
     computed:{
-        ...mapState(['editorType'])
+        ...mapState(['_editorType'])
     },
     components:{
         asideMenu
     },
     methods:{
-        ...mapMutations(['setEditorType']),
+        ...mapMutations(['_setEditorType']),
         goBack() {
             this.$router.push('/index')
         },
         dropdownHandle(command){
-            this.setEditorType(command);
+            this._setEditorType(command);
         }
     }
 }
@@ -48,6 +48,7 @@ export default {
         height:calc(100vh - 20px);
         .Menu{
             height:calc(100vh - 160px);
+            margin-bottom:20px;
             overflow-y:auto;
             .el-menu{
                 border-right: solid 0px #e6e6e6; 

@@ -7,6 +7,8 @@ export function createStore(){
     return new Vuex.Store({
         state:{
             user:{},
+            theme:'#ea6f5a'
+
         },
         mutations:{
             setUser (state,user) {
