@@ -3,7 +3,7 @@
         <ul>
             <li class="newsList">
                 <mu-button fab  color="teal" @click="showNewsList">
-                    news
+                    列表
                 </mu-button>
             </li>
             <li>
@@ -29,7 +29,7 @@
                 <mu-button :color="$store.state.theme" class="mt10" @click="xiuGaiXiangQing">修改详情</mu-button>
             </div>
             <mu-dialog width="360" transition="slide-bottom" fullscreen :open.sync="openFullscreen">
-                <mu-appbar  :color="$store.state.theme" title="修改">
+                <mu-appbar  :color="$store.state.theme" :title="dialogTitle">
                     <mu-button slot="left" icon @click="closeFullscreenDialog">
                         <i class="el-icon-close"></i>
                     </mu-button>
@@ -74,7 +74,8 @@ export default {
             hoverIdx:0,
             openFullscreen:false,
             form:{},
-            options:[]
+            options:[],
+            dialogTitle:'修改',
         }
     },
     computed:{
@@ -83,7 +84,9 @@ export default {
     methods:{
         ...mapMutations(['_addWriteArticleMenuType']),
         addNews() {
-            this._addWriteArticleMenuType()
+            this.dialogTitle='新增';
+            this.openFullscreen = !this.openFullscreen;
+            // this._addWriteArticleMenuType()
         },
         showNewsList() {
             this.open = !this.open;
@@ -95,6 +98,7 @@ export default {
 
         },
         xiuGaiXiangQing() {
+            this.dialogTitle='修改';
             this.openFullscreen = !this.openFullscreen;
         },
         closeFullscreenDialog () {
