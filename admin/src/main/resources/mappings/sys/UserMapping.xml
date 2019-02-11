@@ -67,6 +67,15 @@
         <include refid="Base_Column_List"/>
         from sys_user a
         where a.username = #{username}
+        and a.del_flag = 0
+    </select>
+
+    <select id="getByEmail" resultType="com.aojiaoo.modules.sys.entity.User">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user a
+        where a.email = #{email}
+        and a.del_flag = 0
     </select>
 
 

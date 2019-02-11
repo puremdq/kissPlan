@@ -175,7 +175,9 @@
         a.comment_num as commentNum,
         a.read_num as readNum,
         a.author_avatars as authorAvatars,
-        a.author_name as authorName
+        a.author_name as authorName,
+        a.create_date as createDate,
+        a.update_date as updateDate
         from
         <include refid="Base_select_table"/>
         order by

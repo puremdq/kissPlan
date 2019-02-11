@@ -22,7 +22,7 @@ public class BaseController {
         if (tf) {
             return ServerResponse.createBySuccess();
         } else {
-            return ServerResponse.createByErrorMessage("操作失败了,请稍后再试");
+            return ServerResponse.createByError();
 
         }
     }

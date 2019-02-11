@@ -16,7 +16,9 @@ public class UserService extends BaseService<User, UserMapper> {
         return this.mapper.selectByPrimaryKey(id);
     }
 
-    public boolean delete(Integer id) {
-        return this.mapper.deleteByPrimaryKey(id) > 0;
+
+    public User getByEmail(String email) {
+        return this.mapper.getByEmail(email);
     }
+
 }

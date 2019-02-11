@@ -8,4 +8,6 @@ public interface UserMapper extends BaseMapper<User> {
 
 
     User selectByUserName(String username);
+
+    User getByEmail(String email);
 }
