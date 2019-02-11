@@ -23,6 +23,11 @@ export function createRouter(){
                         component:()=>import(/* webpackChunkName: "home" */'@/views/index/views/home/index.vue')
                     },
                     {
+                        path:'/hotToday',
+                        name:'今日热门',
+                        component:()=>import(/* webpackChunkName: "hotToday" */'@/views/index/views/hotToday/index.vue')
+                    },
+                    {
                         path:'/news/:id',
                         name:'文章详情',
                         component:()=>import(/* webpackChunkName: "news" */'@/views/index/views/news/index.vue')

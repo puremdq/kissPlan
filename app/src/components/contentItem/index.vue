@@ -1,12 +1,12 @@
 <template>
     <div class="contentItem">
-        <a class="wrap-img" v-if="data.img" href="/news/58161c28e611" target="_blank">
-            <img class="img-blur-done" :src="data.img" alt="120">
+        <a class="wrap-img" v-if="data.firstImg" href="/news/58161c28e611" target="_blank">
+            <img class="img-blur-done" :src="data.firstImg" alt="120">
         </a>
-        <div class="content" :class="{hasImg:data.img}">
+        <div class="content" :class="{hasImg:data.firstImg}">
             <a class="title"  href="/news/29559a644e68">{{data.title}}</a>
             <p class="abstract">
-                {{data.content}}
+                {{data.preview}}
             </p>
             <div class="meta">
                 <a class="nickname mr10" target="_blank" href="/news/362fd55c5949">小小荔枝妹</a>
