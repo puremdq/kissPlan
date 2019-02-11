@@ -6,54 +6,51 @@ const SSR = global.__VUE_SSR_CONTEXT__
 
 export function createAPI({ server }) {
   
-  let api
-  axios.defaults.timeout = server.timeout
-  axios.defaults.baseURL = server.baseURL
-  axios.defaults.withCredentials = true
+  var  api
+  // axios.defaults.timeout = server.timeout
+  // axios.defaults.baseURL = server.baseURL
+  // axios.defaults.withCredentials = true
+  var instance = axios.create({
+    baseURL: server.baseURL,
+    timeout: server.timeout,
+    withCredentials:true,
+  
+  });
+  instance.interceptors.request.use(function (config) {
+    SSR.cookies && (config.headers.Cookie = SSR.cookies);
+      return config;
+  }, function (error) {
+      return Promise.reject(error);
+  });
+   // 添加响应拦截器
+   instance.interceptors.response.use(
+    function (response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response.data
+        }
+        
+        return Promise.reject(response)
+    }, 
+    function (error) {
+        return Promise.reject(error);
+    }
+  );
   if (process.__API__) {
     api = process.__API__
   } else {
     api = {
-      get(url, params = {}) {
-        return new Promise((resolve, reject) => {
-          params = qs.stringify(params);
-         
-          axios({
-            url:url+'?'+params,
-            params,
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest',
-              'Cookie': SSR.cookies//'_ga=GA1.1.178608337.1537086079; kissPlan-sid=e5aa65a6-4852-4ad6-8fb1-3d4f28763ec9'//parseCookie(SSR.cookies)
-            },
-            method: 'get'
-          }).then(res => {
-            console.log(res.data);
-            resolve(res.data)
-          }).catch(error => {
-            reject(error)
+      instance (cfg){
+          return new Promise((resolve,reject) => {
+              instance(cfg).then((res) => {
+                  resolve(res)
+              }).catch((err) => {
+                  reject(err)
+              })
           })
-        })
-      },
-      post(url, params = {}) {
-        return new Promise((resolve, reject) => {
-          axios({
-            url,
-            data: qs.stringify(params),
-            method: 'post',
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest',
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'Cookie':  parseCookie(SSR.cookies || {})
-            }
-          }).then(res => {
-            console.log(res.data);
-            resolve(res.data)
-          }).catch(error => {
-            reject(error)
-          })
-        })
       }
+      
     }
+    
   }
   return api
 }

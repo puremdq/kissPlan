@@ -1,6 +1,6 @@
 <template>
     <div class="hotEnter">
-        <div class="hot-item p10 mb10" v-for="(item) in hot" :key="item.label" :style="{color:item.color,backgroundColor:item.bgColor}">{{item.label}}</div>
+        <div class="hot-item p10 mb10" v-for="(item) in hot" :key="item.label" :style="{color:item.color,backgroundColor:item.bgColor}" @click="goToRoute(item)">{{item.label}}</div>
     </div>
 </template>
 <script>
@@ -10,36 +10,41 @@ export default {
         return {
             hot:[
                 {
-                    to:'',
+                    path:'hotToday',
                     label:'今日热门 >',
                     bgColor:'#febb50',
                     color:'#fff',
                 },
                 {
-                    to:'',
+                    path:'',
                     label:'7日热门 >',
                     bgColor:'#f69581',
                     color:'#fff',
                 },
                 {
-                    to:'',
+                    path:'',
                     label:'30日热门 >',
                     bgColor:'#f4e0bd',
                     color:'#bf913d',
                 },
                 {
-                    to:'',
+                    path:'',
                     label:'优选连载 >',
                     bgColor:'#c1e4de',
                     color:'#548f88',
                 },
                 {
-                    to:'',
+                    path:'',
                     label:'top100 >',
                     bgColor:'#b7d6ec',
                     color:'#4e8aab',
                 },
             ]
+        }
+    },
+    methods:{
+        goToRoute(item) {
+            this.$router.push(item.path);
         }
     }
 }

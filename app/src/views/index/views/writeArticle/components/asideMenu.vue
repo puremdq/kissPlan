@@ -1,0 +1,108 @@
+<template>
+    <div class="asideMenu">
+        <el-menu default-active="1" unique-opened class="el-menu-vertical-demo">
+            <el-menu-item :index="idx+1+''" v-for="(item,idx) in _writeArticleMenuType" :key="idx" @mouseenter.native="mouseenter(idx)" @mouseleave.native="mouseleave">
+                <i class="el-icon-document"></i>
+                <span slot="title">
+                    {{item.name}}
+                    <i class="el-icon-edit" style="margin-left:15px;" @click="openSimpleDialog(idx)" v-if="hoverIdx===idx"></i>
+                </span>
+            </el-menu-item>
+            
+        </el-menu>
+        <mu-dialog :title="dialogTitle" width="760" :open.sync="openSimple">
+            <el-form ref="form" :rules="rules" :model="form" label-width="100px">
+                <el-form-item label="文章标题" prop="name">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="文章类型">
+                    <el-select v-model="form.region" placeholder="请选择活动区域">
+                    <el-option label="区域一" value="shanghai"></el-option>
+                    <el-option label="区域二" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="仅自己可见">
+                    <el-switch v-model="form.delivery"></el-switch>
+                </el-form-item>
+                <el-form-item label="文章描述">
+                    <el-input type="textarea" v-model="form.desc"></el-input>
+                </el-form-item>
+            
+            </el-form>
+            <mu-button slot="actions" flat color="default" @click="closeSimpleDialog">取消</mu-button>
+            <mu-button slot="actions" flat color="primary" @click="OkSimpleDialog">确定</mu-button>
+        </mu-dialog>
+    </div>
+</template>
+<script>
+import { createNamespacedHelpers } from 'vuex';
+const { mapState, mapActions,mapMutations } = createNamespacedHelpers('writeArticle');
+export default {
+    name:'asideMenu',
+    data(){
+        return {
+            hoverIdx:-1,
+            openSimple:false,
+            form:{},
+            dialogTitle:'修改文章详情',
+            rules: {
+                name:[
+                    { required: true, message: '请输入文章标题', trigger: 'blur' },
+                    { min: 3, max: 25, message: '长度在 3 到 25 个字符', trigger: 'blur' }
+                ]
+            }
+        }
+    },
+    computed:{
+        ...mapState(['_writeArticleMenuType']),
+        
+    },
+    mounted(){
+        var that = this;
+        this.$eventBus.off('dialog')
+        this.$eventBus.on('dialog',(data)=>{
+            if(data.type==='add'){
+                that.dialogTitle = '添加文章';
+                this.form = {};
+                that.openSimple = !that.openSimple;
+            }
+        })
+    },
+    methods:{
+        mouseenter(idx) {
+            this.hoverIdx = idx;
+        },
+        mouseleave() {
+            this.hoverIdx = -1;
+        },
+        openSimpleDialog () {
+            this.dialogTitle = '修改文章详情';
+            this.openSimple = true;
+        },
+        OkSimpleDialog() {
+            this.$refs['form'].validate((valid) => {
+                if (valid) {
+                    this.openSimple = false;
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+            
+        },
+        closeSimpleDialog () {
+            this.$refs['form'].resetFields();
+            this.openSimple = false;
+        },
+        //设置新闻详情
+        setNewsDetail() {
+            this.openSimple = true;
+        }
+    }
+}
+</script>
+<style lang="less">
+    .asideMenu{
+
+    }
+</style>

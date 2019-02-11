@@ -16,7 +16,7 @@
                         </mu-col>
                     </mu-row>
                     <pingLun style="margin-top:40px;"></pingLun>
-                    <comment style="margin-top:40px;" :data="comment"></comment>
+                    <comment style="padding:40px 0;" :data="comment"></comment>
                 </mu-col>
             </mu-row>
         </div>
