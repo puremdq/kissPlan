@@ -12,8 +12,7 @@ public class GreetingController {
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public String greeting(String message) throws Exception {
-        Thread.sleep(1000); // simulated delay
-        return "message";
+        return message;
     }
 
 }
