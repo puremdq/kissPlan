@@ -3,6 +3,7 @@ package com.aojiaoo.modules.sys.controller;
 import com.aojiaoo.core.common.ResponseCode;
 import com.aojiaoo.core.common.ServerResponse;
 import com.aojiaoo.utils.JsonUtil;
+import com.aojiaoo.utils.UserUtil;
 import com.aojiaoo.utils.WebUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -26,8 +27,16 @@ public class AuthController {
     }
 
 
-    //登录失败
+    @RequestMapping(value = "loginHtml", method = RequestMethod.GET)
+    public String loginHtml() {
+        if (UserUtil.isAuthenticated()) {
+            return "redirect:/";
+        }
+        return "login";
+    }
 
+
+    //登录失败
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String doLogin(HttpServletResponse response) {
         if (SecurityUtils.getSubject().isAuthenticated()) {

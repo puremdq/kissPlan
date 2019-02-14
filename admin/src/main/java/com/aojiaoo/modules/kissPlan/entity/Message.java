@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "kp_message")
 public class Message extends BaseEntity {
@@ -21,18 +21,16 @@ public class Message extends BaseEntity {
     }
 
     public Message(Integer id) {
-        this.id=id;
+        this.id = id;
     }
 
     /**
-     * 
      * 表字段： kp_message.id
      */
     @Id
     @Column(name = "id")
     private Integer id;
     /**
-     * 
      * 表字段： kp_message.content
      */
     @Column(name = "content")
@@ -54,6 +52,6 @@ public class Message extends BaseEntity {
      * 表字段： kp_message.is_read
      */
     @Column(name = "is_read")
-    private Byte isRead;
+    private Integer isRead;
 
 }

@@ -23,10 +23,14 @@ public class UserUtil {
     }
 
     public static boolean isRemembered() {
+        if (!UserUtil.isAuthenticated()) {
+            return false;
+        }
         return SecurityUtils.getSubject().isRemembered();
     }
 
     public static boolean isAuthenticated() {
-        return SecurityUtils.getSubject().isAuthenticated();
+        System.out.println(getCurrentUser());
+        return IdUtil.isValidId(getCurrentUser().getId());
     }
 }
