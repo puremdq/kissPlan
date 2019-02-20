@@ -16,6 +16,7 @@ Vue.prototype.$axios = api
 import eventBus from '@/eventBus'
 Vue.prototype.$eventBus = new eventBus()
 
+
 if(process.env.VUE_ENV === 'client'){
   const Velocity = require("velocity-animate/velocity.js");
   require("velocity-animate/velocity.ui.js");
