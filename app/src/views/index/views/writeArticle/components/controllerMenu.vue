@@ -38,9 +38,9 @@
                     </mu-button>
                 </mu-appbar>
                 <div style="padding: 24px;">
-                    <mu-form  ref="form" :model="form" class="mu-demo-form" label-position="left" label-width="100">
-                        <mu-form-item prop="input" label="文章标题" :rules="nameRules">
-                            <mu-text-field v-model="form.input"></mu-text-field>
+                    <mu-form :model="form" class="mu-demo-form" :label-position="labelPosition" label-width="100">
+                        <mu-form-item prop="input" label="标题">
+                        <mu-text-field v-model="form.input"></mu-text-field>
                         </mu-form-item>
                         <mu-form-item prop="select" label="文章类型">
                         <mu-select v-model="form.select">
@@ -76,12 +76,7 @@ export default {
             form:{},
             options:[],
             dialogTitle:'修改',
-            nameRules: [
-            { validate: (val) => !!val, message: '必须填写文章标题'},
-            { validate: (val) => {
-                return val.length >= 3 && val.length <= 25
-            }, message: '文章标题长度大于3 小于等于25'}
-        ],
+            labelPosition: 'top',
         }
     },
     computed:{
@@ -90,14 +85,8 @@ export default {
     methods:{
         ...mapMutations(['_addWriteArticleMenuType']),
         addNews() {
-            if(this.isPhone){
-                this.dialogTitle='新增';
-                this.openFullscreen = !this.openFullscreen;
-            }else{
-                this.$eventBus.emit('dialog',{
-                    type:'add'
-                })
-            }
+            this.dialogTitle='新增';
+            this.openFullscreen = !this.openFullscreen;
             // this._addWriteArticleMenuType()
         },
         showNewsList() {
@@ -109,17 +98,15 @@ export default {
         openSimpleDialog() {
 
         },
+        okFullscreenDialog() {
+
+            
+        },
         xiuGaiXiangQing() {
             this.dialogTitle='修改';
             this.openFullscreen = !this.openFullscreen;
         },
-        okFullscreenDialog() {
-            this.$refs.form.validate().then((result) => {
-                console.log('form valid: ', result)
-            });
-        },
         closeFullscreenDialog () {
-            this.$refs.form.clear();
             this.openFullscreen = false;
         }
     }

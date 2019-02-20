@@ -57,7 +57,7 @@ export default {
     },
     methods:{
         load() {
-
+            alert(1)
         },
         refresh() {}
     }

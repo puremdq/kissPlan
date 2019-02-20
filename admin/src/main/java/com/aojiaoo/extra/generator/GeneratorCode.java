@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import static com.aojiaoo.utils.FileUtils.createPath;
-
 public class GeneratorCode {
 
     public static void startGeneratorCode() throws Exception {
