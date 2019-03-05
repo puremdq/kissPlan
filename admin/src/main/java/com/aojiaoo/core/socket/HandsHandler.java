@@ -12,12 +12,10 @@ import java.util.Map;
 public class HandsHandler extends DefaultHandshakeHandler {
 
     public HandsHandler() {
-        System.out.println("HandsHandler");
     }
 
     public HandsHandler(RequestUpgradeStrategy requestUpgradeStrategy) {
         super(requestUpgradeStrategy);
-        System.out.println("requestUpgradeStrategy HandsHandler");
     }
 
 
