@@ -64,9 +64,9 @@
     }
 
     function connect() {
-        var socket = new SockJS('http://localhost:8080/msg');
+        var socket = new SockJS('http://localhost:8080/msg?');
         stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
+        stompClient.connect({"kiss_plan_token":"800984d87a864423a16f3caf0159ac3f"}, function (frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
             stompClient.subscribe('/receive', function (greeting) {

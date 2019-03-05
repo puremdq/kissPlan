@@ -1,6 +1,7 @@
 package com.aojiaoo.core.shiro.realm;
 
 
+import com.aojiaoo.core.security.KissPlanPrincipal;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -57,9 +58,12 @@ public class DbRealm extends AuthorizingRealm {
             throw new UnknownAccountException("用户不存在");
         }
 
+
+        KissPlanPrincipal kissPlanPrincipal = new KissPlanPrincipal(user.getId(), user.getUsername());
+
         String afterMd5Password = DigestUtils.md5Hex(String.valueOf(userToken.getPassword()) + user.getSalt());
         userToken.setPassword(afterMd5Password.toCharArray());
-        return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
+        return new SimpleAuthenticationInfo(kissPlanPrincipal, user.getPassword(), getName());
     }
 
 }

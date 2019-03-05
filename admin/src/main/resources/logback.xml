@@ -39,7 +39,7 @@
         </encoder>
     </appender>
 
-    <root level="WARN">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="DAYFILE"/>
         <appender-ref ref="FILE"/>

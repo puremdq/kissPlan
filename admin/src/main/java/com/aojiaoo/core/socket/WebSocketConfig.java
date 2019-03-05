@@ -1,6 +1,5 @@
-package com.aojiaoo.config;
+package com.aojiaoo.core.socket;
 
-import com.aojiaoo.core.handler.MyHandsHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -19,7 +18,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/msg").setHandshakeHandler(new MyHandsHandler()).setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/msg").
+                addInterceptors(new SessionAuthHandshakeInterceptor()).
+                setHandshakeHandler(new HandsHandler()).setAllowedOrigins("*").withSockJS();
     }
+
+
 
 }

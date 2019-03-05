@@ -27,6 +27,7 @@ public class MessageController extends BaseController {
 
     @MessageMapping("/msg")
     public void sendMsg(Message message) {
+        System.out.println("send "+message);
         if (!UserUtil.isAuthenticated()) {
             return;
         }
@@ -42,10 +43,20 @@ public class MessageController extends BaseController {
         if (!UserUtil.isAuthenticated()) {
             return;
         }
+
+//        simpMessagingTemplate.convertAndSendToUser();
         Message message = new Message();
-        message.setTo(UserUtil.getCurrentUser().getId());
+        message.setTo(UserUtil.getCurrentUserId());
         message.setIsRead(0);
         List<Message> messageList = messageService.findList(message);
         this.simpMessagingTemplate.convertAndSend("/", messageList);
+    }
+
+
+    @GetMapping("/test")
+    public void test() {
+
+//        simpMessagingTemplate.convertAndSendToUser();
+        this.simpMessagingTemplate.convertAndSend("/receive", "hahaha");
     }
 }
