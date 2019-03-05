@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello WebSocket</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello WebSocket啊</title>
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="./main.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
@@ -12,6 +16,7 @@
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
+<h1>撒旦法</h1>
 <div id="main-content" class="container">
     <div class="row">
         <div class="col-md-6">
@@ -66,7 +71,7 @@
     function connect() {
         var socket = new SockJS('http://localhost:8080/msg?');
         stompClient = Stomp.over(socket);
-        stompClient.connect({"kiss_plan_token":"800984d87a864423a16f3caf0159ac3f"}, function (frame) {
+        stompClient.connect({"kiss_plan_token": "800984d87a864423a16f3caf0159ac3f"}, function (frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
             stompClient.subscribe('/receive', function (greeting) {
