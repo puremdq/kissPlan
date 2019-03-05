@@ -57,8 +57,12 @@ public class SubProtocolWebSocketHandler
 
 
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        System.out.println("创建连接:" + session.getId());
+        System.out.println("start seassuion");
+        System.out.println(session.getAttributes());
+        System.out.println("end seassuion");
+
         super.afterConnectionEstablished(session);
+
     }
 
     /**

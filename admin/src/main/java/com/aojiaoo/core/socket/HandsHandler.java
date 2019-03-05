@@ -21,6 +21,7 @@ public class HandsHandler extends DefaultHandshakeHandler {
 
     @Override
     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
+//        wsHandler.handleMessage();
         return UserUtil.getPrincipal();
     }
 
