@@ -69,14 +69,15 @@
     }
 
     function connect() {
-        var socket = new SockJS('http://localhost:8080/msg?kiss_plan_token=800984d87a864423a16f3caf0159ac3f');
+        var socket = new SockJS('http://localhost:8080/msg?kiss_plan_token=14980580f5d6466aa45fc13af06b5ae0');
         stompClient = Stomp.over(socket);
-        stompClient.connect({'kiss_plan_token':'800984d87a864423a16f3caf0159ac3f'}, function (frame) {
+        stompClient.connect({}, function (frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/receive', function (greeting) {
+            stompClient.subscribe('/receive-userjhzfnoxx', function (greeting) {
                 showGreeting(greeting.body);
             });
+
         });
     }
 

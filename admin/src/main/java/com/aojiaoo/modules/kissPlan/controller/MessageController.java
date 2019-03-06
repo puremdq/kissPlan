@@ -27,7 +27,7 @@ public class MessageController extends BaseController {
 
     @MessageMapping("/msg")
     public void sendMsg(Message message) {
-        System.out.println("send "+message);
+        System.out.println("send " + message);
         if (!UserUtil.isAuthenticated()) {
             return;
         }
@@ -55,8 +55,11 @@ public class MessageController extends BaseController {
 
     @GetMapping("/test")
     public void test() {
-
-//        simpMessagingTemplate.convertAndSendToUser();
         this.simpMessagingTemplate.convertAndSend("/receive", "hahaha");
+    }
+
+    @GetMapping("/test1")
+    public void test1() {
+        simpMessagingTemplate.convertAndSendToUser("2", "/receive", "hahaha");
     }
 }

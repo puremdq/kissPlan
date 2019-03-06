@@ -15,12 +15,12 @@ public interface GlobalProperties {
     String TOKEN_NAME = "kiss_plan_token";
     String IS_NEED_TOKEN_NAME = "is_need_token";
     String TOKEN_SESSION_CACHE_NAME = "token_session_cache";
+    String TOKEN_USERID_CACHE_NAME = "token_userid_cache_name";
 
     static String get(String key) {
         if (StringUtils.isBlank(key)) {
             return null;
         }
-        PropertiesUtil.load("classpath:application.properties");
         PropertiesUtil.load("classpath:application.properties");
         return PropertiesUtil.get(key);
     }

@@ -1,6 +1,5 @@
 package com.aojiaoo.utils;
 
-import com.aojiaoo.core.security.KissPlanPrincipal;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.mapper.UserMapper;
 import org.apache.shiro.SecurityUtils;
@@ -11,13 +10,21 @@ public class UserUtil {
 
     public static Integer getCurrentUserId() {
         try {
-            KissPlanPrincipal kissPlanPrincipal = (KissPlanPrincipal) SecurityUtils.getSubject().getPrincipal();
-            return kissPlanPrincipal.getId();
+            User user = (User) SecurityUtils.getSubject().getPrincipal();
+            return user.getId();
         } catch (Exception e) {
             return null;
         }
     }
 
+
+    public static User getCurrentUser() {
+        try {
+            return (User) SecurityUtils.getSubject().getPrincipal();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     public static Principal getPrincipal() {
         try {

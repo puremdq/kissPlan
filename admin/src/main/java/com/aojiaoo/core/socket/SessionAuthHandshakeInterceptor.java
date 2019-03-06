@@ -23,45 +23,20 @@ public class SessionAuthHandshakeInterceptor implements HandshakeInterceptor {
         if (request instanceof ServletServerHttpRequest) {
             ServletServerHttpRequest serverRequest = (ServletServerHttpRequest) request;
             String token = serverRequest.getServletRequest().getParameter(GlobalProperties.TOKEN_NAME);
-            if (StringUtils.isBlank(token)) {
-                logger.error("websocket权限拒绝");
+            if (StringUtils.isBlank(token) || CacheUtils.get(GlobalProperties.TOKEN_USERID_CACHE_NAME, token) == null) {
+                logger.warn("websocket权限拒绝");
                 return false;
             }
-
-//            CacheUtils.get()
-
-//        SecurityUtils.getSubject().runAs();
-
-//        HttpSession session = getSession(request);
-//        if(session==null || session.getAttribute("user")==null){
-//            logger.error("websocket权限拒绝");
-//            return false;
-//        }
-//        attributes.put("user",session.getAttribute("user"));
+            return true;
         }
-
-        return true;
-
+        return false;
     }
 
     @Override
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler
             wsHandler, Exception exception) {
-
-        if (request instanceof ServletServerHttpRequest) {
-            System.out.println("后面属于ServletServerHttpRequest  ");
-            ServletServerHttpRequest serverRequest = (ServletServerHttpRequest) request;
-            System.out.println(serverRequest.getServletRequest().getParameter("kiss_plan_token"));
-        }
         System.out.println("afterHandshake");
     }
 
-    // 参考 HttpSessionHandshakeInterceptor
-//    private HttpSession getSession(ServerHttpRequest request) {
-//        if (request instanceof ServletServerHttpRequest) {
-//            ServletServerHttpRequest serverRequest = (ServletServerHttpRequest) request;
-//            return serverRequest.getServletRequest().getSession(false);
-//        }
-//        return null;
-//    }
+
 }

@@ -53,9 +53,15 @@ limitations under the License.
         </value-type>
 
         <expiry>
-            <tti unit="seconds">120</tti>
+            <tti unit="minutes">30</tti>
+            <!--<tti unit="minutes">2</tti>   &lt;!&ndash;使用 TTI(time to idle) 策略&ndash;&gt;-->
+            <!--<ttl unit="minutes">30</ttl>  使用 TTL(time to live)策略 -->
         </expiry>
-        <heap unit="entries">10000</heap>
+        <resources>
+            <heap unit="entries">1000</heap>
+            <disk unit="MB">100</disk>
+        </resources>
+
     </cache-template>
 
 </config>
