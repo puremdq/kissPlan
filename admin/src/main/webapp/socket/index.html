@@ -57,6 +57,24 @@
 
     var stompClient = null;
 
+    //在str中查找cha第num次出现的位置
+    function indexOfByNum(str, cha, num) {
+
+        if (num < 1) {
+            return -1;
+        }
+
+        if (num === 1) {
+            return str.indexOf(cha);
+        }
+
+        var x = str.indexOf(cha);
+        for (var i = 1; i < num; i++) {
+            x = str.indexOf(cha, x + 1);
+        }
+        return x;
+    }
+
     function setConnected(connected) {
         $("#connect").prop("disabled", connected);
         $("#disconnect").prop("disabled", !connected);
@@ -69,16 +87,27 @@
     }
 
     function connect() {
-        var socket = new SockJS('http://localhost:8080/msg?kiss_plan_token=14980580f5d6466aa45fc13af06b5ae0');
+        var socket = new SockJS('http://localhost:8080/msg?kiss_plan_token=d3835b8a035648f1b00de608bdfc911f');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
-            setConnected(true);
-            console.log('Connected: ' + frame);
-            stompClient.subscribe('/receive-userjhzfnoxx', function (greeting) {
-                showGreeting(greeting.body);
-            });
 
-        });
+                setConnected(true);
+
+                var url = stompClient.ws._transport.url;
+                var currentToken = url.substring(indexOfByNum(url, "/", 5) + 1, indexOfByNum(url, "/", 6));
+
+                //接受通知
+                stompClient.subscribe('/receive-user' + currentToken, function (greeting) {
+                    showGreeting(greeting.body);
+                });
+
+                stompClient.subscribe('/receive-userxoc4a4', function (greeting) {
+                    showGreeting(greeting.body);
+                });
+
+            }
+        )
+        ;
     }
 
     function disconnect() {

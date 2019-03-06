@@ -19,17 +19,17 @@ public class SessionAuthHandshakeInterceptor implements HandshakeInterceptor {
 
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-
-        if (request instanceof ServletServerHttpRequest) {
-            ServletServerHttpRequest serverRequest = (ServletServerHttpRequest) request;
-            String token = serverRequest.getServletRequest().getParameter(GlobalProperties.TOKEN_NAME);
-            if (StringUtils.isBlank(token) || CacheUtils.get(GlobalProperties.TOKEN_USERID_CACHE_NAME, token) == null) {
-                logger.warn("websocket权限拒绝");
-                return false;
-            }
-            return true;
-        }
-        return false;
+        return true;
+//        if (request instanceof ServletServerHttpRequest) {
+//            ServletServerHttpRequest serverRequest = (ServletServerHttpRequest) request;
+//            String token = serverRequest.getServletRequest().getParameter(GlobalProperties.TOKEN_NAME);
+//            if (StringUtils.isBlank(token) || CacheUtils.get(GlobalProperties.TOKEN_USERID_CACHE_NAME, token) == null) {
+//                logger.warn("websocket权限拒绝");
+//                return false;
+//            }
+//            return true;
+//        }
+//        return false;
     }
 
     @Override

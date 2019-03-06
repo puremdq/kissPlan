@@ -60,6 +60,10 @@ public class MessageController extends BaseController {
 
     @GetMapping("/test1")
     public void test1() {
-        simpMessagingTemplate.convertAndSendToUser("2", "/receive", "hahaha");
+        try {
+            simpMessagingTemplate.convertAndSendToUser("1", "/receive", "hahaha");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
