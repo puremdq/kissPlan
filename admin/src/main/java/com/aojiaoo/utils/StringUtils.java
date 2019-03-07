@@ -1,5 +1,7 @@
 package com.aojiaoo.utils;
 
+import java.util.Random;
+
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     //实现类似mysql的find_in_set
@@ -101,6 +103,20 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     public static String toString(Object str) {
         return str == null ? null : str.toString();
+    }
+
+
+    public static String getRandomString(int length) {
+
+        String base = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*_-+.";
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+
+        for(int i = 0; i < length; ++i) {
+            int number = random.nextInt(base.length());
+            sb.append(base.charAt(number));
+        }
+        return sb.toString();
     }
 
 

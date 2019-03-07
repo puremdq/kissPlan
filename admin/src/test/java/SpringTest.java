@@ -30,8 +30,6 @@ public class SpringTest {
     @Resource
     UserMapper userMapper;
 
-    @Resource
-    TestMapper stMapper;
 
     @Resource
     UserRoleMapper userRoleMapper;
@@ -39,7 +37,9 @@ public class SpringTest {
     //自动装配
     @org.junit.Test
     public void test1() {
-        User user = userService.get(1);
+        User user = new User();
+        user.setUsername("sdfsdf");
+        userMapper.insert(user);
         System.out.println(user);
 
     }
