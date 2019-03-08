@@ -5,7 +5,6 @@ import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.mapper.UserMapper;
 import com.aojiaoo.utils.StringUtils;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 @Service

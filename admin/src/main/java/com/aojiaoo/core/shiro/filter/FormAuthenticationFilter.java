@@ -39,11 +39,8 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
         try {
             Subject subject = getSubject(request, response);
             subject.login(token);
-
-
             String _token = IdUtil.uuid();              //生成token
             CacheUtils.put(GlobalProperties.TOKEN_SESSION_CACHE_NAME, _token, SecurityUtils.getSubject().getSession().getId().toString());
-            System.out.println("_token:"+_token+"\n"+"getCurrentUserId:"+UserUtil.getCurrentUserId());
             CacheUtils.put(GlobalProperties.TOKEN_USERID_CACHE_NAME, _token, UserUtil.getCurrentUserId());
 
             //不需要token直接调用登陆成功

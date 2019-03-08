@@ -1,11 +1,13 @@
 package com.aojiaoo.core.base;
 
 import com.aojiaoo.core.mybatis.plugins.paging.Page;
+import com.aojiaoo.utils.IdUtil;
 import com.aojiaoo.utils.StringUtils;
 import com.aojiaoo.utils.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
 import java.util.Date;
@@ -48,10 +50,12 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
      * @param entity entity
      * @return 是否保存成
      */
+    @Transactional
     public boolean save(E entity) {
         return this.save(entity, true);
     }
 
+    @Transactional
     public boolean save(E entity, boolean isSelective) {
 
         if (null == entity) {
@@ -77,10 +81,12 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
     }
 
 
+    @Transactional
     public boolean update(E entity) {
         return this.update(entity, true);
     }
 
+    @Transactional
     public boolean update(E entity, boolean isSelective) {
 
         if (!entity.isAllIdHaveValue()) {
@@ -97,15 +103,19 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
         }
     }
 
+    @Transactional
     public boolean insert(E entity) {
         return this.insert(entity, true);
     }
 
+    @Transactional
     public boolean insert(E entity, boolean isSelective) {
 
         entity.setCreateDate(new Date());
         entity.setUpdateDate(new Date());
-        entity.setCreateBy(UserUtil.getCurrentUserId());
+        if (!IdUtil.isValidId(entity.getCreateBy())) {
+            entity.setCreateBy(UserUtil.getCurrentUserId());
+        }
         entity.setUpdateBy(entity.getCreateBy());
         List<Field> idFields = entity.getIdFields();
 
@@ -171,6 +181,7 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
      * @param isPhysics 是否物理删除
      * @return
      */
+    @Transactional
     public boolean delete(E entity, boolean isPhysics) {
         if (isPhysics) {
             //物理删除

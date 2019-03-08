@@ -188,7 +188,6 @@
         }else {
             stompClient.send("/send/msg", {}, JSON.stringify({
                 'content': $("#name").val(),
-                'from': 1,
                 'to': $("#sendTo").val()
             }));
         }
