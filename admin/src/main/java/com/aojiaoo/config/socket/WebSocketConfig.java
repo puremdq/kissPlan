@@ -1,6 +1,7 @@
-package com.aojiaoo.core.socket;
+package com.aojiaoo.config.socket;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -19,9 +20,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/msg").
-                addInterceptors(new SessionAuthHandshakeInterceptor()).
-                setHandshakeHandler(new HandsHandler()).setAllowedOrigins("*").withSockJS();
+                addInterceptors(new com.aojiaoo.core.socket.SessionAuthHandshakeInterceptor()).
+                setHandshakeHandler(new com.aojiaoo.core.socket.HandsHandler()).setAllowedOrigins("*").withSockJS();
     }
 
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(new com.aojiaoo.core.socket.ChannelInterceptor());
+    }
 
 }
