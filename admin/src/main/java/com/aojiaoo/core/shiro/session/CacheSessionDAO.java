@@ -6,6 +6,7 @@
 package com.aojiaoo.core.shiro.session;
 
 import org.apache.shiro.session.Session;
+import org.apache.shiro.session.UnknownSessionException;
 
 import java.io.Serializable;
 
@@ -21,9 +22,15 @@ public class CacheSessionDAO extends org.apache.shiro.session.mgt.eis.CachingSes
         return sessionId;
     }
 
+    /*调readSession  如果返回为空才会调用doReadSession*/
     @Override
     protected Session doReadSession(Serializable sessionId) {
         return null;
+    }
+
+    @Override
+    public Session readSession(Serializable sessionId) throws UnknownSessionException {
+        return super.readSession(sessionId);
     }
 
 

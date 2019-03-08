@@ -2,6 +2,7 @@ package com.aojiaoo.modules.sys.controller;
 
 import com.aojiaoo.core.base.BaseController;
 import com.aojiaoo.core.common.ServerResponse;
+import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.service.UserService;
 import com.aojiaoo.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/")
 public class UserController extends BaseController {
 
     @Autowired
@@ -19,9 +20,14 @@ public class UserController extends BaseController {
 
     @ResponseBody
     @PostMapping("register")
-    public ServerResponse register(String username, String password, String email) {
-        return null;
-//        return createServerResponse(this.articleService.save(article, true));
+    public ServerResponse register(User user) {
+
+        Integer id = userService.register(user);
+        if (id == null) {
+            return ServerResponse.createByErrorMessage("注册失败,请检查您的输入是否正确");
+        }
+
+        return ServerResponse.createBySuccess(user);
     }
 
 

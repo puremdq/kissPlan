@@ -89,7 +89,7 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
         }
 
         entity.setUpdateDate(new Date());
-        entity.setUpdateBy(UserUtil.getCurrentUser().getId());
+        entity.setUpdateBy(UserUtil.getCurrentUserId());
         if (isSelective) {
             return this.mapper.updateByPrimaryKeySelective(entity) > 0;
         } else {
@@ -105,7 +105,7 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
 
         entity.setCreateDate(new Date());
         entity.setUpdateDate(new Date());
-        entity.setCreateBy(UserUtil.getCurrentUser().getId());
+        entity.setCreateBy(UserUtil.getCurrentUserId());
         entity.setUpdateBy(entity.getCreateBy());
         List<Field> idFields = entity.getIdFields();
 

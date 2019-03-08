@@ -6,10 +6,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -32,6 +34,7 @@ public class User extends BaseEntity {
      */
     @Id
     @Column(name = "id")
+    @KeySql(useGeneratedKeys = true)//回显id
     private Integer id;
     /**
      * 用户名(登录名)

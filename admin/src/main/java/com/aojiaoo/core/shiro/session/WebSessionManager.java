@@ -36,6 +36,8 @@ public class WebSessionManager extends org.apache.shiro.web.session.mgt.DefaultW
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
 
+        System.out.println("getProtocol:" + request.getProtocol());
+        System.out.println("getParameterMap:" + request.getParameterMap().toString());
         Serializable sessionId = null;
 
         if (request instanceof HttpServletRequest) {

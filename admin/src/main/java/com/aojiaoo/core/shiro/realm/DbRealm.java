@@ -57,6 +57,7 @@ public class DbRealm extends AuthorizingRealm {
             throw new UnknownAccountException("用户不存在");
         }
 
+
         String afterMd5Password = DigestUtils.md5Hex(String.valueOf(userToken.getPassword()) + user.getSalt());
         userToken.setPassword(afterMd5Password.toCharArray());
         return new SimpleAuthenticationInfo(user, user.getPassword(), getName());

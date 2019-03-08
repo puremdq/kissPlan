@@ -37,7 +37,7 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
         String content = StringUtils.trimToEmpty(article.getContent());
         String preview = content.length() > 15 ? content.substring(0, 15) + "..." : content;
         article.setContent(content);
-        article.setAuthorId(UserUtil.getCurrentUser().getId());
+        article.setAuthorId(UserUtil.getCurrentUserId());
         article.setPreview(preview);
         return super.save(article);
     }
@@ -92,7 +92,7 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
             return false;
         }
 
-        entity.setAuthorId(UserUtil.getCurrentUser().getId());
+        entity.setAuthorId(UserUtil.getCurrentUserId());
         return commentService.insert(entity);
     }
 

@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Hello WebSocket</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello WebSocket啊</title>
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="./main.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
@@ -12,6 +16,18 @@
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
+
+<h1>获取token</h1>
+<div>
+    <label>用户名</label>
+    <input type="text" id="username">
+    <label>密码</label>
+    <input type="text" id="password">
+    <button id="submit-button">获取</button>
+
+</div>
+
+
 <div id="main-content" class="container">
     <div class="row">
         <div class="col-md-6">
@@ -26,8 +42,14 @@
         </div>
         <div class="col-md-6">
             <form class="form-inline">
+
                 <div class="form-group">
-                    <label for="name">What is your name?</label>
+                    <label for="name">发送给(对方id)</label>
+                    <input type="text" id="sendTo" class="form-control" placeholder="发送给(对方id)">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">msg?</label>
                     <input type="text" id="name" class="form-control" placeholder="Your name here...">
                 </div>
                 <button id="send" class="btn btn-default" type="submit">Send</button>
@@ -48,9 +70,53 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    var kiss_plan_token = undefined;
+    $("#submit-button").click(function () {
+        $.ajax({
+            url: 'http://localhost:8080/login',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                'username': $("#username").val(),
+                'password': $("#password").val(),
+                'is_need_token': 1
+            },
+            success: function (resp) {
+                if (resp.status === 200) {
+                    kiss_plan_token = resp.data.kiss_plan_token
+                }
+            }
+        });
+
+    });
+
+</script>
+
+
 <script>
 
     var stompClient = null;
+
+    //在str中查找cha第num次出现的位置
+    function indexOfByNum(str, cha, num) {
+
+        if (num < 1) {
+            return -1;
+        }
+
+        if (num === 1) {
+            return str.indexOf(cha);
+        }
+
+        var x = str.indexOf(cha);
+        for (var i = 1; i < num; i++) {
+            x = str.indexOf(cha, x + 1);
+        }
+        return x;
+    }
 
     function setConnected(connected) {
         $("#connect").prop("disabled", connected);
@@ -64,15 +130,28 @@
     }
 
     function connect() {
-        var socket = new SockJS('http://localhost:8080/msg');
+
+
+        if (kiss_plan_token === undefined) {
+            alert("请先获取token");
+            return;
+        }
+
+        var socket = new SockJS('http://localhost:8080/msg?kiss_plan_token=' + kiss_plan_token);
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
-            setConnected(true);
-            console.log('Connected: ' + frame);
-            stompClient.subscribe('/receive', function (greeting) {
-                showGreeting(greeting.body);
-            });
-        });
+
+                setConnected(true);
+
+                var url = stompClient.ws._transport.url;
+                var currentToken = url.substring(indexOfByNum(url, "/", 5) + 1, indexOfByNum(url, "/", 6));
+
+                //接受通知
+                stompClient.subscribe('/receive/msg-user' + currentToken, function (greeting) {
+                    showGreeting(greeting.body);
+                });
+            }
+        );
     }
 
     function disconnect() {
@@ -104,13 +183,16 @@
     });
 
     function sendMsg() {
-        stompClient.send("/send/msg", {}, JSON.stringify({
-            'content': $("#name").val(),
-            'from': 1,
-            'to': 2
-        }));
+        if ($("#sendTo").val() == '') {
+            alert("请输入要发送给谁");
+        }else {
+            stompClient.send("/send/msg", {}, JSON.stringify({
+                'content': $("#name").val(),
+                'from': 1,
+                'to': $("#sendTo").val()
+            }));
+        }
     }
-
 </script>
 </body>
 </html>

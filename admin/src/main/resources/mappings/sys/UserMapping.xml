@@ -79,4 +79,12 @@
     </select>
 
 
+    <select id="checkUserNameAndEmail" resultType="java.lang.Integer">
+        select count(*)
+        from sys_user a
+        where a.email = #{email}
+           or a.username = #{username}
+    </select>
+
+
 </mapper>

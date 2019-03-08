@@ -4,16 +4,34 @@ import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.mapper.UserMapper;
 import org.apache.shiro.SecurityUtils;
 
+import java.security.Principal;
+
 public class UserUtil {
+
+    public static Integer getCurrentUserId() {
+        try {
+            User user = (User) SecurityUtils.getSubject().getPrincipal();
+            return user.getId();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 
     public static User getCurrentUser() {
         try {
-            User user = (User) SecurityUtils.getSubject().getPrincipal();
-            return user == null ? new User() : user;
+            return (User) SecurityUtils.getSubject().getPrincipal();
         } catch (Exception e) {
-            return new User();
+            return null;
         }
+    }
 
+    public static Principal getPrincipal() {
+        try {
+            return (Principal) SecurityUtils.getSubject().getPrincipal();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static User getUserById(Integer id) {
@@ -30,7 +48,6 @@ public class UserUtil {
     }
 
     public static boolean isAuthenticated() {
-        System.out.println(getCurrentUser());
-        return IdUtil.isValidId(getCurrentUser().getId());
+        return IdUtil.isValidId(getCurrentUserId());
     }
 }
