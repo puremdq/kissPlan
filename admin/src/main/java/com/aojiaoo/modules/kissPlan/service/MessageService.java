@@ -65,7 +65,6 @@ public class MessageService extends BaseService<Message, MessageMapper> {
     @Transactional
     public List<Message> messageList(Integer userId, Date maxSendTime) {
 
-
         boolean isNeedSetReadStatus = (maxSendTime == null);
 
         if (maxSendTime == null) {
@@ -73,7 +72,6 @@ public class MessageService extends BaseService<Message, MessageMapper> {
         }
 
         List<Message> list = this.mapper.messageList(userId, maxSendTime);
-
         if (isNeedSetReadStatus) {
             this.mapper.setReadByUserId(userId);
         }
