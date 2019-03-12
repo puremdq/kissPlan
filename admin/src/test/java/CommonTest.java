@@ -71,5 +71,12 @@ public class CommonTest {
         System.out.println(DigestUtils.md5Hex("亲爱的你都不知道我有多爱你‘撒打发斯蒂芬闪电法师，，，是的发生的"));
     }
 
+    @Test
+    public void test3c() {
 
+        String[] strs = "adc,abd,bc".split(",");
+
+        System.out.println(Arrays.asList(strs).get(2));
+
+    }
 }
