@@ -102,8 +102,26 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
     }
 
 
+    public boolean doLike(Integer id, boolean isCancel) {
+
+        boolean isLiked = this.mapper.checkIsLiked(id, UserUtil.getCurrentUserId());
+
+        if ((isLiked && !isCancel) || (!isLiked && isCancel)) {
+            //不需要操作
+            return true;
+        }
+
+        if (isCancel) {
+            return this.mapper.cancelLike(id, UserUtil.getCurrentUserId()) > 0;
+        }else {
+            return this.mapper.doLike(id, UserUtil.getCurrentUserId()) > 0;
+        }
+    }
+
+
     private String getArticleUrlById(Integer id) {
         return WebUtils.spliceUrl(WebUtils.getUrl(), "article", String.valueOf(id));
     }
+
 
 }

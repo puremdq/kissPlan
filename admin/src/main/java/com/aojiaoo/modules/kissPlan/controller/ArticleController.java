@@ -102,4 +102,23 @@ public class ArticleController extends BaseController {
         return createServerResponse(articleService.reply(comment));
     }
 
+
+    /**
+     * 点赞
+     *
+     * @param id       文章id
+     * @param isCancel boolean 是否是取消赞
+     * @return ServerResponse
+     */
+    @ResponseBody
+    @PostMapping("like")
+    public ServerResponse like(Integer id, boolean isCancel) {
+
+        if (!IdUtil.isValidId(id)) {
+            return ServerResponse.createByErrorMessage("非法参数");
+        }
+
+        return createServerResponse(this.articleService.doLike(id, isCancel));
+    }
+
 }

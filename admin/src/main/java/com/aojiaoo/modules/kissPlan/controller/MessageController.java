@@ -44,7 +44,7 @@ public class MessageController extends BaseController {
     @ResponseBody
     @GetMapping("/messageList")
     public ServerResponse messageList(Date maxSendTime) {
-        return  ServerResponse.createBySuccess(messageService.messageList(UserUtil.getCurrentUserId(), maxSendTime));
+        return ServerResponse.createBySuccess(messageService.messageList(UserUtil.getCurrentUserId(), maxSendTime));
     }
 
 

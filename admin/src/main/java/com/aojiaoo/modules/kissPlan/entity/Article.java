@@ -79,5 +79,11 @@ public class Article extends BaseEntity {
     @Column(name = "read_num")
     private Integer readNum;
 
+    /**
+     * 文章类型 0普通 | 1 markdown
+     */
+    @Column(name = "article_type")
+    private Integer articleType;
+
 
 }
