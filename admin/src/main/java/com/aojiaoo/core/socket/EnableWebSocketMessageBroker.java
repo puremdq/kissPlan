@@ -16,6 +16,7 @@
 
 package com.aojiaoo.core.socket;
 
+import com.aojiaoo.config.socket.DelegatingWebSocketMessageBrokerConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
@@ -60,7 +61,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
-@Import(com.aojiaoo.core.socket.DelegatingWebSocketMessageBrokerConfiguration.class)
+@Import(DelegatingWebSocketMessageBrokerConfiguration.class)
 public @interface EnableWebSocketMessageBroker {
 
 }

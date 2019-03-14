@@ -1,2 +1,4 @@
 
 app/dist
+app/.project
+app/package-lock.json

@@ -48,7 +48,8 @@
         .
         read_num
         as
-        readNum
+        readNum,
+        a.article_type  as articleType
     </sql>
 
     <sql id="Base_select_table">
@@ -93,6 +94,25 @@
     </select>
 
 
+    <select id="checkIsLiked" resultType="java.lang.Boolean">
+        select count(*)
+        from kp_like_record a
+        where a.article_id = #{articleId}
+          and a.user_id = #{userId}
+    </select>
+
+    <insert id="doLike">
+        INSERT INTO `kp_like_record`(`user_id`, `article_id`)
+        VALUES (#{userId}, #{articleId});
+    </insert>
+
+
+    <delete id="cancelLike">
+        delete
+        from `kp_like_record`
+        where user_id = #{userId}
+          and article_id = #{articleId}
+    </delete>
 
 
 </mapper>

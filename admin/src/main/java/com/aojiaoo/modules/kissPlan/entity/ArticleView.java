@@ -87,5 +87,10 @@ public class ArticleView extends BaseEntity {
     @Column(name = "author_avatars")
     private String authorAvatars;
 
+    /**
+     * 文章类型 0普通 | 1 markdown
+     */
+    @Column(name = "article_type")
+    private Integer articleType;
 
 }

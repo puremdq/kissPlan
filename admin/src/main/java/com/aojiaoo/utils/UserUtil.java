@@ -1,5 +1,6 @@
 package com.aojiaoo.utils;
 
+import com.aojiaoo.core.common.GlobalProperties;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.mapper.UserMapper;
 import org.apache.shiro.SecurityUtils;
@@ -35,9 +36,18 @@ public class UserUtil {
     }
 
     public static User getUserById(Integer id) {
+
+        Object obj = CacheUtils.get(GlobalProperties.USER_CACHE_NAME, String.valueOf(id));
+        if (obj instanceof User) {
+            return (User) obj;
+        }
+
         UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
         User user = userMapper.selectByPrimaryKey(id);
-        return user == null ? new User() : user;
+        if (user != null) {
+            CacheUtils.put(GlobalProperties.USER_CACHE_NAME, String.valueOf(id), user);
+        }
+        return user;
     }
 
     public static boolean isRemembered() {

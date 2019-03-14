@@ -30,7 +30,6 @@ public class HandsHandler extends DefaultHandshakeHandler {
         if (request instanceof ServletServerHttpRequest) {
             ServletServerHttpRequest serverRequest = (ServletServerHttpRequest) request;
             String token = serverRequest.getServletRequest().getParameter(GlobalProperties.TOKEN_NAME);
-            System.out.println("TOKEN_USERID_CACHE_NAME:" + StringUtils.toString(CacheUtils.get(GlobalProperties.TOKEN_USERID_CACHE_NAME, token)));
             return new WsPrincipal(StringUtils.toString(CacheUtils.get(GlobalProperties.TOKEN_USERID_CACHE_NAME, token)));
         }
 

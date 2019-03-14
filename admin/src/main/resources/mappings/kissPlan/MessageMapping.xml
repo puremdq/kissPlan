@@ -3,9 +3,8 @@
 <mapper namespace="com.aojiaoo.modules.kissPlan.mapper.MessageMapper">
 
 
-
     <sql id="Base_Column_List">
-            a.id as id,a.content as content,a.from as from,a.to as to,a.is_read as isRead,a.create_by as createBy,a.create_date as createDate,a.update_by as updateBy,a.update_date as updateDate,a.remarks as remarks,a.del_flag as delFlag
+        a.id as id,a.content as content,a.from as `from`,a.to as `to`,a.is_read as isRead,a.create_by as createBy,a.create_date as createDate,a.update_by as updateBy,a.update_date as updateDate,a.remarks as remarks,a.del_flag as delFlag
     </sql>
 
     <sql id="Base_select_table">
@@ -13,50 +12,81 @@
     </sql>
 
 
-
     <select id="selectBySelective" resultType="com.aojiaoo.modules.kissPlan.entity.Message">
         select
         <include refid="Base_Column_List"/>
-        from <include refid="Base_select_table"/>
+        from
+        <include refid="Base_select_table"/>
         <where>
-               <if test="id != null">
-                   and a.id = #{id,jdbcType=INTEGER}
-               </if>
-               <if test="content != null and content != ''">
-                   and a.content = #{content,jdbcType=VARCHAR}
-               </if>
-               <if test="from != null">
-                   and a.from = #{from,jdbcType=INTEGER}
-               </if>
-               <if test="to != null">
-                   and a.to = #{to,jdbcType=INTEGER}
-               </if>
-               <if test="isRead != null">
-                   and a.is_read = #{isRead,jdbcType=TINYINT}
-               </if>
-               <if test="createBy != null and createBy != ''">
-                   and a.create_by = #{createBy,jdbcType=CHAR}
-               </if>
-               <if test="createDate != null">
-                   and a.create_date = #{createDate,jdbcType=TIMESTAMP}
-               </if>
-               <if test="updateBy != null and updateBy != ''">
-                   and a.update_by = #{updateBy,jdbcType=CHAR}
-               </if>
-               <if test="updateDate != null">
-                   and a.update_date = #{updateDate,jdbcType=TIMESTAMP}
-               </if>
-               <if test="remarks != null and remarks != ''">
-                   and a.remarks = #{remarks,jdbcType=VARCHAR}
-               </if>
-               <if test="delFlag != null and delFlag != ''">
-                   and a.del_flag = #{delFlag,jdbcType=CHAR}
-               </if>
+            <if test="id != null">
+                and a.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="content != null and content != ''">
+                and a.content = #{content,jdbcType=VARCHAR}
+            </if>
+            <if test="from != null">
+                and a.from = #{from,jdbcType=INTEGER}
+            </if>
+            <if test="to != null">
+                and a.to = #{to,jdbcType=INTEGER}
+            </if>
+            <if test="isRead != null">
+                and a.is_read = #{isRead,jdbcType=TINYINT}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and a.create_by = #{createBy,jdbcType=CHAR}
+            </if>
+            <if test="createDate != null">
+                and a.create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and a.update_by = #{updateBy,jdbcType=CHAR}
+            </if>
+            <if test="updateDate != null">
+                and a.update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and a.remarks = #{remarks,jdbcType=VARCHAR}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and a.del_flag = #{delFlag,jdbcType=CHAR}
+            </if>
         </where>
     </select>
 
 
+    <select id="getUnreadNum" resultType="java.lang.Integer">
+        select count(*)
+        from kp_message a
+        where a.to = #{currentUserId}
+          and a.is_read = 0
+    </select>
 
+    <select id="messageList" resultType="com.aojiaoo.modules.kissPlan.entity.Message">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Base_select_table"/>
+        <where>
+            (a.from = #{userId}
+            or a.to = #{userId})
+            and
+            <![CDATA[
+               a.create_date < #{maxSendTime}
+        ]]>
+        </where>
+        order by a.create_date desc limit 10;
+    </select>
+
+
+    <!--设置某个用户下的消息全部为已读-->
+    <update id="setReadByUserId">
+
+        update kp_message a
+        set a.is_read = 1
+        where a.to = #{userId}
+
+    </update>
 
 
 </mapper>

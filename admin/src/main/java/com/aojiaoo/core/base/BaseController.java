@@ -2,9 +2,32 @@ package com.aojiaoo.core.base;
 
 import com.aojiaoo.core.common.ResponseCode;
 import com.aojiaoo.core.common.ServerResponse;
+import com.aojiaoo.utils.DateUtils;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+
+import java.beans.PropertyEditorSupport;
+import java.util.Date;
 
 public class BaseController {
 
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+
+        // Date 类型转换
+        binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                setValue(DateUtils.parseDate(text));
+            }
+//			@Override
+//			public String getAsText() {
+//				Object value = getValue();
+//				return value != null ? DateUtils.formatDateTime((Date)value) : "";
+//			}
+        });
+    }
 
     /**
      * @param object 要返回的参数
@@ -23,7 +46,7 @@ public class BaseController {
             return ServerResponse.createBySuccess();
         } else {
             return ServerResponse.createByError();
-
         }
     }
+
 }

@@ -100,6 +100,8 @@
                 /login = authc
                 /article/save = authc
                 /article/reply = authc
+                /article/like = authc
+                /message/** = authc
                 /** = anon
             </value>
         </property>

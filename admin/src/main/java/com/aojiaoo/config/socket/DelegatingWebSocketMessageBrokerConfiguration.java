@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.aojiaoo.core.socket;
+package com.aojiaoo.config.socket;
 
+import com.aojiaoo.core.socket.EnableWebSocketMessageBroker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.WebSocketHandler;

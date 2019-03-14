@@ -57,9 +57,6 @@ public class SubProtocolWebSocketHandler
 
 
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        System.out.println("start seassuion");
-        System.out.println(session.getAttributes());
-        System.out.println("end seassuion");
 
         super.afterConnectionEstablished(session);
 
@@ -72,8 +69,6 @@ public class SubProtocolWebSocketHandler
      *                   Javadoc for details.
      */
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        System.out.println("处理消息:" + session.getId());
-        System.out.println(message.toString());
         super.handleMessage(session, message);
     }
 
@@ -98,7 +93,6 @@ public class SubProtocolWebSocketHandler
      */
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        System.out.println("关闭连接:" + session.getId());
         super.afterConnectionClosed(session, closeStatus);
     }
 }

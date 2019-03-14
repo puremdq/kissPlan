@@ -2,21 +2,23 @@ package com.aojiaoo.modules.sys.controller;
 
 import com.aojiaoo.core.base.BaseController;
 import com.aojiaoo.core.common.ServerResponse;
+import com.aojiaoo.modules.kissPlan.service.AuthorService;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.service.UserService;
 import com.aojiaoo.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/u")
 public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AuthorService authorService;
 
     @ResponseBody
     @PostMapping("register")
@@ -31,23 +33,44 @@ public class UserController extends BaseController {
     }
 
 
+    /**
+     * 检查用户名和密码是否存在
+     *
+     * @param username username
+     * @param email    email
+     * @return ServerResponse
+     */
     @ResponseBody
-    @PostMapping("checkUsername")
-    public ServerResponse checkUsername(String username) {
+    @PostMapping("check")
+    public ServerResponse checkUsername(String username, String email) {
 
         if (StringUtils.isBlank(username)) {
             return ServerResponse.createByError();
         }
+        if (StringUtils.isBlank(username)) {
+            return ServerResponse.createByError();
+        }
 
-        boolean tf = userService.getByUserName(username) == null;
-        return createServerResponse(tf);
+        if (userService.getByUserName(username) != null) {
+            return ServerResponse.createByErrorMessage("用户名已存在");
+        }
+
+        if (userService.getByEmail(email) != null) {
+            return ServerResponse.createByErrorMessage("邮箱已存在");
+        }
+
+        return ServerResponse.createBySuccess();
     }
 
 
     @ResponseBody
-    @PostMapping("checkEmail")
-    public ServerResponse checkEmail(String email) {
-        boolean tf = userService.getByEmail(email) == null;
-        return createServerResponse(tf);
+    @GetMapping("{id}")
+    public ServerResponse form(@PathVariable("id") Integer id) {
+
+        if (id == null || id <= 0) {
+            return ServerResponse.createByErrorMessage("非法参数");
+        }
+        return this.createServerResponseNotFoundOrSuccess(authorService.getAuthorView(id));
     }
+
 }
