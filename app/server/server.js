@@ -11,7 +11,7 @@ app.set('trust proxy', function (ip) {
   if (ip === '127.0.0.1' || ip === '123.123.123.123') return true; // trusted IPs
   else return false;
 })
-app.use('/public',express.static(path.join(__dirname, '../dist'),{
+app.use('/static',express.static(path.join(__dirname, '../dist'),{
   maxAge:31536000
 }))
 
@@ -35,11 +35,11 @@ app.use(arr);
 app.locals.reload = true;
 let renderer
 function createRenderer(bundle, template) {
-    return createBundleRenderer(bundle, {
-      // runInNewContext: false, // 推荐
-      template, // （可选）页面模板
-      //clientManifest // （可选）客户端构建 manifest
-    })
+  return createBundleRenderer(bundle, {
+    // runInNewContext: false, // 推荐
+    template, // （可选）页面模板
+    //clientManifest // （可选）客户端构建 manifest
+  })
 }
 if (isProd) {
     // 生产环境使用本地打包文件来渲染
@@ -85,7 +85,7 @@ app.get('*', (req, res) => {
     })
 })
   
-const port = /*process.env.PORT ||*/ 3000
+const port = /*process.env.PORT ||*/ 80
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`)
 })

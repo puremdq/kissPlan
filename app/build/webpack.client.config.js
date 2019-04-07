@@ -30,7 +30,7 @@ const config = merge(baseConfig,{
         path : path.join(__dirname,'../dist'),
         filename: isProd ? 'js/[name]-[chunkhash].js' : 'js/[name].js',
         chunkFilename :isProd ? 'js/[name]-[chunkhash].js':'js/[name].js',
-        publicPath:'/public/'
+        publicPath:'/static/'
     },
     plugins:[
         new VueLoaderPlugin(),
