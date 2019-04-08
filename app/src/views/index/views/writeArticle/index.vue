@@ -40,7 +40,9 @@ export default {
        "my-header":header,
        controllerMenu
     },
-    
+    methods:{
+       
+    }
 }
 </script>
 <style lang="less">

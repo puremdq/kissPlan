@@ -1,15 +1,15 @@
 <template>
     <div class="contentItem">
-        <a class="wrap-img" v-if="data.firstImg" href="/news/58161c28e611" target="_blank">
+        <a class="wrap-img" v-if="data.firstImg" :href="'/news/'+data.id" target="_blank">
             <img class="img-blur-done" :src="data.firstImg" alt="120">
         </a>
         <div class="content" :class="{hasImg:data.firstImg}">
-            <a class="title"  href="/news/29559a644e68">{{data.title}}</a>
+            <a class="title"  :href="'/news/'+data.id">{{data.title}}</a>
             <p class="abstract">
                 {{data.preview}}
             </p>
             <div class="meta">
-                <a class="nickname mr10" target="_blank" href="/news/362fd55c5949">小小荔枝妹</a>
+                <a class="nickname mr10" target="_blank"  :href="'/news/'+data.id">小小荔枝妹</a>
                 <span class="mr10"><i class="iconfont icon-message"></i> 9</span>
                 <span><i class="iconfont icon-shoucang_xiantiao"></i> 1</span>
             </div>
