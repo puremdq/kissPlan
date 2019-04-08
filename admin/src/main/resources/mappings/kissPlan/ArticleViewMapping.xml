@@ -168,7 +168,9 @@
 
 
     <select id="indexArticleList" resultType="com.aojiaoo.modules.kissPlan.entity.ArticleView">
-        select a.title as title,
+        select
+        a.id as id,
+        a.title as title,
         a.article_type as articleType,
         a.preview as preview,
         a.author_id as authorId,
