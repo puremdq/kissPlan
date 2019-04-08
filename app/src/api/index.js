@@ -10,7 +10,7 @@ const FaceUrl = isProd ? proUrl : devUrl
 var config = {
   baseURL: FaceUrl,
   client: {
-    baseURL: isProd?FaceUrl:'/api',
+    baseURL: '/api',
     timeout: 10000,
     hasMessage:true,
     hasLoading:true,
