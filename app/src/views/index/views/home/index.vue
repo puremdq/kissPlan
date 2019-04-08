@@ -31,9 +31,9 @@ import download from "./components/download.vue"
 import author from "./components/author.vue"
 export default {
     name:'home',
-    asyncData({store}){
-        return store.dispatch('home/getNewItem');
-    },
+    // asyncData({store}){
+    //     return store.dispatch('home/getNewItem');
+    // },
     data(){
         return {
             open:true,
@@ -57,7 +57,6 @@ export default {
     },
     methods:{
         load() {
-            alert(1)
         },
         refresh() {}
     }
