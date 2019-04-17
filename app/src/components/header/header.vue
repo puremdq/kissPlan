@@ -25,7 +25,7 @@
                         
                         <span  class="el-dropdown-link">
                             <mu-avatar size="36" style="vertical-align: middle;margin-right:5px;cursor:pointer;"  ref="button" @click="open = !open">
-                                <img src="../../assets/images/head.jpg">
+                                <img :src="user.user.avatars">
                             </mu-avatar>
                         </span>
                         <el-dropdown-menu slot="dropdown">

@@ -15,10 +15,11 @@ export default {
     name:'quillEditor',
     data(){
         return {
-            content:'',
+            content:this.value.content,
             editorOption:{},
         }
     },
+    props:['value'],
     mounted(){
         
     },
@@ -36,6 +37,10 @@ export default {
                         showClose: true,
                         type: 'success'
                     });
+                    this.$emit('input',{
+                        content:this.content,
+                        baseText:this.content,
+                    })
                     clearTimeout(time);
                     time = null;
                 },3000)

@@ -86,7 +86,7 @@ export default {
         ...mapActions(['articleSave']),
         ...mapMutations(['_addWriteArticleMenuType']),
         save() {
-            this.articleSave();
+            this.articleSave(this.$store.state.user);
         },
         addNews() {
             this.dialogTitle='新增';
