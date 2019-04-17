@@ -86,7 +86,14 @@ export default {
         ...mapMutations(['_addWriteArticleMenuType']),
         addNews() {
             this.dialogTitle='新增';
-            this.openFullscreen = !this.openFullscreen;
+            if(this.isPhone){
+                this.openFullscreen = !this.openFullscreen;
+
+            }else{
+                this.$eventBus.emit('dialog',{
+                    type:'add'
+                })
+            }
             // this._addWriteArticleMenuType()
         },
         showNewsList() {
