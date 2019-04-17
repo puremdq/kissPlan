@@ -3,27 +3,28 @@ export default {
     name:'writeArticle',
     namespaced:true,
     state:{
-        _editorType:'markdown编辑器',
+        _editorType:'富文本编辑器',
         _mavonEditorQP:false,//markdown编辑器全屏
         _writeArticleMenuType:[
             {
                 title:'默认菜单',
                 content:'',
+                baseText:'',
                 active:true,
             },
-            // {
-            //     title:'默认菜单',
-            //     content:'',
-            //     active:false,
-            // }
         ]
     },
     actions : {
-        articleSave({commit},data) {
+        articleSave({commit,state},config) {
+            var data = state._writeArticleMenuType[0];
             return api.instance({
                 method:'post',
-                url:'/index/slideshow',
-                data:data
+                url:'/article/save',
+                data:{
+                    title:data.title,
+                    content:data.content,
+                    kiss_plan_token:"faa474b7a22e469287655db19334609c"
+                }
             })
             .then((res)=>{
                 if(res.status==200){
@@ -60,6 +61,14 @@ export default {
         },
         _setQPBoll(state,type) {
             state._mavonEditorQP = !state._mavonEditorQP;
+        },
+        _writeText(state,data) {
+            state._writeArticleMenuType.forEach((item)=>{
+                if(item.active){
+                    item.content = data.content;
+                    item.baseText =  data.baseText;
+                }
+            })
         }
     }
 }

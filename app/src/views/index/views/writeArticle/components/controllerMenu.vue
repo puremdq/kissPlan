@@ -86,11 +86,18 @@ export default {
         ...mapActions(['articleSave']),
         ...mapMutations(['_addWriteArticleMenuType']),
         save() {
-            this.articleSave();
+            this.articleSave(this.$store.state.user);
         },
         addNews() {
             this.dialogTitle='新增';
-            this.openFullscreen = !this.openFullscreen;
+            if(this.isPhone){
+                this.openFullscreen = !this.openFullscreen;
+
+            }else{
+                this.$eventBus.emit('dialog',{
+                    type:'add'
+                })
+            }
             // this._addWriteArticleMenuType()
         },
         showNewsList() {
