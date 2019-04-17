@@ -66,6 +66,7 @@ export default {
             })
             .then((res) => {
                 if(res.status == 200){
+                    debugger
                     this.$message({
                         message: '登陆成功',
                         showClose: true,

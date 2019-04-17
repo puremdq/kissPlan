@@ -44,9 +44,7 @@ export function createAPI ({client}){
             if(hasLoading){
                 hasLoading.close();
             }
-            if(hasMessage){
                 Vue.prototype.$Message.error(error.config);
-            }
             return Promise.reject(error);
         }
     );

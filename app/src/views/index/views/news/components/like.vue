@@ -1,10 +1,10 @@
 <template>
     <div class="like">
-        <div class="like-box">
+        <div class="like-box" @click="clickHandle">
             <i class="iconfont icon-shoucang_xiantiao" style="font-size:25px;vertical-align: middle;"></i>
             <span>喜欢</span>
             <span>|</span>
-            <span>46</span>
+            <span>{{data.likeNum | MoneyFormat(true)}}</span>
         </div>
     </div>
 </template>
@@ -15,21 +15,31 @@ export default {
         return {
 
         }
+    },
+    props:['data'],
+    methods:{
+        clickHandle() {
+            this.$emit('clickLike')
+        }
     }
 }
 </script>
 <style lang="less">
     .like{
         .like-box{
-            border:1px solid #ea6f5a;
+            border:1px solid #999;
             border-radius:25px;
             height:50px;
             line-height:50px;
             text-align: center;
             width:200px;
-            color:#ea6f5a;
+            color:#999;
             cursor: pointer;
             display: inline-block;
+            &.active{
+                border:1px solid #ea6f5a;
+                color:#ea6f5a;
+            }
         }
         
     }

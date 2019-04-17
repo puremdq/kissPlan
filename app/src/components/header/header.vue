@@ -224,12 +224,19 @@ export default {
 <style lang="less" >
     .header{
         height:62px;
-        
+        position: fixed;
+        top:0px;
+        left:0px;
+        right:0px;
+        height:61px;
+        z-index: 2;
+        border-bottom:1px solid #ddd;
         background-color:#fff;
         font-size: 16px;
+        margin-bottom:61px;
         .header_container{
             background-color:#fff;
-            border-bottom:1px solid #ddd;
+            
             border-top:none;
             padding:0 16px;
             position: fixed;

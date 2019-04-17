@@ -6,13 +6,13 @@
                     列表
                 </mu-button>
             </li>
-            <li>
+            <!-- <li>
                 <mu-button fab  color="teal" @click="addNews">
                     新增
                 </mu-button>
-            </li>
+            </li> -->
             <li>
-                <mu-button fab  color="success">
+                <mu-button fab  color="success" @click="save">
                     保存
                 </mu-button>
             </li>
@@ -21,7 +21,7 @@
             <mu-list class="mu-list">
                 <mu-list-item button v-for="(item,idx) in _writeArticleMenuType" :key="idx"  @click.native="checkList(idx)" :class="{active:hoverIdx==idx}">
                     <i class="el-icon-document"></i>
-                    <mu-list-item-title>{{item.name}}</mu-list-item-title>
+                    <mu-list-item-title>{{item.title}}</mu-list-item-title>
                     <i class="el-icon-edit" style="margin-left:15px;" @click="openSimpleDialog(idx)" v-if="hoverIdx===idx"></i>
                 </mu-list-item>
             </mu-list>
@@ -44,7 +44,7 @@
                         </mu-form-item>
                         <mu-form-item prop="select" label="文章类型">
                         <mu-select v-model="form.select">
-                            <mu-option v-for="option,index in options" :key="option" :label="option" :value="option"></mu-option>
+                            <mu-option v-for="(option,index) in options" :key="index" :label="option" :value="option"></mu-option>
                         </mu-select>
                         </mu-form-item>
                        
@@ -83,7 +83,11 @@ export default {
         ...mapState(['_writeArticleMenuType'])
     },
     methods:{
+        ...mapActions(['articleSave']),
         ...mapMutations(['_addWriteArticleMenuType']),
+        save() {
+            this.articleSave();
+        },
         addNews() {
             this.dialogTitle='新增';
             if(this.isPhone){
