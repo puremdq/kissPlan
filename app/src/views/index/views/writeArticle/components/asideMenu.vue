@@ -1,10 +1,10 @@
 <template>
     <div class="asideMenu">
         <el-menu default-active="1" unique-opened class="el-menu-vertical-demo">
-            <el-menu-item :index="idx+1+''" v-for="(item,idx) in _writeArticleMenuType" :key="idx" @mouseenter.native="mouseenter(idx)" @mouseleave.native="mouseleave">
+            <el-menu-item :index="idx+1+''" v-for="(item,idx) in _writeArticleMenuType" :key="idx" @mouseenter.native="mouseenter(idx)" @mouseleave.native="mouseleave" @click.native="clickNative(idx)">
                 <i class="el-icon-document"></i>
                 <span slot="title">
-                    {{item.name}}
+                    {{item.title}}
                     <i class="el-icon-edit" style="margin-left:15px;" @click="openSimpleDialog(idx)" v-if="hoverIdx===idx"></i>
                 </span>
             </el-menu-item>
@@ -12,8 +12,8 @@
         </el-menu>
         <mu-dialog :title="dialogTitle" width="760" :open.sync="openSimple">
             <el-form ref="form" :rules="rules" :model="form" label-width="100px">
-                <el-form-item label="文章标题" prop="name">
-                    <el-input v-model="form.name"></el-input>
+                <el-form-item label="文章标题" prop="title">
+                    <el-input v-model="form.title"></el-input>
                 </el-form-item>
                 <el-form-item label="文章类型">
                     <el-select v-model="form.region" placeholder="请选择活动区域">
@@ -42,11 +42,14 @@ export default {
     data(){
         return {
             hoverIdx:-1,
+            activeIdx:-1,
             openSimple:false,
-            form:{},
+            form:{
+                title:'',
+            },
             dialogTitle:'修改文章详情',
             rules: {
-                name:[
+                title:[
                     { required: true, message: '请输入文章标题', trigger: 'blur' },
                     { min: 3, max: 25, message: '长度在 3 到 25 个字符', trigger: 'blur' }
                 ]
@@ -69,19 +72,28 @@ export default {
         })
     },
     methods:{
+        ...mapMutations(['_checkNewsItem','_setNewsItem']),
+        clickNative(idx) {
+            this._checkNewsItem(idx);
+        },
         mouseenter(idx) {
             this.hoverIdx = idx;
         },
         mouseleave() {
             this.hoverIdx = -1;
         },
-        openSimpleDialog () {
+        openSimpleDialog (idx) {
+            this.activeIdx = idx;
             this.dialogTitle = '修改文章详情';
             this.openSimple = true;
         },
         OkSimpleDialog() {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
+                    this._setNewsItem({
+                        idx:this.activeIdx,
+                        title:this.form.title,
+                    })
                     this.openSimple = false;
                 } else {
                     console.log('error submit!!');

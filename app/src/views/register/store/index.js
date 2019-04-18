@@ -1,4 +1,5 @@
 import api from '@/api'
+var Qs = require('qs')
 export default {
     name:'login',
     namespaced:true,
@@ -6,17 +7,27 @@ export default {
         count : 1
     }),
     actions : {
-        a_setCount: ({commit},n)=>{
-            commit('m_setCont',n)
-            
-        },
-        a_getCount({commit},n){
-            console.log(api);
-            api.get('https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts-en.common.js')
-                .then((res) => {
-                    commit('m_setCont',n)
+        userEmilRepeat({commit},data) {
+            return api.instance({
+                method:'post',
+                url:'/u/check',
+                hasLoading:false,
+                data:Qs.stringify({
+                    username:data.username,
+                    email:data.email,
                 })
-          
+            })
+        },
+        _register({commit},data) {
+            return api.instance({
+                method:'post',
+                url:'/u/register',
+                data:Qs.stringify({
+                    username:data.username,
+                    password:data.password,
+                    email:data.email,
+                })
+            })
         }
     },
     mutations:{

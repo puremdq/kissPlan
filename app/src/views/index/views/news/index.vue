@@ -3,16 +3,16 @@
         <div class="box mt20" ref="box">
             <mu-row gutter>
                 <mu-col span="24"  sm="24" md="8" style="margin:0 auto;">
-                    <h1 class="title">李白临终前最后一首诗，道尽多少英雄情，令人惋惜</h1>
-                    <newsAutor></newsAutor>
-                    <textPic></textPic>
+                    <h1 class="title">{{news.title}}</h1>
+                    <newsAutor :data="news"></newsAutor>
+                    <textPic :data="news.content"></textPic>
                     <zanShang class="mt20"></zanShang>
                     <mu-row gutter >
                         <mu-col span="12" sm="12" md="6">
-                            <like class="phoneTAC mt20"></like>
+                            <like class="phoneTAC mt20" :data="news" @clickLike="clickLike"></like>
                         </mu-col>
                         <mu-col span="12" sm="12" md="6">
-                            <zhuanZai class="phoneTAC mt20 tar"></zhuanZai>
+                            <zhuanZai class="phoneTAC mt20 tar" :data="news"></zhuanZai>
                         </mu-col>
                     </mu-row>
                     <pingLun style="margin-top:40px;"></pingLun>
@@ -34,12 +34,23 @@ import pingLun from "@/components/pingLun/index.vue"
 import comment from "@/components/comment/index.vue"
 export default {
     name:'news',
+    asyncData({store}){
+        return Promise.all([
+            store.dispatch('news/getNews',{
+                id:store.state.route.params.id
+            }),
+            store.dispatch('news/getComment',{
+                id:store.state.route.params.id,
+                pageNo:'1'
+            }),
+        ]);
+    },
     data(){
         return {
         }
     },
     computed:{
-        ...mapState(['comment'])
+        ...mapState(['news','comment'])
     },
     components:{
         newsAutor,
@@ -50,8 +61,12 @@ export default {
         pingLun,
         comment
     },
-    mounted(){
-        
+    methods:{
+        ...mapActions(['articleLike']),
+        //点赞
+        clickLike() {
+
+        }
     }
 }
 </script>

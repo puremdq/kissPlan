@@ -1,8 +1,8 @@
 <template>
-    <div class="hotToday">
+    <div class="preferredSerialization">
         <div class="box mt20">
             <div class="hot-item p10 mb10" style="" >
-                <h1 class="tac">今日热门</h1>
+                <h1 class="tac">优选连载</h1>
             </div>
             <mu-row gutter>
                 <mu-col span="12" sm="12" md="8">
@@ -26,7 +26,7 @@ const { mapState, mapActions } = createNamespacedHelpers('home');
 import contentItem from "@/components/contentItem/index.vue"
 import author from "@/components/author/index.vue"
 export default {
-    name:'hotToday',
+    name:'preferredSerialization',
     asyncData({store}){
         return store.dispatch('home/getNewItem');
     },
@@ -55,7 +55,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-    .hotToday{
+    .preferredSerialization{
         .contentItem-box{
             border-top:1px solid #ddd;
             padding-top:10px;

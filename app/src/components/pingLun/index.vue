@@ -10,6 +10,9 @@
                 placeholder="请输入内容"
                 v-model="from.pingLun">
             </el-input>
+            <div class="tar mt10">
+                <mu-button color="success">发送</mu-button>
+            </div>
         </div>
         <div v-else class="noLogin">
             <mu-button color="primary" @click="toLogin">登录</mu-button>

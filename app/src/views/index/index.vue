@@ -1,7 +1,7 @@
 <template>
     <div class="index">
         <yx-header></yx-header>
-        <router-view></router-view>
+        <router-view style="margin-top:71px;"></router-view>
     </div>
 </template>
 <script>

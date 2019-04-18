@@ -7,8 +7,8 @@
             </el-aside>
             <el-container>
                 <el-main class="main">
-                    <mavonEditorMy v-if="_editorType==='markdown编辑器'"></mavonEditorMy>
-                    <quillEditor v-else></quillEditor>
+                    <mavonEditorMy v-if="_editorType==='markdown编辑器'"  v-model="data"></mavonEditorMy>
+                    <quillEditor v-else v-model="data"></quillEditor>
                 </el-main>
             </el-container>
             <controllerMenu></controllerMenu>
@@ -27,11 +27,14 @@ export default {
     name:'writeArticle',
     data(){
         return {
-
+            data:{
+                content:'',
+                baseText:'',
+            }
         }
     },
     computed:{
-        ...mapState(['_editorType','_mavonEditorQP'])
+        ...mapState(['_editorType','_mavonEditorQP','_writeArticleMenuType'])
     },
     components:{
        ledtController ,
@@ -40,7 +43,14 @@ export default {
        "my-header":header,
        controllerMenu
     },
-    
+    methods:{
+       ...mapMutations(['_writeText'])
+    },
+    watch:{
+        data(newValue,oldValue) {
+            this._writeText(newValue)
+        }
+    }
 }
 </script>
 <style lang="less">

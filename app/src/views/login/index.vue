@@ -45,6 +45,7 @@ export default {
         ...mapState(['user'])
     },
     methods:{
+        ...mapMutations(['setUser']),
         login() {
             if(!this.validateForm.userName || !this.validateForm.password){
                 this.$message({
@@ -71,10 +72,11 @@ export default {
                         showClose: true,
                         type: 'success'
                     });
+                    this.setUser(res.data)
                     window.localStorage.setItem('user',JSON.stringify(res.data))
                     setTimeout(()=>{
-                        // this.$router.push('/')
-                        location.href='/index'
+                        this.$router.push('/index')
+                        // location.href='/index'
                     },1300)
                 }
             })
@@ -85,7 +87,7 @@ export default {
     },
     watch:{
         active(newValue) {
-            debugger
+            
             if(newValue==0){
                 this.$router.push('/login')
             }else{

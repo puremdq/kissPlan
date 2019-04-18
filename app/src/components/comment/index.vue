@@ -3,37 +3,42 @@
         <div>
             <mu-button style="float:right;" flat color="primary">按时间正序</mu-button>
             <mu-button style="float:right;" flat>按时间倒序</mu-button>
-            <h2 class="comment-count">25条评论</h2>
+            <h2 class="comment-count">{{data.total}}条评论</h2>
             <div class="comment-box mt10">
-                <div v-for="(item,idx) in data.comments" :key="'news-'+idx" class="item">
+                <div v-for="(item,idx) in data.list" :key="'news-'+idx" class="item">
                     <div class="clearfix head">
                         <mu-avatar size="45" style="vertical-align: middle;margin-right:5px;cursor:pointer;float:left;">
-                            <img :src="item.user && item.user.avatar">
+                            <img :src="item.authorAvatars">
                         </mu-avatar>
                         <div  style="margin-left:50px;">
-                            <p class="nickname">{{item.user && item.user.nickname}}</p>
-                            <p class="floor">{{item.floor}}楼 {{item.created_at | formatDate('yyyy-MM-dd hh:mm:ss')}}</p>
+                            <p class="nickname">{{item.authorName}}</p>
+                            <p class="floor">{{idx+1}}楼 {{item.updateDate | formatDate('yyyy-MM-dd hh:mm:ss')}}</p>
                         </div>
                     </div>
                     <div class="compiled_content" style="padding:10px 0;font-size:16px;word-break: break-word!important;line-height: 1.5;">
-                        {{item.compiled_content}}
+                        {{item.content}}
                     </div>
                     <div>
-                        点赞
+                        <mu-icon size="25" value=":icon-message" class="iconfont" style="vertical-align: middle;cursor:pointer;"></mu-icon>
+                        <span style="cursor:pointer;">回复</span>
                     </div>
                     <div class="child-content mt20">
-                        <div v-for="(child,index) in (item.children?item.children.slice(0,3):[])" :key="index" class="mt20 childItem">
+                        <div v-for="(child,index) in (item.childCommentList?item.childCommentList.slice(0,3):[])" :key="index" class="mt20 childItem">
                             <div class="child-content-text">
-                                <span class="nickname">{{child.user && child.user.nickname}}</span>:
-                                <span v-html="child.compiled_content"></span>
+                                <span class="nickname">{{child.authorName}}</span>:
+                                <span v-html="child.content"></span>
                             </div>
-                            <div class="child-content-time">{{child.created_at | formatDate('yyyy-MM-dd hh:mm:ss')}}</div>
+                             <div>
+                                <mu-icon size="20" value=":icon-message" class="iconfont" style="vertical-align: middle;cursor:pointer;"></mu-icon>
+                                <span style="cursor:pointer;">回复</span>
+                            </div>
+                            <div class="child-content-time">{{child.updateDate | formatDate('yyyy-MM-dd hh:mm:ss')}}</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <mu-flex justify-content="center">
-                <mu-pagination raised circle :total="1000" :current.sync="current"></mu-pagination>
+            <mu-flex justify-content="center" v-if="data.total">
+                <mu-pagination raised circle :total="data.total" :current.sync="current"></mu-pagination>
             </mu-flex>
         </div>
     </div>

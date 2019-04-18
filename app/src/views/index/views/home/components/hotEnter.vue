@@ -16,19 +16,19 @@ export default {
                     color:'#fff',
                 },
                 {
-                    path:'',
+                    path:'sevenDayHot',
                     label:'7日热门 >',
                     bgColor:'#f69581',
                     color:'#fff',
                 },
                 {
-                    path:'',
+                    path:'ThirtyDayHot',
                     label:'30日热门 >',
                     bgColor:'#f4e0bd',
                     color:'#bf913d',
                 },
                 {
-                    path:'',
+                    path:'preferredSerialization',
                     label:'优选连载 >',
                     bgColor:'#c1e4de',
                     color:'#548f88',
