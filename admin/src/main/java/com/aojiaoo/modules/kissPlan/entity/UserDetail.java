@@ -3,23 +3,22 @@ package com.aojiaoo.modules.kissPlan.entity;
 import com.aojiaoo.core.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import com.aojiaoo.core.mybatis.enums.IdType;
-import com.aojiaoo.core.mybatis.annotations.TableId;
 
 @EqualsAndHashCode(callSuper=true)
 @Data
-@Table(name = "kp_author")
-public class Author extends BaseEntity {
+@Table(name = "kp_user_detail")
+public class  UserDetail extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    public Author() {
+    public UserDetail() {
     }
 
-    public Author(Integer userId) {
+    public UserDetail(Integer userId) {
         this.userId=userId;
     }
 

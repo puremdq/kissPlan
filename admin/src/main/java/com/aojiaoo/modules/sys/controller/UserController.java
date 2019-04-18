@@ -1,8 +1,9 @@
 package com.aojiaoo.modules.sys.controller;
 
 import com.aojiaoo.core.base.BaseController;
+import com.aojiaoo.core.common.GlobalProperties;
 import com.aojiaoo.core.common.ServerResponse;
-import com.aojiaoo.modules.kissPlan.service.AuthorService;
+import com.aojiaoo.modules.kissPlan.service.UserDetailService;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.service.UserService;
 import com.aojiaoo.utils.StringUtils;
@@ -18,7 +19,7 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @Autowired
-    private AuthorService authorService;
+    private UserDetailService authorService;
 
     @ResponseBody
     @PostMapping("register")
@@ -36,30 +37,34 @@ public class UserController extends BaseController {
     /**
      * 检查用户名和密码是否存在
      *
-     * @param username username
-     * @param email    email
+     * @param value        username
+     * @param identifyType email|username
      * @return ServerResponse
      */
     @ResponseBody
     @PostMapping("check")
-    public ServerResponse checkUsername(String username, String email) {
+    public ServerResponse checkUsername(String value, String identifyType) {
 
-        if (StringUtils.isBlank(username)) {
-            return ServerResponse.createByError();
-        }
-        if (StringUtils.isBlank(username)) {
+        if (StringUtils.isAnyBlank(value, identifyType)) {
             return ServerResponse.createByError();
         }
 
-        if (userService.getByUserName(username) != null) {
-            return ServerResponse.createByErrorMessage("用户名已存在");
+        if (!StringUtils.equalsAny(identifyType, GlobalProperties.IDENTIFY_TYPE_USERNAME, GlobalProperties.IDENTIFY_TYPE_EMAIL)) {
+            return ServerResponse.createByErrorMessage("非法参数");
         }
 
-        if (userService.getByEmail(email) != null) {
-            return ServerResponse.createByErrorMessage("邮箱已存在");
+        if (GlobalProperties.IDENTIFY_TYPE_USERNAME.equals(identifyType)) {
+            if (userService.getByUserName(value) != null) {
+                return ServerResponse.createByErrorMessage("用户名已存在");
+            }
         }
 
-        return ServerResponse.createBySuccess();
+        if (GlobalProperties.IDENTIFY_TYPE_EMAIL.equals(identifyType)) {
+            if (userService.getByEmail(value) != null) {
+                return ServerResponse.createByErrorMessage("邮箱已存在");
+            }
+        }
+        return ServerResponse.createBySuccess("该名称可用");
     }
 
 

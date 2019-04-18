@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
@@ -92,5 +93,9 @@ public class ArticleView extends BaseEntity {
      */
     @Column(name = "article_type")
     private Integer articleType;
+
+
+    @Transient
+    private Boolean isCurrentUserLiked;
 
 }

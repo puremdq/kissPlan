@@ -10,12 +10,12 @@ import javax.persistence.Table;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode(callSuper=true)
 @Data
-@Table(name = "kp_author_view")
-public class AuthorView extends BaseEntity {
+@Table(name = "kp_user_view")
+public class UserView extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    public AuthorView() {
+    public UserView() {
     }
 
     /**
@@ -29,8 +29,8 @@ public class AuthorView extends BaseEntity {
      * 用户名(登录名)
      * 表字段： kp_author_view.author_name
      */
-    @Column(name = "author_name")
-    private String authorName;
+    @Column(name = "username")
+    private String username;
     /**
      * 用户邮箱
      * 表字段： kp_author_view.email
@@ -41,8 +41,8 @@ public class AuthorView extends BaseEntity {
      * 头像
      * 表字段： kp_author_view.avatars
      */
-    @Column(name = "author_avatars")
-    private String authorAvatars;
+    @Column(name = "avatars")
+    private String avatars;
     /**
      * 备注信息
      * 表字段： kp_author_view.remarks

@@ -54,19 +54,22 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
         if (id == null || id <= 0) {
             return null;
         }
-        return articleViewMapper.selectByPrimaryKey(id);
+        ArticleView articleView = articleViewMapper.selectByPrimaryKey(id);
+        this.setLikedStatus(articleView);
+        return articleView;
     }
 
 
     /*得到加入轮播图的 文章 */
-    public List<Map<String, String>> getSlideshowArticle(int size) {
+    public List<Map<String, Object>> getSlideshowArticle(int size) {
         size = (size < 2 || size > 6) ? 5 : size;
         List<ArticleView> list = this.articleViewMapper.getHotArticle(size);
-        Map<String, String> map = new HashMap<>();
-        List<Map<String, String>> resList = new ArrayList<>();
+        Map<String, Object> map = new HashMap<>();
+        List<Map<String, Object>> resList = new ArrayList<>();
         list.forEach(article -> {
-            map.put("url", getArticleUrlById(article.getId()));
             map.put("img", article.getFirstImg());
+            map.put("url", this.getArticleUrlById(article.getId()));
+            map.put("articleId", article.getId());
             resList.add(map);
         });
         return resList;
@@ -113,15 +116,24 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
 
         if (isCancel) {
             return this.mapper.cancelLike(id, UserUtil.getCurrentUserId()) > 0;
-        }else {
+        } else {
             return this.mapper.doLike(id, UserUtil.getCurrentUserId()) > 0;
         }
     }
-
 
     private String getArticleUrlById(Integer id) {
         return WebUtils.spliceUrl(WebUtils.getUrl(), "article", String.valueOf(id));
     }
 
+    //设置当前用户的是否点赞属性
+    private ArticleView setLikedStatus(ArticleView articleView) {
+        if (!UserUtil.isAuthenticated()) {
+            return articleView;
+        }
+
+        boolean isLiked = this.mapper.checkIsLiked(articleView.getId(), UserUtil.getCurrentUserId());
+        articleView.setIsCurrentUserLiked(isLiked);
+        return articleView;
+    }
 
 }

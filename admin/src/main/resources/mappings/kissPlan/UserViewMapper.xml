@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.aojiaoo.modules.kissPlan.mapper.AuthorViewMapper">
+<mapper namespace="com.aojiaoo.modules.kissPlan.mapper.UserViewMapper">
 
 
 
@@ -9,12 +9,12 @@
     </sql>
 
     <sql id="Base_select_table">
-        kp_author_view a
+        kp_user_view a
     </sql>
 
 
 
-    <select id="selectBySelective" resultType="com.aojiaoo.modules.kissPlan.entity.AuthorView">
+    <select id="selectBySelective" resultType="com.aojiaoo.modules.kissPlan.entity.UserView">
         select
         <include refid="Base_Column_List"/>
         from <include refid="Base_select_table"/>
@@ -63,9 +63,6 @@
                </if>
         </where>
     </select>
-
-
-
 
 
 </mapper>

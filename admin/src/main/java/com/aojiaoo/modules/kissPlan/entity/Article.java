@@ -48,6 +48,10 @@ public class Article extends BaseEntity {
      */
     @Column(name = "content")
     private String content;
+
+
+    @Column(name = "md_content")
+    private String mdContent;
     /**
      * 预览
      * 表字段： kp_article.preview

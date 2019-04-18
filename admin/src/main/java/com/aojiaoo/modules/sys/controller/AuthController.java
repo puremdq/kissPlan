@@ -9,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,6 +45,13 @@ public class AuthController {
         }
         WebUtils.writeBody(response, JsonUtil.toJson(ServerResponse.createByErrorMessage("登录失败")));
         return null;
+    }
+
+    //退出登录
+    @ResponseBody
+    @RequestMapping(value = "logoutSuccess")
+    public ServerResponse logoutSuccess() {
+        return ServerResponse.createBySuccess("退出登录成功");
     }
 
 

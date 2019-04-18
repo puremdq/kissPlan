@@ -19,6 +19,9 @@ public interface GlobalProperties {
     String CONNECTED_SOCKET_USER_CACHE_NAME = "connected_socket_user_cache_name";
     String USER_CACHE_NAME = "user_cache_name";
 
+    String IDENTIFY_TYPE_USERNAME = "username";
+    String IDENTIFY_TYPE_EMAIL = "email";
+
     static String get(String key) {
         if (StringUtils.isBlank(key)) {
             return null;
