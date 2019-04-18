@@ -9,7 +9,7 @@
             <mu-tooltip :content="userMessage" placement="top" :open="userRepeat">
                 <div class="login_input_box mt20">
                     <mu-icon class="toggle-icon iconfont icon" size="25" value=":icon-addressbook"></mu-icon>
-                    <input class="input" id="userName" placeholder="请输入账号" v-model="validateForm.userName" @input="userNameInput" type="text" autocomplete="off">
+                    <input  class="input" id="username" placeholder="请输入账号" v-model="validateForm.username" @input="usernameInput" type="text" autocomplete="off">
                 
                         <i class="iconfont icon-gantanhao passwordErr" :class="[userErr?'icon-duigoutianchong- colorG':'icon-gantanhao colorR']"></i>
                     
@@ -18,13 +18,20 @@
             <mu-tooltip content="不能为空" placement="top">
                 <div class="login_input_box">
                     <mu-icon class="toggle-icon iconfont icon" size="25" value=":icon-lock"></mu-icon>
-                    <input class="input"  id="password" placeholder="密码长度为6-12之间，只能是字母、数字和下划线" v-model="validateForm.password" @input="passwordInput" type="password" autocomplete="off">
+                    <input autocomplete="new-password" class="input"  id="password" placeholder="密码长度为6-12之间，只能是字母、数字和下划线" v-model="validateForm.password" @input="passwordInput" type="password">
                     <i class="iconfont icon-gantanhao passwordErr" :class="[passwordErr?'icon-duigoutianchong- colorG':'icon-gantanhao colorR']"></i>
+                </div>
+           </mu-tooltip>
+           <mu-tooltip content="不能为空" placement="top">
+                <div class="login_input_box">
+                    <mu-icon class="toggle-icon iconfont icon" size="25" value=":icon-lock"></mu-icon>
+                    <input class="input"  id="email" placeholder="请输入邮箱（asc@qq.com）" v-model="validateForm.email" @input="emailInput" type="email" autocomplete="off">
+                    <i class="iconfont icon-gantanhao passwordErr" :class="[emailErr?'icon-duigoutianchong- colorG':'icon-gantanhao colorR']"></i>
                 </div>
            </mu-tooltip>
             <mu-row gutter class="btn_box">
                 <mu-col span="24">
-                    <mu-button color="success" class="login_button" :disabled="(userErr && passwordErr)?false:true" @click="register">注册</mu-button>
+                    <mu-button color="success" class="login_button" :disabled="(userErr && passwordErr && emailErr)?false:true" @click="registerC">注册</mu-button>
                 </mu-col>
             </mu-row >
         </div>
@@ -33,19 +40,23 @@
 <script>
 import axios from 'axios'
 var Qs = require('qs');
-import { mapMutations ,mapState} from 'vuex'
+import { createNamespacedHelpers } from 'vuex';
+const { mapState, mapActions,mapMutations } = createNamespacedHelpers('register');
 export default {
     name:'login',
     data:function(){
         return {
             userRepeat:false,
             active:1,
-            userErr:false,
             userMessage:'不能为空',
+
+            userErr:false,
             passwordErr:false,
+            emailErr:false,
             validateForm:{
-                userName:'',
+                username:'',
                 password:'',
+                email:'',
             }
         }
     },
@@ -53,18 +64,49 @@ export default {
         ...mapState(['user'])
     },
     methods:{
-        register() {
-
+        ...mapActions(['userEmilRepeat','_register']),
+        registerC() {
+            if(this.userErr && this.passwordErr && this.emailErr){
+                this._register(this.validateForm)
+                .then((res)=>{
+                    if(res && res.status=='200'){
+                        this.$message({
+                            message: '注册成功',
+                            showClose: true,
+                            type: 'success'
+                        });
+                        setTimeout(()=>{
+                            this.$router.push('/login')
+                        },1000)
+                    }
+                })
+            }else{
+                this.$message({
+                    message: '格式有误，或不能为空',
+                    showClose: true,
+                    type: 'warning'
+                });
+            }
         },
         goHome() {
             this.$router.push('/')
         },
-        userNameInput() {
-            var userName = this.validateForm.userName;
-            this.userErr = false;
-            this.userRepeat = false;
-            if(userName.trim()){
-                this.userMessage = '用户名重复';
+        usernameInput() {
+            var username = this.validateForm.username;
+            if(username.trim()){
+                this.userEmilRepeat({
+                    username:username,
+                    email:this.validateForm.email
+                })
+                .then((res)=>{
+                    if(res && res.status=='200'){
+                        this.userErr = true;
+                        this.userRepeat = true;
+                        this.userMessage = '不能为空';
+                    }
+                },(err)=>{
+                    this.userMessage = err.msg;
+                })
             }else{
                 this.userMessage = '不能为空';
             }
@@ -77,11 +119,31 @@ export default {
             }else{
                 this.passwordErr = false;
             }
+        },
+        emailInput() {
+            var email = this.validateForm.email; 
+            var reg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+            if(new RegExp(reg).test(email)){
+                
+                this.userEmilRepeat({
+                    username:this.validateForm.username,
+                    email:this.validateForm.email
+                })
+                .then((res)=>{
+                    if(res && res.status=='200'){
+                        this.emailErr = true;
+                    }
+                },(err)=>{
+                    this.emailErr = false;
+                })
+            }else{
+                this.emailErr = false;
+            }
         }
     },
     watch:{
         active(newValue) {
-            debugger
+            
             if(newValue==0){
                 this.$router.push('/login')
             }else{

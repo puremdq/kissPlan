@@ -19,13 +19,18 @@
                         {{item.content}}
                     </div>
                     <div>
-                        点赞
+                        <mu-icon size="25" value=":icon-message" class="iconfont" style="vertical-align: middle;cursor:pointer;"></mu-icon>
+                        <span style="cursor:pointer;">回复</span>
                     </div>
                     <div class="child-content mt20">
                         <div v-for="(child,index) in (item.childCommentList?item.childCommentList.slice(0,3):[])" :key="index" class="mt20 childItem">
                             <div class="child-content-text">
                                 <span class="nickname">{{child.authorName}}</span>:
                                 <span v-html="child.content"></span>
+                            </div>
+                             <div>
+                                <mu-icon size="20" value=":icon-message" class="iconfont" style="vertical-align: middle;cursor:pointer;"></mu-icon>
+                                <span style="cursor:pointer;">回复</span>
                             </div>
                             <div class="child-content-time">{{child.updateDate | formatDate('yyyy-MM-dd hh:mm:ss')}}</div>
                         </div>

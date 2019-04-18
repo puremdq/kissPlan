@@ -30,6 +30,10 @@ export default {
         onEditorFocus(){//获得焦点事件
         },
         onEditorChange(){//内容改变事件
+            this.$emit('input',{
+                content:this.content,
+                baseText:this.content,
+            })
             if(!time){
                 time = window.setTimeout(()=>{
                     this.$message({
@@ -37,10 +41,7 @@ export default {
                         showClose: true,
                         type: 'success'
                     });
-                    this.$emit('input',{
-                        content:this.content,
-                        baseText:this.content,
-                    })
+                    
                     clearTimeout(time);
                     time = null;
                 },3000)

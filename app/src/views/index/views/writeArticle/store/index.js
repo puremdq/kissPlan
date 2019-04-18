@@ -1,4 +1,5 @@
 import api from '@/api'
+const Qs = require('qs')
 export default {
     name:'writeArticle',
     namespaced:true,
@@ -20,11 +21,11 @@ export default {
             return api.instance({
                 method:'post',
                 url:'/article/save',
-                data:{
+                kiss_plan_token:config.kiss_plan_token,
+                data:Qs.stringify({
                     title:data.title,
                     content:data.content,
-                    kiss_plan_token:"faa474b7a22e469287655db19334609c"
-                }
+                })
             })
             .then((res)=>{
                 if(res.status==200){

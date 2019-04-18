@@ -62,6 +62,7 @@ export default {
         comment
     },
     methods:{
+        ...mapActions(['articleLike']),
         //点赞
         clickLike() {
 

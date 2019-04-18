@@ -11,10 +11,10 @@
                     </span>
                 </mu-col>
                 <mu-col span="12" sm="12" md="6" class="phone_hide">
-                    <span class="baseColor h60 ptr10 pointer">首页</span>
-                    <span class="h60 ptr10 pointer">下载App</span>
+                    <span class="baseColor h60 ptr10 pointer"  @click="goHome">首页</span>
+                    <span class="h60 ptr10 pointer" @click="downloadApp">下载App</span>
                     <mu-text-field v-model="search" placeholder="搜索" style="margin-left:20px;margin-bottom: 0px;" >
-                        <i class="iconfont icon-search pointer" style="font-size:25px;"></i>
+                        <i class="iconfont icon-search pointer" style="font-size:25px;" @click="doSearch"></i>
                     </mu-text-field>
                 </mu-col>
                 <mu-col span="12" sm="12" md="4" class="tar phone_hide">
@@ -57,13 +57,13 @@
         </mu-container>
         <div class="phone_menu" :class="{active:phone_menu}" :style="{height:phone_menu_height}">
             <mu-list>
-                <mu-list-item button >
+                <mu-list-item button  @click="()=>{this.goHome();this.click_phone_menu()}">
                     <mu-list-item-action>
                         <i class="iconfont icon-shouye" style="font-size:28px;margin-left:-5px;"></i>
                     </mu-list-item-action>
                     <mu-list-item-title>首页</mu-list-item-title>
                 </mu-list-item>
-                <mu-list-item button >
+                <mu-list-item button  @click="()=>{this.click_phone_menu();this.downloadApp()}">
                     <mu-list-item-action>
                         <i class="iconfont icon-erweima"></i>
                     </mu-list-item-action>
@@ -86,26 +86,26 @@
                 </mu-list-item>
                 <mu-list-item button  @click="signIn"  v-if="!user || !user.kiss_plan_token">
                     <mu-list-item-action class="tac">
-                        <i class="iconfont icon-bi"></i>
+                        <i class="iconfont icon-huodongxiangqu"></i>
                     </mu-list-item-action>
                     <mu-list-item-title >登录</mu-list-item-title>
                 </mu-list-item>
                 <div v-else>
                     <mu-list-item button >
                         <mu-list-item-action class="tac">
-                            <i class="iconfont icon-bi"></i>
+                            <i class="iconfont icon-addressbook"></i>
                         </mu-list-item-action>
                         <mu-list-item-title >个人中心</mu-list-item-title>
                     </mu-list-item>
                     <mu-list-item button >
                         <mu-list-item-action class="tac">
-                            <i class="iconfont icon-bi"></i>
+                            <i class="iconfont icon-setup"></i>
                         </mu-list-item-action>
                         <mu-list-item-title >设置</mu-list-item-title>
                     </mu-list-item>
                     <mu-list-item button  @click="signOut" >
                         <mu-list-item-action class="tac">
-                            <i class="iconfont icon-bi"></i>
+                            <i class="iconfont icon-tuichu"></i>
                         </mu-list-item-action>
                         <mu-list-item-title >退出登录</mu-list-item-title>
                     </mu-list-item>
@@ -145,6 +145,20 @@ export default {
             if(command=='退出登录'){
                 this.signOut();
             }
+        },
+        doSearch() {
+            this.$message({
+                message: '该功能暂未开放',
+                showClose: true,
+                type: 'warning'
+            });
+        },
+        downloadApp() {
+            this.$message({
+                message: '该功能暂未开放',
+                showClose: true,
+                type: 'warning'
+            });
         },
         keypress(e) {
             var keycode = e.keyCode;

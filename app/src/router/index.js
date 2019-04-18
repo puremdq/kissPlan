@@ -28,6 +28,21 @@ export function createRouter(){
                         component:()=>import(/* webpackChunkName: "hotToday" */'@/views/index/views/hotToday/index.vue')
                     },
                     {
+                        path:'/sevenDayHot',
+                        name:'七日热门',
+                        component:()=>import(/* webpackChunkName: "sevenDayHot" */'@/views/index/views/sevenDayHot/index.vue')
+                    },
+                    {
+                        path:'/ThirtyDayHot',
+                        name:'30日热门',
+                        component:()=>import(/* webpackChunkName: "ThirtyDayHot" */'@/views/index/views/ThirtyDayHot/index.vue')
+                    },
+                    {
+                        path:'/preferredSerialization',
+                        name:'优选连载',
+                        component:()=>import(/* webpackChunkName: "preferredSerialization" */'@/views/index/views/preferredSerialization/index.vue')
+                    },
+                    {
                         path:'/news/:id',
                         name:'文章详情',
                         component:()=>import(/* webpackChunkName: "news" */'@/views/index/views/news/index.vue')

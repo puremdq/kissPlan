@@ -10,6 +10,9 @@ export function createAPI ({client}){
         hasLoading:client.hasLoading,
     });
     instance.interceptors.request.use(function (config) {
+        if(config.kiss_plan_token){
+            config.headers.kiss_plan_token = config.kiss_plan_token;
+        }
         if(config.hasLoading){
             hasLoading = Vue.prototype.$loading({
                 lock: true,
@@ -36,7 +39,11 @@ export function createAPI ({client}){
                 return response.data
             }
             if(hasMessage){
-                Vue.prototype.$Message.error(response.msg);
+                Vue.prototype.$message({
+                    message: response.msg,
+                    showClose: true,
+                    type: 'warning'
+                });
             }
             return Promise.reject(response)
         }, 
@@ -44,8 +51,12 @@ export function createAPI ({client}){
             if(hasLoading){
                 hasLoading.close();
             }
-                Vue.prototype.$Message.error(error.config);
-            return Promise.reject(error);
+            Vue.prototype.$message({
+                message: error.response&& error.response.data&& error.response.data.msg,
+                showClose: true,
+                type: 'warning'
+            });
+            return Promise.reject(error.response && error.response.data);
         }
     );
     return {
