@@ -121,4 +121,24 @@ public class ArticleController extends BaseController {
         return createServerResponse(this.articleService.doLike(id, isCancel));
     }
 
+
+    /**
+     * 得到文章评论
+     *
+     * @param id   文章id
+     * @param page page
+     * @return ServerResponse
+     */
+    @ResponseBody
+    @GetMapping("getLikeRecord")
+    public ServerResponse getLikeRecord(Integer id, Page<CommentView> page) {
+
+        if (!IdUtil.isValidId(id)) {
+            return ServerResponse.createByErrorMessage("非法参数");
+        }
+
+        Page<CommentView> commentPage = this.articleService.getCommentByArticleId(id, page);
+        return ServerResponse.createBySuccess(commentPage);
+    }
+
 }

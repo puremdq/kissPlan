@@ -27,7 +27,7 @@ public class GeneratorCode {
                 GeneratorCode.generatorMapper(tableName, currentEntityName, resMap.get(tableName), cfg, generatorProperties);
                 GeneratorCode.generatorMapping(tableName, currentEntityName, resMap.get(tableName), cfg, generatorProperties);
                 GeneratorCode.generatorService(currentEntityName, resMap.get(tableName), cfg, generatorProperties);
-                GeneratorCode.generatorController(currentEntityName, cfg, generatorProperties);
+//                GeneratorCode.generatorController(currentEntityName, cfg, generatorProperties);
             }
         }
     }

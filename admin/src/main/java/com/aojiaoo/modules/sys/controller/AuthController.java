@@ -49,8 +49,9 @@ public class AuthController {
 
     //退出登录
     @ResponseBody
-    @RequestMapping(value = "logoutSuccess")
-    public ServerResponse logoutSuccess() {
+    @RequestMapping(value = "logout")
+    public ServerResponse logout() {
+        UserUtil.Logout();
         return ServerResponse.createBySuccess("退出登录成功");
     }
 
