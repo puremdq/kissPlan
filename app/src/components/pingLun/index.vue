@@ -1,17 +1,19 @@
 <template>
     <div class="pingLun">
-        <mu-avatar size="45" style="vertical-align: middle;margin-right:5px;cursor:pointer;float:left;">
-            <img src="../../assets/images/head.jpg">
+        <mu-avatar  v-if="!hide_head" size="45" style="vertical-align: middle;margin-right:5px;cursor:pointer;float:left;">
+            <img :src="$store.state.user.user && $store.state.user.user.avatars">
         </mu-avatar>
         <div class="pingLinInputBox" v-if="user && user.kiss_plan_token">
             <el-input
                 type="textarea"
                 :rows="5"
                 placeholder="请输入内容"
+                @change="change"
                 v-model="from.pingLun">
             </el-input>
             <div class="tar mt10">
-                <mu-button color="success">发送</mu-button>
+                <mu-button @click="cancel" v-if="!hide_cancel">取消</mu-button>
+                <mu-button color="success" @click="success">发送</mu-button>
             </div>
         </div>
         <div v-else class="noLogin">
@@ -29,20 +31,34 @@ export default {
     data(){
         return {
             from:{
-                pingLun:'',
+                pingLun:this.value,
             },
             user:{},
         }
     },
+    props:['hide_head','value','hide_cancel'],
     mounted(){
         this.isLogin()
     },
     methods:{
+        change(){
+            this.$emit('input',this.from.value)
+        },
         isLogin() {
             var user = JSON.parse(window.localStorage.getItem('user'));
             this.user = user;
         },
-    }
+        cancel() {
+            this.$emit('cancel')
+        },
+        success() {
+            this.$emit('ok',this.from)
+        },
+        setValue(value) {
+            this.from.pingLun = value;
+        }
+    },
+   
 }
 </script>
 <style lang="less">

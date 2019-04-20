@@ -29,7 +29,8 @@ export default {
         return {
             data:{
                 content:'',
-                baseText:'',
+                mdContent:'',
+                articleType:'',
             }
         }
     },

@@ -17,7 +17,7 @@ app.use('/static',express.static(path.join(__dirname, '../dist'),{
 
 var proxyTable = {
   '/api': {
-      target: 'http://106.12.205.37:8080',
+      target: 'http://10.0.9.158:8080',
       pathRewrite: {
           '^/api': '/'
       }

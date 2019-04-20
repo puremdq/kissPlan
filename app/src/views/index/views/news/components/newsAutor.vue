@@ -2,11 +2,11 @@
     <div class="newsAutor">
         <div class="mt20 newsTargetDetail">
             <mu-avatar size="45" style="vertical-align: middle;margin-right:5px;cursor:pointer;float:left;">
-                <img :src="data.authorAvatars">
+                <img :src="data.avatars">
             </mu-avatar>
             <div style="margin-left:50px;height:50px;">
                 <div style="padding:0 10px;">
-                    <span class="name ">{{data.authorName}}</span>
+                    <span class="name ">{{data.username}}</span>
                     <mu-tooltip content="更新达人">
                         <i class="iconfont icon-bi"></i>
                     </mu-tooltip>
@@ -14,7 +14,7 @@
                 </div>
                 <div style="padding:0 10px;" class="new-t-t-y-p-x">
                     <span>{{data.updateDate}}</span>
-                    <span>字数 {{data.content.length | MoneyFormat(true)}}</span>
+                    <span>字数 {{data.content&& data.content.length | MoneyFormat(true)}}</span>
                     <span>阅读 {{(data.readNum || 0) | MoneyFormat(true)}}</span>
                     <span>评论 {{(data.commentNum || 0) | MoneyFormat(true)}}</span>
                     <span>喜欢 {{(data.likeNum || 0 )| MoneyFormat(true)}}</span>

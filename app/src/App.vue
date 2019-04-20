@@ -10,6 +10,11 @@ export default {
 	mounted(){
 		var user = JSON.parse(localStorage.getItem('user'));
 		this.$store.commit('setUser',user)
+		if(user){
+			if(this.$route.path==='/login'){
+				this.$router.push('/')
+			}
+		}
 	}
 }
 </script>

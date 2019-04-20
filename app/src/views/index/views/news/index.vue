@@ -15,8 +15,8 @@
                             <zhuanZai class="phoneTAC mt20 tar" :data="news"></zhuanZai>
                         </mu-col>
                     </mu-row>
-                    <pingLun style="margin-top:40px;"></pingLun>
-                    <comment style="padding:40px 0;" :data="comment"></comment>
+                    <pingLun ref="pingLun" style="margin-top:40px;" :hide_cancel="true" @ok="getContext" v-model="value"></pingLun>
+                    <comment style="padding:40px 0;" :data="comment" @sortType="sortType" @pageChange="pageChange"></comment>
                 </mu-col>
             </mu-row>
         </div>
@@ -47,6 +47,8 @@ export default {
     },
     data(){
         return {
+            value:'',
+            pageNo:'1',
         }
     },
     computed:{
@@ -62,10 +64,45 @@ export default {
         comment
     },
     methods:{
-        ...mapActions(['articleLike']),
+        ...mapActions(['articleLike','_articleReply','getComment']),
+        pageChange(pageNo) {
+            this.pageNo = pageNo;
+            this.getComment({
+                id:this.$route.params.id,
+                pageNo:this.pageNo,
+            })
+        },
+        sortType(sortType) {
+            this.getComment({
+                id:this.$route.params.id,
+                pageNo:this.pageNo,
+                sortType:sortType
+            })
+        },
         //点赞
         clickLike() {
 
+        },
+        getContext(data){
+            
+            this._articleReply({
+                articleId:this.$route.params.id,
+                content:data.pingLun
+            })
+            .then((res)=>{
+                if(res && res.status=='200'){
+                    this.$refs['pingLun'].setValue('');
+                    this.$message({
+                        message: '评论成功',
+                        showClose: true,
+                        type: 'success'
+                    });
+                    this.getComment({
+                        id:this.$route.params.id,
+                        pageNo:this.pageNo
+                    })
+                }
+            })
         }
     }
 }
