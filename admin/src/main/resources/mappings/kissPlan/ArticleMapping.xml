@@ -94,6 +94,12 @@
     </select>
 
 
+    <update id="addCommentNumById">
+        update kp_article
+        set comment_num =comment_num + 1
+        where id = #{id}
+    </update>
+
     <select id="checkIsLiked" resultType="java.lang.Boolean">
         select count(*)
         from kp_like_record a

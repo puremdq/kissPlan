@@ -43,12 +43,7 @@ public class UserView extends BaseEntity {
      */
     @Column(name = "avatars")
     private String avatars;
-    /**
-     * 备注信息
-     * 表字段： kp_author_view.remarks
-     */
-    @Column(name = "remarks")
-    private String remarks;
+
     /**
      * 关注数
      * 表字段： kp_author_view.follow_num

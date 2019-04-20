@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class TestCollectors {
@@ -65,12 +66,40 @@ public class TestCollectors {
 //                .collect(Collectors.toMap(x -> {
 //                }));
 
-        Map<String, String> personIdNameMap2 = persons.stream()
-                .collect(Collectors.toMap(Person::getId, Person::getName));
+        Map<String, Person> personIdNameMap2 = persons.stream()
+                .collect(Collectors.toMap(Person::getId, Function.identity()));
 
 
 //        logger.debug("personIdNameMap1 is: {}", personIdNameMap1);
         logger.debug("personIdNameMap2 is: {}", personIdNameMap2);
+    }
+
+
+    /**
+     * Collectors.groupingBy
+     * 分组
+     */
+    @Test
+    public void TestGroupingBy() {
+
+        List<Person> persons = new ArrayList<>();
+        persons.add(new Person("1", "tom", 15));
+        persons.add(new Person("2", "jan", 18));
+        persons.add(new Person("3", "jack", 18));
+        persons.add(new Person("4", "kate1", 15));
+        persons.add(new Person("5", "kate2", 12));
+
+        Map<Integer, List<Person>> personAgeMap1 = persons.stream()
+                .collect(Collectors.groupingBy(Person::getAge));
+        System.out.println(personAgeMap1);
+
+
+        Map<Integer, Map<String, Person>> personAgeMap2 = persons.stream()
+                .collect(Collectors.groupingBy(Person::getAge,
+                        Collectors.toMap(Person::getId, Function.identity())));
+        System.out.println(personAgeMap2);
+
+
     }
 
 

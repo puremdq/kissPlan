@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.beanutils.BeanUtils;
 
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -22,11 +23,16 @@ public abstract class BaseEntity implements Serializable {
 
     protected Date updateDate;
 
-
     protected Integer createBy;
     protected Integer updateBy;
 
     protected String remarks;//备注
+    @Transient
+    @JsonIgnore
+    protected String sortBy;//根据什么排序 如时间
+    @Transient
+    @JsonIgnore
+    protected String sortType;//desc asc
 
 
     @JsonIgnore
@@ -109,6 +115,31 @@ public abstract class BaseEntity implements Serializable {
 
     public void setDelFlag(String delFlag) {
         this.delFlag = delFlag;
+    }
+
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+
+    public String getSortType() {
+        return sortType;
+    }
+
+    public void setSortType(String sortType) {
+        this.sortType = sortType;
     }
 
 }

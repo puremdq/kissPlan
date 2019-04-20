@@ -7,6 +7,7 @@ import com.aojiaoo.modules.kissPlan.entity.CommentView;
 import com.aojiaoo.modules.kissPlan.mapper.CommentMapper;
 import com.aojiaoo.modules.kissPlan.mapper.CommentViewMapper;
 import com.aojiaoo.utils.IdUtil;
+import com.aojiaoo.utils.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,19 +23,23 @@ public class CommentService extends BaseService<Comment, CommentMapper> {
     /**
      * 根据文章id得到评论
      *
-     * @param id
+     * @param articleId
      * @param page
      * @return
      */
-    public Page<CommentView> getCommentByArticleId(Integer id, Page<CommentView> page) {
+    public Page<CommentView> getCommentByArticleId(Integer articleId, String sortBy, String sortType, Page<CommentView> page) {
 
-        if (!IdUtil.isValidId(id)) {
+        if (!IdUtil.isValidId(articleId)) {
             return null;
         }
 
         CommentView comment = new CommentView();
-        comment.setArticleId(id);
+        comment.setArticleId(articleId);
         comment.setPid(0);
+        comment.setPid(0);
+        comment.setSortBy(sortBy);
+        comment.setSortType(sortType);
+
 
         List<CommentView> list = this.commentViewMapper.selectBySelective(comment, page);
         list.forEach(commentView ->
