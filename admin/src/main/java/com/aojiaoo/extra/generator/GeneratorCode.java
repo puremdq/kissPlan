@@ -26,7 +26,7 @@ public class GeneratorCode {
                 String currentEntityName = GeneratorCode.generatorEntity(tableName, resMap.get(tableName), cfg, generatorProperties);
                 GeneratorCode.generatorMapper(tableName, currentEntityName, resMap.get(tableName), cfg, generatorProperties);
                 GeneratorCode.generatorMapping(tableName, currentEntityName, resMap.get(tableName), cfg, generatorProperties);
-                GeneratorCode.generatorService(currentEntityName, resMap.get(tableName), cfg, generatorProperties);
+//                GeneratorCode.generatorService(currentEntityName, resMap.get(tableName), cfg, generatorProperties);
 //                GeneratorCode.generatorController(currentEntityName, cfg, generatorProperties);
             }
         }
@@ -53,6 +53,7 @@ public class GeneratorCode {
 
         String filePath = FileUtils.spliceFilePath(getSourceRootPath(properties), StringUtils.replaceAll(entityPackage, "\\.", "/"), entityName + ".java");
         Files.createParentDirs(new File(filePath));
+        System.out.println("深层温江到：" + filePath);
         cfg.getTemplate("entity.ftl").process(templateMap, new FileWriter(filePath));
         return entityName;
     }

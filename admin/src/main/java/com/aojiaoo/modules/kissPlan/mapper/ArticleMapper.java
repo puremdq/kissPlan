@@ -28,4 +28,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @return
      */
     Integer cancelLike(@Param("articleId") Integer articleId, @Param("userId") Integer userId);
+
+    void addCommentNumById(Integer articleId);
 }

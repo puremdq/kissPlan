@@ -39,14 +39,14 @@ public class CommentView extends BaseEntity {
      * 用户名(登录名)
      * 表字段： kp_comment_view.author_name
      */
-    @Column(name = "author_name")
-    private String authorName;
+    @Column(name = "username")
+    private String username;
     /**
      * 头像
      * 表字段： kp_comment_view.author_avatars
      */
-    @Column(name = "author_avatars")
-    private String authorAvatars;
+    @Column(name = "avatars")
+    private String avatars;
     /**
      * 
      * 表字段： kp_comment_view.content

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aojiaoo.modules.kissPlan.mapper.LikeRecordViewMapper">
+
+
+
+    <sql id="Base_Column_List">
+            a.user_id as userId,a.article_id as articleId,a.username as username,a.avatars as avatars
+    </sql>
+
+    <sql id="Base_select_table">
+        kp_like_record_view a
+    </sql>
+
+
+
+    <select id="selectBySelective" resultType="com.aojiaoo.modules.kissPlan.entity.LikeRecordView">
+        select
+        <include refid="Base_Column_List"/>
+        from <include refid="Base_select_table"/>
+        <where>
+               <if test="userId != null">
+                   and a.user_id = #{userId,jdbcType=INTEGER}
+               </if>
+               <if test="articleId != null">
+                   and a.article_id = #{articleId,jdbcType=INTEGER}
+               </if>
+               <if test="username != null and username != ''">
+                   and a.username = #{username,jdbcType=VARCHAR}
+               </if>
+               <if test="avatars != null and avatars != ''">
+                   and a.avatars = #{avatars,jdbcType=VARCHAR}
+               </if>
+        </where>
+    </select>
+
+
+
+
+
+</mapper>

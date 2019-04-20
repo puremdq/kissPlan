@@ -2,12 +2,10 @@ package com.aojiaoo.modules.kissPlan.service;
 
 import com.aojiaoo.core.base.BaseService;
 import com.aojiaoo.core.mybatis.plugins.paging.Page;
-import com.aojiaoo.modules.kissPlan.entity.Article;
-import com.aojiaoo.modules.kissPlan.entity.ArticleView;
-import com.aojiaoo.modules.kissPlan.entity.Comment;
-import com.aojiaoo.modules.kissPlan.entity.CommentView;
+import com.aojiaoo.modules.kissPlan.entity.*;
 import com.aojiaoo.modules.kissPlan.mapper.ArticleMapper;
 import com.aojiaoo.modules.kissPlan.mapper.ArticleViewMapper;
+import com.aojiaoo.modules.kissPlan.mapper.LikeRecordViewMapper;
 import com.aojiaoo.utils.StringUtils;
 import com.aojiaoo.utils.UserUtil;
 import com.aojiaoo.utils.WebUtils;
@@ -27,6 +25,10 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
     @Resource
     private ArticleViewMapper articleViewMapper;
 
+    @Resource
+    private LikeRecordViewMapper likeRecordViewMapper;
+
+
     @Autowired
     private CommentService commentService;
 
@@ -35,10 +37,12 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
     public boolean save(Article article) {
 
         String content = StringUtils.trimToEmpty(article.getContent());
-        String preview = content.length() > 15 ? content.substring(0, 15) + "..." : content;
+        if (StringUtils.isBlank(article.getPreview())) {
+            String preview = content.length() > 15 ? content.substring(0, 15) + "..." : content;
+            article.setPreview(preview);
+        }
         article.setContent(content);
         article.setAuthorId(UserUtil.getCurrentUserId());
-        article.setPreview(preview);
         return super.save(article);
     }
 
@@ -75,7 +79,12 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
         return resList;
     }
 
-
+    /**
+     * 首页文章列表
+     *
+     * @param page
+     * @return
+     */
     public Page<ArticleView> indexArticleList(Page<ArticleView> page) {
         page.setList(this.articleViewMapper.indexArticleList(page));
         return page;
@@ -96,12 +105,8 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
         }
 
         entity.setAuthorId(UserUtil.getCurrentUserId());
+        this.mapper.addCommentNumById(entity.getArticleId());
         return commentService.insert(entity);
-    }
-
-
-    public Page<CommentView> getCommentByArticleId(Integer id, Page<CommentView> page) {
-        return commentService.getCommentByArticleId(id, page);
     }
 
 
@@ -121,19 +126,25 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
         }
     }
 
-    private String getArticleUrlById(Integer id) {
-        return WebUtils.spliceUrl(WebUtils.getUrl(), "article", String.valueOf(id));
-    }
-
     //设置当前用户的是否点赞属性
-    private ArticleView setLikedStatus(ArticleView articleView) {
+    private void setLikedStatus(ArticleView articleView) {
         if (!UserUtil.isAuthenticated()) {
-            return articleView;
+            return;
         }
 
         boolean isLiked = this.mapper.checkIsLiked(articleView.getId(), UserUtil.getCurrentUserId());
         articleView.setIsCurrentUserLiked(isLiked);
-        return articleView;
     }
 
+
+    private String getArticleUrlById(Integer id) {
+        return WebUtils.spliceUrl(WebUtils.getUrl(), "article", String.valueOf(id));
+    }
+
+
+    public Page<LikeRecordView> getLikeRecord(LikeRecordView likeRecordView, Page<LikeRecordView> page) {
+        List<LikeRecordView> likeRecordViews = this.likeRecordViewMapper.selectBySelective(likeRecordView, page);
+        page.setList(likeRecordViews);
+        return page;
+    }
 }
