@@ -36,7 +36,6 @@ export default {
             })
             .then((res)=>{
                 if(res.status==200){
-                    console.log(res);
                     if(res.data){
                         commit('getComment',res.data)
                     }else{
@@ -68,7 +67,14 @@ export default {
             })
             
         },
-        
+        //点赞
+        _articleLike({commit,dispatch},data){
+            return api.instance({
+                method:'post',
+                url:`/article/like`,
+                data:Qs.stringify(data)
+            })
+        }
     },
     mutations:{
         setNews(state,data) {

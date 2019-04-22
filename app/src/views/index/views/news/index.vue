@@ -2,7 +2,7 @@
     <div class="news" >
         <div class="box mt20" ref="box">
             <mu-row gutter>
-                <mu-col span="24"  sm="24" md="8" style="margin:0 auto;">
+                <mu-col span="24"  sm="24" md="10" style="margin:0 auto;">
                     <h1 class="title">{{news.title}}</h1>
                     <newsAutor :data="news"></newsAutor>
                     <textPic :data="news.content"></textPic>
@@ -16,7 +16,7 @@
                         </mu-col>
                     </mu-row>
                     <pingLun ref="pingLun" style="margin-top:40px;" :hide_cancel="true" @ok="getContext" v-model="value"></pingLun>
-                    <comment style="padding:40px 0;" :data="comment" @sortType="sortType" @pageChange="pageChange"></comment>
+                    <comment style="padding:40px 0;" ref="comment" :data="comment" :pageNo="pageNo" @sortType="getSortType" @pageChange="pageChange" @comment="commentText"></comment>
                 </mu-col>
             </mu-row>
         </div>
@@ -41,14 +41,15 @@ export default {
             }),
             store.dispatch('news/getComment',{
                 id:store.state.route.params.id,
-                pageNo:'1'
+                pageNo:1
             }),
         ]);
     },
     data(){
         return {
             value:'',
-            pageNo:'1',
+            pageNo:1,
+            sortType:'asc',
         }
     },
     computed:{
@@ -64,15 +65,41 @@ export default {
         comment
     },
     methods:{
-        ...mapActions(['articleLike','_articleReply','getComment']),
+        ...mapActions(['articleLike','_articleReply','getComment','_articleLike']),
+        //评论
+        commentText(data) {
+            this.$store.dispatch('news/_articleReply',{
+                articleId:this.$route.params.id,
+                content:data.content,
+                pid:data.pid
+           })
+           .then((res)=>{
+                if(res && res.status=='200'){
+                    this.$refs['comment'].cancel();
+                    this.$message({
+                        message: '评论成功',
+                        showClose: true,
+                        type: 'success'
+                    });
+                    this.$store.dispatch('news/getComment',{
+                        id:this.$route.params.id,
+                        pageNo:this.pageNo,
+                        sortType:this.sortType
+                    })
+                }
+           })
+        },
         pageChange(pageNo) {
-            this.pageNo = pageNo;
+            this.pageNo = Number(pageNo);
             this.getComment({
                 id:this.$route.params.id,
                 pageNo:this.pageNo,
+                sortType:this.sortType
             })
         },
-        sortType(sortType) {
+        getSortType(sortType) {
+            this.sortType = sortType;
+            this.pageNo =1;
             this.getComment({
                 id:this.$route.params.id,
                 pageNo:this.pageNo,
@@ -81,10 +108,19 @@ export default {
         },
         //点赞
         clickLike() {
-
+            this._articleLike({
+                id:this.$route.params.id,
+                isCancel:this.news.isCurrentUserLiked?1:0
+            })
+            .then((res)=>{
+                if(res && res.status=='200'){
+                    this.$store.dispatch('news/getNews',{
+                        id:this.$route.params.id,
+                    })
+                }
+            })
         },
         getContext(data){
-            
             this._articleReply({
                 articleId:this.$route.params.id,
                 content:data.pingLun
@@ -99,7 +135,8 @@ export default {
                     });
                     this.getComment({
                         id:this.$route.params.id,
-                        pageNo:this.pageNo
+                        pageNo:this.pageNo,
+                        sortType:this.sortType
                     })
                 }
             })

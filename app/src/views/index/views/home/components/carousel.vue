@@ -78,7 +78,6 @@ export default {
                 hasLoading:false,
             })
             .then((res)=>{
-                console.log(res);
                 if(res.status==200){
                     if(res.data && res.data.slideshow){
                         this.imgs = res.data.slideshow;

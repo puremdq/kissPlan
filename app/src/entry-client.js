@@ -7,7 +7,8 @@ if (window.__INITIAL_STATE__) {
 
 router.beforeEach((to, from, next) => {
     var hasUser = JSON.parse(window.localStorage.getItem('user'))
-    console.log(to);
+    var user = JSON.parse(localStorage.getItem('user'));
+    store.commit('setUser',user)
     if(to.meta.requiresAuth){
         if(hasUser){
             return next();

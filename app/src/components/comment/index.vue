@@ -55,7 +55,7 @@ export default {
     data(){
         return {
             active:'asc',
-            current:1,
+            current:this.pageNo,
             parentIdx:null,
             childIdx:null,
             content:'',
@@ -68,7 +68,8 @@ export default {
             default(){
                 return {}
             }
-        }
+        },
+        pageNo:Number
     },
     components:{
         pingLun
@@ -82,26 +83,11 @@ export default {
             this.$emit('sortType',text)
         },
         ok(data) {
-           this.$store.dispatch('news/_articleReply',{
-                articleId:this.$route.params.id,
+            this.$emit('comment',{
                 content:data.pingLun,
                 pid:this.pid
-           })
-           .then((res)=>{
-                if(res && res.status=='200'){
-                    this.$refs['pingLun'][0].setValue('')
-                    this.cancel();
-                    this.$message({
-                        message: '评论成功',
-                        showClose: true,
-                        type: 'success'
-                    });
-                    this.$store.dispatch('news/getComment',{
-                        id:this.$route.params.id,
-                        pageNo:'1'
-                    })
-                }
-           })
+            })
+            
         },
         comment(parentIdx,childIdx,item,Pitem) {
             this.parentIdx = parentIdx;
@@ -112,6 +98,12 @@ export default {
         cancel() {
             this.parentIdx = null;
             this.childIdx = null;
+            this.$refs['pingLun'][0].setValue('');
+        }
+    },
+    watch:{
+        pageNo(newValue){
+            this.current = newValue;
         }
     }
 }
@@ -125,7 +117,6 @@ export default {
         .comment-box{
             .item{
                 border-bottom:1px solid #ddd;
-                padding-bottom:30px;
                 margin-bottom:30px;
                 .head{
                     .floor{

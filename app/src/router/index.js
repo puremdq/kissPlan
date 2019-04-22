@@ -52,7 +52,11 @@ export function createRouter(){
                         name:'文章详情',
                         component:()=>import(/* webpackChunkName: "news" */'@/views/index/views/news/index.vue')
                     },
-                    
+                    {
+                        path:'/userHome/:id',
+                        name:'个人中心',
+                        component:()=>import(/* webpackChunkName: "userHome" */'@/views/index/views/userHome/index.vue')
+                    },
                 ]
             },
             {

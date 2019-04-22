@@ -111,7 +111,6 @@ export default {
                     this._setNewsItem(data)
                     this.openSimple = false;
                 } else {
-                    console.log('error submit!!');
                     return false;
                 }
             });

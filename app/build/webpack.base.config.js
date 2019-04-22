@@ -15,6 +15,7 @@ module.exports = {
         extensions: ['.js', '.vue', '.json'],
         alias: {
             '@': path.join(__dirname,'../src'),
+            '@images': path.join(__dirname,'../src/assets/images'),
         }
     },
     //如果一个资源超过 300kb，webpack 会对此输出一个警告来通知你。

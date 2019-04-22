@@ -91,7 +91,7 @@
                     <mu-list-item-title >登录</mu-list-item-title>
                 </mu-list-item>
                 <div v-else>
-                    <mu-list-item button >
+                    <mu-list-item button @click="goUserHome">
                         <mu-list-item-action class="tac">
                             <i class="iconfont icon-addressbook"></i>
                         </mu-list-item-action>
@@ -144,6 +144,9 @@ export default {
         handleCommand(command) {
             if(command=='退出登录'){
                 this.signOut();
+            }else if(command=='个人中心'){
+                var id = this.$store.state.user && this.$store.state.user.user.id
+                window.location.href = `/userHome/${id}`
             }
         },
         doSearch() {
@@ -231,7 +234,10 @@ export default {
         writeArticle() {
             this.$router.push('/writeArticle')
         },
-        
+        goUserHome() {
+            var id = this.$store.state.user && this.$store.state.user.user.id
+            window.location.href = `/userHome/${id}`
+        }
     }
 }
 </script>

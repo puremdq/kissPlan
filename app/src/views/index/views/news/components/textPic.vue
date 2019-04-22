@@ -1,7 +1,7 @@
 <template>
     <div class="textPic">
         <div data-note-content="" class="show-content mt20">
-            <div class="show-content-free" v-html="data">
+            <div class="show-content-free ql-editor markdown-body" v-html="data">
             </div>
         </div>
     </div>
@@ -17,6 +17,9 @@ export default {
 </script>
 <style lang="less">
     .textPic{
+        img{
+            max-width: 100%;
+        }
         .show-content{
             color: #2f2f2f;
             word-break: break-word!important;
