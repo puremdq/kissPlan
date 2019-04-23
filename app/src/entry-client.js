@@ -1,27 +1,34 @@
 import {createApp} from './app.js'
-
+import Vue from "vue"
 const {app,router,store} = createApp();
 if (window.__INITIAL_STATE__) {
     store.replaceState(window.__INITIAL_STATE__)
 }
 
 router.beforeEach((to, from, next) => {
-    var hasUser = JSON.parse(window.localStorage.getItem('user'))
-    if(to.meta.requiresAuth){
-        
-        if(hasUser){
-            return next();
-        }else{
-            return next({ path: '/login' });
-        }
-    }else{
-        if(to.path=='/login' || to.path=='/register' ){
-            if(hasUser){
-               return next({path:'/'})
-            } 
-        }
-        return next();
-    }
+    store.dispatch('currentUser')
+        .then((res)=>{
+            if(to.meta.requiresAuth){
+               
+                if(res && res.status=='200'){
+                    return next();
+                }else{
+                    Vue.prototype.$message({
+                        message: '当前页面需要登陆呦！',
+                        showClose: true,
+                        type: 'warning'
+                    });
+                    return next({ path: '/login' });
+                }
+            }else{
+                if(to.path=='/login' || to.path=='/register' ){
+                    if(store.state.user.user){
+                       return next({path:'/'})
+                    } 
+                }
+                return next();
+            }
+        })
  
 })
 router.afterEach(()=>{

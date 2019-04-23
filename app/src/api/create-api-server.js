@@ -24,7 +24,8 @@ export function createAPI({ server }) {
   });
    // 添加响应拦截器
    instance.interceptors.response.use(
-    function (response) {
+     function (response) {
+       console.log(response);
         if (response.status >= 200 && response.status < 300) {
             return response.data
         }

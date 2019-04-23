@@ -1,6 +1,6 @@
 <template>
     <div class="like">
-        <div class="like-box" @click="clickHandle">
+        <div class="like-box" @click="clickHandle" :class="{active:data.isCurrentUserLiked}">
             <i class="iconfont icon-shoucang_xiantiao" style="font-size:25px;vertical-align: middle;"></i>
             <span>喜欢</span>
             <span>|</span>

@@ -34,7 +34,7 @@ export default {
                     color:'#548f88',
                 },
                 {
-                    path:'',
+                    path:'topOneHundred',
                     label:'top100 >',
                     bgColor:'#b7d6ec',
                     color:'#4e8aab',

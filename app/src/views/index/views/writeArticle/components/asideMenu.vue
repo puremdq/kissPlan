@@ -15,7 +15,7 @@
                 <el-form-item label="文章标题" prop="title">
                     <el-input v-model="form.title"></el-input>
                 </el-form-item>
-                <el-form-item label="文章类型">
+                <!-- <el-form-item label="文章类型">
                     <el-select v-model="form.region" placeholder="请选择活动区域">
                     <el-option label="区域一" value="shanghai"></el-option>
                     <el-option label="区域二" value="beijing"></el-option>
@@ -23,9 +23,9 @@
                 </el-form-item>
                 <el-form-item label="仅自己可见">
                     <el-switch v-model="form.delivery"></el-switch>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="文章描述">
-                    <el-input type="textarea" v-model="form.desc"></el-input>
+                    <el-input type="textarea" v-model="form.preview"></el-input>
                 </el-form-item>
             
             </el-form>
@@ -46,8 +46,10 @@ export default {
             openSimple:false,
             form:{
                 title:'',
+                preview:'',
             },
             dialogTitle:'修改文章详情',
+            nowData:{},
             rules: {
                 title:[
                     { required: true, message: '请输入文章标题', trigger: 'blur' },
@@ -83,20 +85,32 @@ export default {
             this.hoverIdx = -1;
         },
         openSimpleDialog (idx) {
+            var that = this;
             this.activeIdx = idx;
             this.dialogTitle = '修改文章详情';
             this.openSimple = true;
+            if(this._writeArticleMenuType && this._writeArticleMenuType.length){
+                this._writeArticleMenuType.forEach((item)=>{
+                    if(item.active){
+                        that.nowData = item;
+                    }
+                })
+            }
+            this.form = {
+                title:that.nowData.title,
+                preview:that.nowData.preview,
+            }
         },
         OkSimpleDialog() {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
-                    this._setNewsItem({
+                    var data = {
                         idx:this.activeIdx,
-                        title:this.form.title,
-                    })
+                    };
+                    $.extend(true,data,this.form)
+                    this._setNewsItem(data)
                     this.openSimple = false;
                 } else {
-                    console.log('error submit!!');
                     return false;
                 }
             });

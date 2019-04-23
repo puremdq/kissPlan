@@ -29,6 +29,7 @@ export default {
                 url:'/article?pageNo=1&pageSize=10'
             })
             .then((res)=>{
+               
                 if(res.status==200){
                     if(res.data){
                         commit('setNewItem',res.data)

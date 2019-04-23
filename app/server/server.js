@@ -17,7 +17,7 @@ app.use('/static',express.static(path.join(__dirname, '../dist'),{
 
 var proxyTable = {
   '/api': {
-      target: 'http://106.12.205.37:8080',
+      target:  'http://10.0.44.47:8080',
       pathRewrite: {
           '^/api': '/'
       }
@@ -66,7 +66,6 @@ app.get('*', (req, res) => {
         res.status(404).end('404 - 页面没找到')
       } else {
         // 页面渲染错误
-        console.log(err);
         res.status(500).end('500 - Internal Server Error')
       }
     }

@@ -9,10 +9,12 @@ import home from "../views/index/views/home/store"
 import news from "../views/index/views/news/store"
 import writeArticle from "../views/index/views/writeArticle/store"
 import register from "../views/register/store"
+import userHome from "../views/index/views/userHome/store"
 var modules = {
     home,
     news,
     writeArticle,
-    register
+    register,
+    userHome
 }
 export default modules

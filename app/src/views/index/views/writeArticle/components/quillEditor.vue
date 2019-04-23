@@ -21,7 +21,11 @@ export default {
     },
     props:['value'],
     mounted(){
-        
+        this.$emit('input',{
+            content:this.content,
+            mdContent:'',
+            articleType:'0',
+        })
     },
     methods:{
         onEditorBlur(e){//失去焦点事件
@@ -32,7 +36,8 @@ export default {
         onEditorChange(){//内容改变事件
             this.$emit('input',{
                 content:this.content,
-                baseText:this.content,
+                mdContent:'',
+                articleType:'0',
             })
             if(!time){
                 time = window.setTimeout(()=>{
