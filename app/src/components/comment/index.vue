@@ -8,10 +8,10 @@
                 <div v-for="(item,idx) in data.list" :key="'news-'+idx" class="item">
                     <div class="clearfix head">
                         <mu-avatar size="45" style="vertical-align: middle;margin-right:5px;cursor:pointer;float:left;">
-                            <img :src="item.avatars">
+                            <img :src="item.avatars"   @click="$router.push(`/userHome/${item.authorId}`)">
                         </mu-avatar>
                         <div  style="margin-left:50px;">
-                            <p class="nickname">{{item.username}}</p>
+                            <p class="nickname" @click="$router.push(`/userHome/${item.authorId}`)" style="cursor:pointer">{{item.username}}</p>
                             <p class="floor">{{idx+1}}楼 {{item.updateDate | formatDate('yyyy-MM-dd hh:mm:ss')}}</p>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                     <div class="child-content mt20">
                         <div v-for="(child,index) in (item.childCommentList?item.childCommentList.slice(0,3):[])" :key="index" class="mt20 childItem">
                             <div class="child-content-text">
-                                <span class="nickname">{{child.username}}</span>:
+                                <span class="nickname" @click="$router.push(`/userHome/${child.authorId}`)" style="cursor:pointer">{{child.username}}</span>:
                                 <span v-html="child.content"></span>
                             </div>
                              <div @click="comment(idx,index,child,item)">

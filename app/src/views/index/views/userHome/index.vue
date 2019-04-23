@@ -20,11 +20,6 @@ import headDetail from "./components/headDetail.vue"
 import userHomeTab from "./components/userHomeTab.vue"
 export default {
     name:'userHome',
-    asyncData({store}){
-        return store.dispatch('userHome/_getUserHome',{
-            id:store.state.route.params.id
-        });
-    },
     data(){
         return {
 
@@ -38,6 +33,11 @@ export default {
         headDetail,
         userHomeTab
     },
+    mounted(){
+        this.$store.dispatch('userHome/_getUserHome',{
+            id:this.$route.params.id
+        });
+    }
 }
 </script>
 <style lang="less">

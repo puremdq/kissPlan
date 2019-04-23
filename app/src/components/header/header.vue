@@ -18,14 +18,14 @@
                     </mu-text-field>
                 </mu-col>
                 <mu-col span="12" sm="12" md="4" class="tar phone_hide">
-                    <span  class="el-dropdown-link"  v-if="!user || !user.kiss_plan_token">
+                    <span  class="el-dropdown-link"  v-if="!$store.state.user || !$store.state.user.user">
                         <mu-button flat color="primary" class="h60" @click="signIn">登录</mu-button>    
                     </span>
-                    <el-dropdown  @command="handleCommand"  v-if="user && user.kiss_plan_token">
+                    <el-dropdown  @command="handleCommand"  v-if="$store.state.user && $store.state.user.user">
                         
                         <span  class="el-dropdown-link">
                             <mu-avatar size="36" style="vertical-align: middle;margin-right:5px;cursor:pointer;"  ref="button" @click="open = !open">
-                                <img :src="user.user.avatars">
+                                <img :src="$store.state.user.user.avatars">
                             </mu-avatar>
                         </span>
                         <el-dropdown-menu slot="dropdown">
@@ -84,7 +84,7 @@
                     </mu-list-item-action>
                     <mu-list-item-title>写文章</mu-list-item-title>
                 </mu-list-item>
-                <mu-list-item button  @click="signIn"  v-if="!user || !user.kiss_plan_token">
+                <mu-list-item button  @click="signIn"  v-if="!$store.state.user || !$store.state.user.user">
                     <mu-list-item-action class="tac">
                         <i class="iconfont icon-huodongxiangqu"></i>
                     </mu-list-item-action>
@@ -125,12 +125,12 @@ export default {
             phone_menu_height:"0px",
             phone_menu:false,
             search:'',
-            user:{},
             open: false,
             trigger: null
         }
     },
     computed:{
+        ...mapState(['user'])
     },
     mounted(){
         this.isLogin();
@@ -225,8 +225,8 @@ export default {
             
         },
         isLogin() {
-            var user = JSON.parse(window.localStorage.getItem('user'));
-            this.user = user;
+            // var user = JSON.parse(window.localStorage.getItem('user'));
+            // this.user = this.$store.state.user;
         },
         goHome() {
             this.$router.push('/index')
@@ -236,7 +236,7 @@ export default {
         },
         goUserHome() {
             var id = this.$store.state.user && this.$store.state.user.user.id
-            window.location.href = `/userHome/${id}`
+            this.$router.push(`/userHome/${id}`)
         }
     }
 }

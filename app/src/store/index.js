@@ -23,11 +23,34 @@ export function createStore(){
                         email:data.email,
                     })
                 })
+            },
+            currentUser({commit}) {
+                return api.instance({
+                    method:'get',
+                    url:'/u/currentUser',
+                    hasLoading:true,
+                })
+                .then((res)=>{
+                    if(res && res.status=='200'){
+                        commit('setCurrentUser',res.data)
+                    }else{
+                        commit('setCurrentUser',null)
+                    }
+                    return res;
+                })
             }
         },
         mutations:{
             setUser (state,user) {
                 state.user = user;
+            },
+            setCurrentUser(state,user) {
+                state.user = state.user|| {};
+                state.user.user = user;
+            },
+            setKiss_plan_token(state,kiss_plan_token) {
+                state.user = state.user|| {};
+                state.user.kiss_plan_token = kiss_plan_token;
             }
         },
         modules

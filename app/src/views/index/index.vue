@@ -8,6 +8,9 @@
 import header from '@/components/header/header.vue'
 export default {
     name:'index',
+    asyncData({store}){
+        return store.dispatch('currentUser');
+    },
     data(){
         return {
 

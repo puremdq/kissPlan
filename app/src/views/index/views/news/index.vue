@@ -35,10 +35,18 @@ import comment from "@/components/comment/index.vue"
 export default {
     name:'news',
     asyncData({store}){
+        var id = store.state.route.params.id;
+        if(!id){
+            id= store.state.route.from.params.id;
+        }
+        console.log(store.state.route);
+        console.log(id);
+        debugger
         return Promise.all([
             store.dispatch('news/getNews',{
                 id:store.state.route.params.id
             }),
+            
             store.dispatch('news/getComment',{
                 id:store.state.route.params.id,
                 pageNo:1

@@ -1,9 +1,9 @@
 <template>
     <div class="pingLun">
-        <mu-avatar  v-if="!hide_head" size="45" style="vertical-align: middle;margin-right:5px;cursor:pointer;float:left;">
+        <mu-avatar  v-if="!hide_head && $store.state.user.user" size="45" style="vertical-align: middle;margin-right:5px;cursor:pointer;float:left;">
             <img :src="$store.state.user.user && $store.state.user.user.avatars">
         </mu-avatar>
-        <div class="pingLinInputBox" v-if="user && user.kiss_plan_token">
+        <div class="pingLinInputBox" v-if="$store.state.user.user">
             <el-input
                 type="textarea"
                 :rows="5"
@@ -33,20 +33,14 @@ export default {
             from:{
                 pingLun:this.value,
             },
-            user:{},
         }
     },
     props:['hide_head','value','hide_cancel'],
     mounted(){
-        this.isLogin()
     },
     methods:{
         change(){
             this.$emit('input',this.from.value)
-        },
-        isLogin() {
-            var user = JSON.parse(window.localStorage.getItem('user'));
-            this.user = user;
         },
         cancel() {
             this.$emit('cancel')

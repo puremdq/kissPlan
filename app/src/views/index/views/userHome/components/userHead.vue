@@ -14,7 +14,7 @@
                     </div>
                 </mu-col>
                 <mu-col span="6" sm="6" md="6">
-                    <div class="btns tar" v-if="$store.state.user.user && $store.state.route.params.id!==$store.state.user.user.id">
+                    <div class="btns tar" v-if="$store.state.user.user && $store.state.route.params.id!=$store.state.user.user.id">
                         <mu-button round color="success">发简信</mu-button>
                         <mu-button round color="success" >关注</mu-button>
                     </div>
@@ -38,7 +38,6 @@ export default {
     },
     props:['data'],
     mounted() {
-        debugger
         console.log(this.$store.state);
     }
 }
