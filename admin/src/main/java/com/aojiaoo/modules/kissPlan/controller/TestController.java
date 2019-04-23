@@ -24,6 +24,7 @@ public class TestController extends BaseController {
     @ResponseBody
     @PostMapping("upload")
     public ServerResponse fileUpload2(@RequestParam("file") CommonsMultipartFile file) throws IOException {
+
         long startTime = System.currentTimeMillis();
         System.out.println("fileName：" + file.getOriginalFilename());
         String path = "E:/" + new Date().getTime() + file.getOriginalFilename();

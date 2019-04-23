@@ -2,4 +2,6 @@
 target
 kissPlan.iml
 *.log
+#屏蔽生产环境的配置信息
 src/main/resources/jdbc.properties
+src/main/resources/application.properties
