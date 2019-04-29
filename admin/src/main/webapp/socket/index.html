@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Hello WebSocket啊</title>
+    <title>Hello WebSocket</title>
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="./main.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
@@ -76,7 +76,7 @@
     var kiss_plan_token = undefined;
     $("#submit-button").click(function () {
         $.ajax({
-            url: 'http://localhost:8080/login',
+            url: '/login',
             type: 'post',
             dataType: 'json',
             data: {
@@ -137,7 +137,7 @@
             return;
         }
 
-        var socket = new SockJS('http://localhost:8080/msg?kiss_plan_token=' + kiss_plan_token);
+        var socket = new SockJS('/msg?kiss_plan_token=' + kiss_plan_token);
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
 

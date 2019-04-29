@@ -1,6 +1,7 @@
 package com.aojiaoo.core.shiro.filter;
 
 import com.aojiaoo.core.common.GlobalProperties;
+import com.aojiaoo.core.common.ResponseCode;
 import com.aojiaoo.core.common.ServerResponse;
 import com.aojiaoo.modules.sys.service.UserService;
 import com.aojiaoo.utils.*;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -115,4 +117,9 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
     }
 
 
+    //需要登录不跳转
+    @Override
+    protected void saveRequestAndRedirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
+        WebUtils.writeBody(response.getWriter(), JsonUtil.toJson(ServerResponse.createByResponseCode(ResponseCode.NEED_LOGIN)));
+    }
 }

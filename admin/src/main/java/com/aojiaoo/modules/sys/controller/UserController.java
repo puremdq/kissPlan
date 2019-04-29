@@ -7,6 +7,7 @@ import com.aojiaoo.modules.kissPlan.service.UserDetailService;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.service.UserService;
 import com.aojiaoo.utils.StringUtils;
+import com.aojiaoo.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -78,4 +79,12 @@ public class UserController extends BaseController {
         return this.createServerResponseNotFoundOrSuccess(authorService.getAuthorView(id));
     }
 
+    @ResponseBody
+    @GetMapping("currentUser")
+    public ServerResponse currentUser() {
+        if (!UserUtil.isAuthenticated()) {
+            return ServerResponse.createByErrorMessage("非法操作");
+        }
+        return ServerResponse.createBySuccess(authorService.getAuthorView(UserUtil.getCurrentUserId()));
+    }
 }

@@ -98,6 +98,7 @@
                 authc表示需要认证 没有进行身份认证是不能进行访问的
                 -->
                 /login = authc
+                /u/currentUser = authc
                 /article/save = authc
                 /article/reply = authc
                 /article/like = authc
