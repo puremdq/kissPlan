@@ -30,6 +30,7 @@
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command="个人中心">个人中心</el-dropdown-item>
+                            <el-dropdown-item command="消息中心">消息中心</el-dropdown-item>
                             <el-dropdown-item command="设置">设置</el-dropdown-item>
                             <el-dropdown-item command="退出登录" >退出登录</el-dropdown-item>
                         </el-dropdown-menu>
@@ -99,6 +100,12 @@
                     </mu-list-item>
                     <mu-list-item button >
                         <mu-list-item-action class="tac">
+                            <i class="iconfont icon-addressbook"></i>
+                        </mu-list-item-action>
+                        <mu-list-item-title >消息中心</mu-list-item-title>
+                    </mu-list-item>
+                    <mu-list-item button >
+                        <mu-list-item-action class="tac">
                             <i class="iconfont icon-setup"></i>
                         </mu-list-item-action>
                         <mu-list-item-title >设置</mu-list-item-title>
@@ -147,7 +154,10 @@ export default {
             }else if(command=='个人中心'){
                 var id = this.$store.state.user && this.$store.state.user.user.id
                 window.location.href = `/userHome/${id}`
+            }else if(command=='消息中心'){
+                window.location.href = `/message`
             }
+            
         },
         doSearch() {
             this.$message({

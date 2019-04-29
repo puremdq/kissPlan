@@ -26,12 +26,15 @@ export default class eventBus {
     }
     emit(type,data){
         if(type){
-            var events = this.eventBus[type] || [];
-            if(events && events.length>0){
-                events.forEach((fn)=>{
-                    fn.call(this,data);
-                })
-            }
+            return new Promise((resolve, reject)=>{
+                var events = this.eventBus[type] || [];
+                if(events && events.length>0){
+                    events.forEach((fn)=>{
+                        fn.call(this,data);
+                    })
+                }
+                resolve()
+            })
         }
     }
 }

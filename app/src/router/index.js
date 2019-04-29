@@ -57,6 +57,24 @@ export function createRouter(){
                         name:'个人中心',
                         component:()=>import(/* webpackChunkName: "userHome" */'@/views/index/views/userHome/index.vue')
                     },
+                    {
+                        path:'/message',
+                        name:'消息中心',
+                        redirect:'/message/communication',
+                        component:()=>import(/* webpackChunkName: "message" */'@/views/index/views/message/index.vue'),
+                        children:[
+                            {
+                                path:'/message/communication',
+                                name:'聊天',
+                                component:()=>import(/* webpackChunkName: "communication" */'@/views/index/views/message/views/communication.vue'),
+                            },
+                            {
+                                path:'/message/commun/:id',
+                                name:'聊天',
+                                component:()=>import(/* webpackChunkName: "communication" */'@/views/index/views/message/views/xiaoXi.vue'),
+                            },
+                        ]
+                    },
                 ]
             },
             {
