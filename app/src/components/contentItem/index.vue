@@ -5,8 +5,7 @@
         </a>
         <div class="content" :class="{hasImg:data.firstImg}">
             <a class="title"  :href="'/news/'+data.id">{{data.title}}</a>
-            <p class="abstract">
-                {{data.preview}}
+            <p class="abstract"  v-html="data.preview">
             </p>
             <div class="meta">
                 <a class="nickname mr10" target="_blank"  :href="'/news/'+data.id">{{data.username}}</a>

@@ -21,5 +21,5 @@ var config = {
   }
 }
 const api = createAPI(config)
-
+export {config}
 export default api
