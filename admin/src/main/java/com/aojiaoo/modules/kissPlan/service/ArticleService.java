@@ -85,8 +85,8 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
      * @param page
      * @return
      */
-    public Page<ArticleView> indexArticleList(Page<ArticleView> page) {
-        page.setList(this.articleViewMapper.indexArticleList(page));
+    public Page<ArticleView> indexArticleList(Page<ArticleView> page, Integer authorId) {
+        page.setList(this.articleViewMapper.indexArticleList(page, authorId));
         return page;
     }
 

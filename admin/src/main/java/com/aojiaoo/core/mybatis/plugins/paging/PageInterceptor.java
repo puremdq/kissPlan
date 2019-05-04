@@ -61,7 +61,6 @@ public class PageInterceptor implements Interceptor {
         Object[] args = invocation.getArgs();
         Page page = getPageParamAndRemoveFormArgs(args);//拿到分页的page 并去除page 分页参数
 
-
         MappedStatement ms = (MappedStatement) args[0];
         Object parameter = args[1];
         RowBounds rowBounds = (RowBounds) args[2];
@@ -156,6 +155,7 @@ public class PageInterceptor implements Interceptor {
      * @return 得到分页对象 并且把它从参数中去掉
      */
     private Page getPageParamAndRemoveFormArgs(Object[] args) {
+
         Object parameterObj = args[1];
 
         if (parameterObj instanceof Page) {
@@ -163,17 +163,19 @@ public class PageInterceptor implements Interceptor {
             return (Page) parameterObj;
         }
 
+        Page tempPage = null;
         if (parameterObj instanceof HashMap) {
             HashMap<String, Object> parameterObjMap = (HashMap<String, Object>) parameterObj;
-            if (parameterObjMap.keySet().contains("param2") && parameterObjMap.get("param2") instanceof Page) {
-                parameterObj = parameterObjMap.get("param1");
-                args[1] = parameterObj;
-                return (Page) parameterObjMap.get("param2");
+            for (String k : parameterObjMap.keySet()) {
+                if (parameterObjMap.get(k) instanceof Page) {
+                    tempPage = (Page) parameterObjMap.get(k);
+                    parameterObjMap.remove(k);
+                    args[1] = parameterObjMap;
+                    return tempPage;
+                }
             }
-            return null;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**

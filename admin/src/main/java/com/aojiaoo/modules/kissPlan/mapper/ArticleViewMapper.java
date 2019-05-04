@@ -11,7 +11,7 @@ import java.util.List;
 @MyBatisDao
 public interface ArticleViewMapper extends BaseMapper<ArticleView> {
 
-    List<ArticleView> indexArticleList(Page<ArticleView> page);
+    List<ArticleView> indexArticleList(Page<ArticleView> page, @Param("authorId") Integer authorId);
 
     List<ArticleView> getHotArticle(@Param("size") int size);
 
