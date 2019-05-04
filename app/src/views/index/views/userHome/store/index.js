@@ -4,7 +4,8 @@ export default {
     name:'userHome',
     namespaced:true,
     state:() => ({
-        _userDetail:{}
+        _userDetail:{},
+        _newsList:[]
     }),
     actions : {
         _getUserHome({commit},data){
@@ -23,11 +24,29 @@ export default {
                 return res
             })
         },
-        
+        _getMyNewsList({commit},data) {
+            return api.instance({
+                method:'get',
+                url:`/article?pageNo=${data.pageNo}&pageSize=${data.pageSize}&authorId=${data.userId}`
+            })
+            .then((res)=>{
+                if(res.status==200){
+                    if(res.data){
+                        commit('_set_newsList',res.data)
+                    }else{
+                        commit('_set_newsList',{})
+                    }
+                }
+                return res
+            })
+        }
     },
     mutations:{
         _setUserDetail(state,data) {
             state._userDetail = data;
+        },
+        _set_newsList(state,data) {
+            state._newsList = data;
         }
     }
 }

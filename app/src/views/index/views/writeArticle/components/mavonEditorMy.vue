@@ -27,17 +27,7 @@ export default {
                 mdContent:value,
                 articleType:'1'
             })
-            if(!time && value){
-                time = window.setTimeout(()=>{
-                    this.$message({
-                        message: '本地保存',
-                        showClose: true,
-                        type: 'success'
-                    });
-                    clearTimeout(time);
-                    time = null;
-                },3000)
-            }
+            
         },
         fullScreen() {
             this._setQPBoll();

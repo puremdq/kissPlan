@@ -4,7 +4,7 @@
             <mu-col span="12" sm="12" md="8">
                 <userHead :data="_userDetail"></userHead>
                 <headDetail :data="_userDetail"></headDetail>
-                <userHomeTab class="mt10"></userHomeTab>
+                <userHomeTab class="mt10" :newList="_newsList"></userHomeTab>
             </mu-col>
             <mu-col class="phone_hide" span="12" sm="12" md="4">
                 
@@ -26,7 +26,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(['_userDetail'])
+        ...mapState(['_userDetail','_newsList'])
     },
     components:{
         userHead,
@@ -37,6 +37,14 @@ export default {
         this.$store.dispatch('userHome/_getUserHome',{
             id:this.$route.params.id
         });
+        this._getMyNewsList({
+            pageNo:'1',
+            pageSize:10,
+            userId:this.$route.params.id
+        })
+    },
+    methods:{
+        ...mapActions(['_getMyNewsList','_getUserHome'])
     }
 }
 </script>

@@ -39,9 +39,6 @@ export default {
         if(!id){
             id= store.state.route.from.params.id;
         }
-        console.log(store.state.route);
-        console.log(id);
-        debugger
         return Promise.all([
             store.dispatch('news/getNews',{
                 id:store.state.route.params.id
