@@ -143,7 +143,7 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
 
 
     public Page<LikeRecordView> getLikeRecord(LikeRecordView likeRecordView, Page<LikeRecordView> page) {
-        List<LikeRecordView> likeRecordViews = this.likeRecordViewMapper.selectBySelective(likeRecordView, page);
+        List<LikeRecordView> likeRecordViews = this.likeRecordViewMapper.selectBySelective(page, likeRecordView);
         page.setList(likeRecordViews);
         return page;
     }

@@ -12,10 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CommonTest {
 
@@ -69,7 +66,7 @@ public class CommonTest {
     public void test3b() throws Exception {
 
 //        String pythonPath="E:/development/Python/Python37-32/python.exe";
-        String pythonPath="/srv/Python-3.6.4/bin/python3";
+        String pythonPath = "/srv/Python-3.6.4/bin/python3";
 //        String searchenginePath = "C:\\Users\\puremdq\\Desktop\\searchengine";//需要执行的命令
         String searchenginePath = "/srv/workSpace/searchengine";//需要执行的命令
 
@@ -122,7 +119,7 @@ public class CommonTest {
                 System.out.println(line);
             }
             //读取标准错误流
-            BufferedReader brError = new BufferedReader(new InputStreamReader(p0.getErrorStream(),  Charset.forName("UTF-8")));
+            BufferedReader brError = new BufferedReader(new InputStreamReader(p0.getErrorStream(), Charset.forName("UTF-8")));
             String errline = null;
             while ((errline = brError.readLine()) != null) {
                 System.out.println(errline);
@@ -138,6 +135,19 @@ public class CommonTest {
 
         System.out.println(baseRes);
 
+    }
+
+
+    @Test
+    public void tests() throws Exception {
+        List<String> list1 = new ArrayList<>();
+        List<String> list2 = new ArrayList<>();
+        list1.add("a");
+        list1.add("b");
+        list2.add("d");
+        list2.add("c");
+        list1.retainAll(list2);
+        System.out.println(list1);
     }
 
 

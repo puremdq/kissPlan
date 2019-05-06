@@ -41,7 +41,7 @@ public class CommentService extends BaseService<Comment, CommentMapper> {
         comment.setSortType(sortType);
 
 
-        List<CommentView> list = this.commentViewMapper.selectBySelective(comment, page);
+        List<CommentView> list = this.commentViewMapper.selectBySelective(page, comment);
         list.forEach(commentView ->
                 commentView.setChildCommentList(getChildCommentList(commentView.getId()))
         );

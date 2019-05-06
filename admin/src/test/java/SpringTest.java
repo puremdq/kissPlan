@@ -39,7 +39,6 @@ public class SpringTest {
     public void test1() {
         User user = new User();
         user.setUsername("sdfsdf");
-        userMapper.insert(user);
         System.out.println(user);
 
     }
@@ -50,7 +49,7 @@ public class SpringTest {
         Page<User> userPage = new Page<>();
         userPage.setPageSize(1);
         userPage.setPageNo(2);
-        System.out.println(userService.findPage(new User(), userPage));
+        userService.get(new User());
     }
 
     @org.junit.Test

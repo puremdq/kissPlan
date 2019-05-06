@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>> {
 
@@ -172,7 +173,7 @@ public abstract class BaseService<E extends BaseEntity, M extends BaseMapper<E>>
     public Page<E> findPage(E entity, Page<E> page) {
 //        RowBounds rowBounds = new RowBounds(page.getOffset(), page.getPageSize());
 //        page.setList(this.mapper.selectByRowBounds(entity, rowBounds));
-        page.setList(this.mapper.selectBySelective(entity, page));
+        page.setList(this.mapper.selectBySelective(page, entity));
         return page;
     }
 

@@ -91,7 +91,7 @@ public class Message extends BaseEntity {
             return fromAvatars;
         }
 
-        return this.getFormUser().getAvatars();
+        return StringUtils.trimToEmpty(this.getFormUser().getAvatars());
     }
 
     public String getToUsername() {
@@ -107,7 +107,7 @@ public class Message extends BaseEntity {
         if (StringUtils.isNotBlank(toAvatars)) {
             return toAvatars;
         }
-        return this.getToUser().getAvatars();
+        return StringUtils.trimToEmpty(this.getToUser().getAvatars());
     }
 
 
