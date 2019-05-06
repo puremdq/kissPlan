@@ -179,6 +179,11 @@
         a.update_date as updateDate
         from
         <include refid="Base_select_table"/>
+        <where>
+            <if test="authorId !=null">
+                a.author_id = #{authorId}
+            </if>
+        </where>
         order by
         a.create_date desc
     </select>

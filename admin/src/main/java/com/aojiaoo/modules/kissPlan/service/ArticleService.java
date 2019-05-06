@@ -85,8 +85,8 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
      * @param page
      * @return
      */
-    public Page<ArticleView> indexArticleList(Page<ArticleView> page) {
-        page.setList(this.articleViewMapper.indexArticleList(page));
+    public Page<ArticleView> indexArticleList(Page<ArticleView> page, Integer authorId) {
+        page.setList(this.articleViewMapper.indexArticleList(page, authorId));
         return page;
     }
 
@@ -143,7 +143,7 @@ public class ArticleService extends BaseService<Article, ArticleMapper> {
 
 
     public Page<LikeRecordView> getLikeRecord(LikeRecordView likeRecordView, Page<LikeRecordView> page) {
-        List<LikeRecordView> likeRecordViews = this.likeRecordViewMapper.selectBySelective(likeRecordView, page);
+        List<LikeRecordView> likeRecordViews = this.likeRecordViewMapper.selectBySelective(page, likeRecordView);
         page.setList(likeRecordViews);
         return page;
     }

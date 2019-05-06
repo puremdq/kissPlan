@@ -1,5 +1,6 @@
 package com.aojiaoo.modules.sys.controller;
 
+import com.aojiaoo.core.annotations.IgnoreInField;
 import com.aojiaoo.core.base.BaseController;
 import com.aojiaoo.core.common.GlobalProperties;
 import com.aojiaoo.core.common.ServerResponse;
@@ -86,5 +87,14 @@ public class UserController extends BaseController {
             return ServerResponse.createByErrorMessage("非法操作");
         }
         return ServerResponse.createBySuccess(authorService.getAuthorView(UserUtil.getCurrentUserId()));
+    }
+
+
+    @ResponseBody
+    @GetMapping("save")
+
+    @IgnoreInField(type = User.class, field = "id")
+    public ServerResponse save(User user) {
+        return null;
     }
 }

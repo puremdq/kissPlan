@@ -6,6 +6,7 @@ import com.aojiaoo.core.mybatis.plugins.paging.Page;
 import com.aojiaoo.modules.kissPlan.entity.*;
 import com.aojiaoo.modules.kissPlan.service.ArticleService;
 import com.aojiaoo.modules.kissPlan.service.CommentService;
+import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.utils.IdUtil;
 import com.aojiaoo.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class ArticleController extends BaseController {
      */
     @ResponseBody
     @GetMapping("")
-    public ServerResponse articleList(Page<ArticleView> page) {
-        page = articleService.indexArticleList(page);
+    public ServerResponse articleList(Page<ArticleView> page, Integer authorId) {
+        page = articleService.indexArticleList(page, authorId);
         return ServerResponse.createBySuccess(page);
     }
 

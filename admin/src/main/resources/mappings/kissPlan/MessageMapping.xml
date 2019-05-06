@@ -68,14 +68,36 @@
         from
         <include refid="Base_select_table"/>
         <where>
+            (
+            (a.from = #{partnerId}
+            and a.to = #{userId})
+            or
             (a.from = #{userId}
-            or a.to = #{userId})
+            and a.to = #{partnerId})
+            )
             and
             <![CDATA[
                a.create_date < #{maxSendTime}
         ]]>
         </where>
         order by a.create_date desc limit 10;
+    </select>
+
+
+    <select id="messagePreview" resultType="com.aojiaoo.modules.kissPlan.entity.Message">
+
+        SELECT
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Base_select_table"/>
+        WHERE a.id in( SELECT MAX(b.id) from kp_message b
+
+        <where>
+            (b.from = #{userId}
+            or b.to = #{userId})
+        </where>
+        GROUP BY min_concat_max(b.`from`,b.`to`) )
+
     </select>
 
 
