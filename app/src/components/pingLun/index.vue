@@ -7,13 +7,13 @@
             <el-input
                 type="textarea"
                 :rows="5"
-                placeholder="请输入内容"
+                placeholder="请输入内容,最多200字"
                 @change="change"
                 v-model="from.pingLun">
             </el-input>
             <div class="tar mt10">
                 <mu-button @click="cancel" v-if="!hide_cancel">取消</mu-button>
-                <mu-button color="success" @click="success">发送</mu-button>
+                <mu-button color="success" @click="success" :disabled="from.pingLun && from.pingLun.length<=200?false:true">发送</mu-button>
             </div>
         </div>
         <div v-else class="noLogin">

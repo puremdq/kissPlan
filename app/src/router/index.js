@@ -65,7 +65,7 @@ export function createRouter(){
                         children:[
                             {
                                 path:'/message/communication',
-                                name:'聊天',
+                                name:'聊天列表',
                                 component:()=>import(/* webpackChunkName: "communication" */'@/views/index/views/message/views/communication.vue'),
                             },
                             {

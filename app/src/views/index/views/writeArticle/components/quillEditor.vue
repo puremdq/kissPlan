@@ -1,10 +1,11 @@
 <template>
     <div class="wangEditor">
-        <div id="wangEditor"></div>
+        <div id="mYwangEditor"></div>
     </div>
 </template>
 <script>
-import wangeditor from "wangeditor"
+// import wangeditor from "wangeditor" 不支持服务端渲染
+var wangeditor
 import {config} from "@/api"
 export default {
     name:'wangEditor',
@@ -16,12 +17,13 @@ export default {
     },
     props:['value'],
     mounted(){
+        wangeditor = require('wangeditor')
         this.create_info();
     },
     methods:{
         create_info(){
             var that = this;
-            this.editor = new wangeditor('#wangEditor');
+            this.editor = new wangeditor('#mYwangEditor');
             this.editor.customConfig.uploadImgServer = this.uploadUrl+'/upload';
             this.editor.customConfig.uploadFileName = 'file'
             this.editor.customConfig.onchange = function (html) {
@@ -89,7 +91,13 @@ export default {
 }
 </script>
 <style lang="less">
-    #wangEditor{
-        height:80vh;
+    #mYwangEditor{
+        
+        .w-e-text-container{
+            height:80vh !important;
+        }
+        .w-e-toolbar{
+            flex-wrap:wrap;
+        }
     }
 </style>

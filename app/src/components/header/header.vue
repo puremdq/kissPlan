@@ -140,7 +140,6 @@ export default {
         ...mapState(['user'])
     },
     mounted(){
-        this.isLogin();
         this.$nextTick(()=>{
             this.trigger = (this.$refs.button && this.$refs.button.$el)
         })
@@ -234,10 +233,7 @@ export default {
             }
             
         },
-        isLogin() {
-            // var user = JSON.parse(window.localStorage.getItem('user'));
-            // this.user = this.$store.state.user;
-        },
+       
         goHome() {
             this.$router.push('/index')
         },
@@ -259,7 +255,7 @@ export default {
         left:0px;
         right:0px;
         height:61px;
-        z-index: 2;
+        z-index: 10000;
         border-bottom:1px solid #ddd;
         background-color:#fff;
         font-size: 16px;
@@ -314,7 +310,7 @@ export default {
             left:0;
             right:0;
             top:60px;
-            z-index: 1000;
+            z-index: 10000;
             background-color: #fff;
             padding:0 10px;
             transition: height .3s;

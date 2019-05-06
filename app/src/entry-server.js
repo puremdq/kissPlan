@@ -26,7 +26,6 @@ export default context => {
                     Object.keys(item.components).forEach((key)=>{
                         item.components[key]
                         if(item.components[key] && item.components[key].asyncData){
-                            console.log(key);
                             arr.push(item.components[key].asyncData({
                                 store,
                                 router:router.currentRoute

@@ -23,7 +23,6 @@ export default {
             return api.instance({
                 method:'post',
                 url:'/article/save',
-                kiss_plan_token:config.kiss_plan_token,
                 data:Qs.stringify(data)
             })
             .then((res)=>{
@@ -65,7 +64,7 @@ export default {
         _writeText(state,data) {
             state._writeArticleMenuType.forEach((item)=>{
                 if(item.active){
-                    item.content = data.content;
+                    item.content = data.content=='<p><br></p>'?'':data.content;
                     item.mdContent =  data.mdContent;
                     item.articleType =  data.articleType;
                 }

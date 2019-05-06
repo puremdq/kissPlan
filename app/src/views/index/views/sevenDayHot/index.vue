@@ -9,7 +9,7 @@
                     
                     <div class="contentItem-box">
                         <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load">
-                            <contentItem class="mt20 bb1 pb10" v-for="(item,idx) in (newItem && newItem.list)" :key="idx" :data="item"></contentItem>
+                            <contentItem class="mt20 bb1 pb10" v-for="(item,idx) in newItem" :key="idx" :data="item"></contentItem>
                         </mu-load-more>
                     </div>
                 </mu-col>
@@ -28,7 +28,10 @@ import author from "@/components/author/index.vue"
 export default {
     name:'sevenDayHot',
     asyncData({store}){
-        return store.dispatch('home/getNewItem');
+        return store.dispatch('home/getNewItem',{
+            pageNo:1,
+            pageSize:10
+        });
     },
     data(){
         return {

@@ -38,7 +38,6 @@ export default {
     },
     props:['data'],
     mounted() {
-        console.log(this.$store.state);
     }
 }
 </script>

@@ -8,9 +8,9 @@ Vue.use(Vuex);
 export function createStore(){
     return new Vuex.Store({
         state:{
-            user:{},
-            theme:'#ea6f5a'
-
+            user:null,
+            theme:'#ea6f5a',
+            pageSize:10
         },
         actions:{
             getUser({commit},data) {
@@ -38,6 +38,7 @@ export function createStore(){
                     }
                     return res;
                 })
+                
             }
         },
         mutations:{

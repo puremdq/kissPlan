@@ -130,7 +130,7 @@ export default {
             left:0px;
             right:0px;
             height:60px;
-            z-index: 2001;
+            z-index: 12001;
             // box-shadow: 0px 3px 3px #ddd;
             .header_left{
                 .logo{
@@ -168,7 +168,7 @@ export default {
             left:0;
             right:0;
             top:60px;
-            z-index: 2000;
+            z-index: 10005;
             background-color: #fff;
             padding:0 10px;
             transition: height .3s;

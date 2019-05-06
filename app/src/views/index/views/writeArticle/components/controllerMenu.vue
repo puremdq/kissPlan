@@ -12,7 +12,7 @@
                 </mu-button>
             </li> -->
             <li>
-                <mu-button fab  color="success" @click="save">
+                <mu-button fab  color="success" @click="save" :disabled="_writeArticleMenuType[0].content?false:true">
                     保存
                 </mu-button>
             </li>
@@ -86,7 +86,35 @@ export default {
         ...mapActions(['articleSave']),
         ...mapMutations(['_addWriteArticleMenuType']),
         save() {
-            this.articleSave(this.$store.state.user);
+            if(!this._writeArticleMenuType[0].content){
+                this.$message({
+                    message: '文章不能为空',
+                    showClose: true,
+                    type: 'warning'
+                });
+                return
+            }
+            if(this._writeArticleMenuType[0].title==='默认菜单'){
+                this.$message({
+                    message: '请修改标题',
+                    showClose: true,
+                    type: 'warning'
+                });
+                return
+            }
+            this.articleSave(this.$store.state.user)
+            .then((res)=>{
+                if(res.status==200){
+                    this.$message({
+                        message: '文章发布成功，3s后将跳转至首页',
+                        showClose: true,
+                        type: 'success'
+                    });
+                    setTimeout(()=>{
+                        this.$router.push('/home')
+                    },3000)
+                }
+            })
         },
         addNews() {
             this.dialogTitle='新增';
@@ -129,7 +157,7 @@ export default {
             position: fixed;
             bottom:25px;
             right:25px;
-            z-index: 2000;
+            z-index: 10004;
             li{
                 margin-top:20px;
                 
