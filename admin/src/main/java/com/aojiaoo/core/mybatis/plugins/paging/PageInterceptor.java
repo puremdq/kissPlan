@@ -165,8 +165,8 @@ public class PageInterceptor implements Interceptor {
 
         if (parameterObj instanceof HashMap) {
             HashMap<String, Object> parameterObjMap = (HashMap<String, Object>) parameterObj;
-            if (parameterObjMap.get("arg0") instanceof Page) {
-                args[1] = parameterObjMap.get("arg1");
+            if (parameterObjMap.containsKey("arg0") && parameterObjMap.get("arg0") instanceof Page) {
+                args[1] = parameterObjMap.getOrDefault("arg1", null);
                 return (Page) parameterObjMap.get("arg0");
             }
         }
