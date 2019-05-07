@@ -41,11 +41,11 @@ export default {
         }
         return Promise.all([
             store.dispatch('news/getNews',{
-                id:store.state.route.params.id
+                id:id
             }),
             
             store.dispatch('news/getComment',{
-                id:store.state.route.params.id,
+                id:id,
                 pageNo:1
             }),
         ]);

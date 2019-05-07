@@ -6,8 +6,9 @@
                     <carousel></carousel>
                     <div class="contentItem-box">
                         <mu-load-more @refresh="refresh" :refreshing="refreshing" :loading="loading" @load="load">
-                            <contentItem class="mt20 bb1 pb10" v-for="(item,idx) in (newItem && newItem.list)" :key="idx" :data="item"></contentItem>
+                            <contentItem class="mt20 bb1 pb10" v-for="(item,idx) in (newItem)" :key="idx" :data="item"></contentItem>
                         </mu-load-more>
+                        <div class="tac mb10" v-if="newItem.length >= newItemObj.total">到底了，没有更多</div>
                     </div>
                 </mu-col>
                 <mu-col class="phone_hide" span="12" sm="12" md="4">
@@ -32,12 +33,15 @@ import author from "./components/author.vue"
 export default {
     name:'home',
     asyncData({store}){
-        return store.dispatch('home/getNewItem');
+        return store.dispatch('home/getNewItem',{
+            pageNo:1,
+            pageSize:store.state.pageSize
+        });
     },
     data(){
         return {
+            pageNo:1,
             open:true,
-            arr:10,
             refreshing: false,
             loading: false,
         }
@@ -51,13 +55,34 @@ export default {
         author
     },
     computed:{ 
-        ...mapState(['newItem'])
+        ...mapState(['newItem','newItemObj'])
         
     },
     methods:{
         load() {
+            if(this.newItem.length < this.newItemObj.total && !this.loading){
+                this.loading = true;
+                this.pageNo = this.pageNo+1;
+                this.$store.dispatch('home/getNewItem',{
+                    pageNo:this.pageNo,
+                    pageSize:this.pSize
+                })
+                .then(()=>{
+                    this.loading = false;
+                })
+            }
         },
-        refresh() {}
+        refresh() {
+            this.refreshing = true;
+            this.pageNo = 1;
+            this.$store.dispatch('home/getNewItem',{
+                pageNo:1,
+                pageSize:this.pSize
+            })
+            .then(()=>{
+                this.refreshing = false;
+            })
+        }
     }
 }
 </script>

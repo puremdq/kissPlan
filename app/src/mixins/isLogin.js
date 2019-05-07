@@ -5,11 +5,10 @@ export default {
         }
     },
     mounted() {
-        this.getIsLogin();
     },
     methods:{
         getIsLogin() {
-            if(this.$store.state.user.user){
+            if(this.$store && this.$store.state.user&& this.$store.state.user.user){
                 this.isLogin = true;
             }else{
                 this.isLogin = false;
