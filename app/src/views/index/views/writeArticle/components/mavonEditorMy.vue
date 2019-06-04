@@ -1,6 +1,6 @@
 <template>
     <div class="mavonEditorMy">
-        <mavon-editor v-if="isWindow" v-model="value" @change="change" @fullScreen="fullScreen" :ishljs="true">></mavon-editor>
+        <mavon-editor v-if="isWindow" v-model="content" @change="change" @fullScreen="fullScreen" :ishljs="true">></mavon-editor>
     </div>
 </template>
 <script>
@@ -11,27 +11,23 @@ export default {
     name:'mavonEditorMy',
     data(){
         return {
-            value:"",
+            content:this.value.content,
             isWindow:false
         }
     },
+    props:['value'],
     mounted(){
         this.isWindow = true;
     },
     methods:{
         ...mapMutations(['_setQPBoll']),
         change(value, render) {
-            if(!time && value){
-                time = window.setTimeout(()=>{
-                    this.$message({
-                        message: '本地保存',
-                        showClose: true,
-                        type: 'success'
-                    });
-                    clearTimeout(time);
-                    time = null;
-                },3000)
-            }
+            this.$emit('input',{
+                content:render,
+                mdContent:value,
+                articleType:'1'
+            })
+            
         },
         fullScreen() {
             this._setQPBoll();

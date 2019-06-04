@@ -18,18 +18,19 @@
                     </mu-text-field>
                 </mu-col>
                 <mu-col span="12" sm="12" md="4" class="tar phone_hide">
-                    <span  class="el-dropdown-link"  v-if="!user || !user.kiss_plan_token">
+                    <span  class="el-dropdown-link"  v-if="!$store.state.user || !$store.state.user.user">
                         <mu-button flat color="primary" class="h60" @click="signIn">登录</mu-button>    
                     </span>
-                    <el-dropdown  @command="handleCommand"  v-if="user && user.kiss_plan_token">
+                    <el-dropdown  @command="handleCommand"  v-if="$store.state.user && $store.state.user.user">
                         
                         <span  class="el-dropdown-link">
                             <mu-avatar size="36" style="vertical-align: middle;margin-right:5px;cursor:pointer;"  ref="button" @click="open = !open">
-                                <img :src="user.user.avatars">
+                                <img :src="$store.state.user.user.avatars">
                             </mu-avatar>
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command="个人中心">个人中心</el-dropdown-item>
+                            <el-dropdown-item command="消息中心">消息中心</el-dropdown-item>
                             <el-dropdown-item command="设置">设置</el-dropdown-item>
                             <el-dropdown-item command="退出登录" @click="signOut">退出登录</el-dropdown-item>
                         </el-dropdown-menu>
@@ -84,18 +85,24 @@
                     </mu-list-item-action>
                     <mu-list-item-title>写文章</mu-list-item-title>
                 </mu-list-item>
-                <mu-list-item button  @click="signIn"  v-if="!user || !user.kiss_plan_token">
+                <mu-list-item button  @click="signIn"  v-if="!$store.state.user || !$store.state.user.user">
                     <mu-list-item-action class="tac">
                         <i class="iconfont icon-huodongxiangqu"></i>
                     </mu-list-item-action>
                     <mu-list-item-title >登录</mu-list-item-title>
                 </mu-list-item>
                 <div v-else>
-                    <mu-list-item button >
+                    <mu-list-item button @click="goUserHome">
                         <mu-list-item-action class="tac">
                             <i class="iconfont icon-addressbook"></i>
                         </mu-list-item-action>
                         <mu-list-item-title >个人中心</mu-list-item-title>
+                    </mu-list-item>
+                    <mu-list-item button >
+                        <mu-list-item-action class="tac">
+                            <i class="iconfont icon-addressbook"></i>
+                        </mu-list-item-action>
+                        <mu-list-item-title >消息中心</mu-list-item-title>
                     </mu-list-item>
                     <mu-list-item button >
                         <mu-list-item-action class="tac">
@@ -124,15 +131,14 @@ export default {
             phone_menu_height:"0px",
             phone_menu:false,
             search:'',
-            user:{},
             open: false,
             trigger: null
         }
     },
     computed:{
+        ...mapState(['user'])
     },
     mounted(){
-        this.isLogin();
         this.$nextTick(()=>{
             this.trigger = (this.$refs.button && this.$refs.button.$el)
         })
@@ -143,7 +149,13 @@ export default {
         handleCommand(command) {
             if(command=='退出登录'){
                 this.signOut();
+            }else if(command=='个人中心'){
+                var id = this.$store.state.user && this.$store.state.user.user.id
+                window.location.href = `/userHome/${id}`
+            }else if(command=='消息中心'){
+                window.location.href = `/message`
             }
+            
         },
         doSearch() {
             this.$message({
@@ -218,17 +230,17 @@ export default {
             }
             
         },
-        isLogin() {
-            var user = JSON.parse(window.localStorage.getItem('user'));
-            this.user = user;
-        },
+       
         goHome() {
             this.$router.push('/index')
         },
         writeArticle() {
             this.$router.push('/writeArticle')
         },
-        
+        goUserHome() {
+            var id = this.$store.state.user && this.$store.state.user.user.id
+            this.$router.push(`/userHome/${id}`)
+        }
     }
 }
 </script>
@@ -240,7 +252,7 @@ export default {
         left:0px;
         right:0px;
         height:61px;
-        z-index: 2;
+        z-index: 10000;
         border-bottom:1px solid #ddd;
         background-color:#fff;
         font-size: 16px;
@@ -295,7 +307,7 @@ export default {
             left:0;
             right:0;
             top:60px;
-            z-index: 1000;
+            z-index: 10000;
             background-color: #fff;
             padding:0 10px;
             transition: height .3s;

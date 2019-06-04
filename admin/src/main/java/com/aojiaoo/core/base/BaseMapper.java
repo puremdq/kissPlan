@@ -11,7 +11,7 @@ public interface BaseMapper<Entity extends BaseEntity> extends Mapper<Entity> {
 
     List<Entity> selectBySelective(Entity record);
 
-    List<Entity> selectBySelective(Entity record, Page page);
+    List<Entity> selectBySelective(Page page, Entity record);
 
 
     List<Map> selectMap(Entity record);

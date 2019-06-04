@@ -4,13 +4,15 @@ export default {
     namespaced:true,
     state:() => ({
         imgs : [],
-        newItem:{},
+        newItem:[],
+        newItemObj:{}
     }),
     actions : {
         getCarousel({commit},n){
             return api.instance({
                 method:'get',
-                url:'/index/slideshow'
+                url:'/index/slideshow',
+                hasLoading:false,
             })
             .then((res)=>{
                 if(res.status==200){
@@ -26,9 +28,11 @@ export default {
         getNewItem({commit},data) {
             return api.instance({
                 method:'get',
-                url:'/article?pageNo=1&pageSize=10'
+                hasLoading:false,
+                url:`/article?pageNo=${data.pageNo}&pageSize=${data.pageSize}`
             })
             .then((res)=>{
+               
                 if(res.status==200){
                     if(res.data){
                         commit('setNewItem',res.data)
@@ -45,7 +49,13 @@ export default {
             state.imgs=data 
         },
         setNewItem:(state,data)=>{
-            state.newItem = data;
+            state.newItemObj = data;
+            if(data.pageNo>1){
+                state.newItem = state.newItem.concat(data.list)
+            }else{
+                state.newItem = data.list;
+            }
+           
         }
     }
 }

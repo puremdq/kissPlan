@@ -7,6 +7,7 @@ import com.aojiaoo.utils.UserUtil;
 import com.aojiaoo.utils.WebUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,10 +50,12 @@ public class AuthController {
 
     //退出登录
     @ResponseBody
-    @RequestMapping(value = "logoutSuccess")
-    public ServerResponse logoutSuccess() {
+    @RequestMapping(value = "logout")
+    public ServerResponse logout() {
+        UserUtil.Logout();
         return ServerResponse.createBySuccess("退出登录成功");
     }
+
 
 
 }

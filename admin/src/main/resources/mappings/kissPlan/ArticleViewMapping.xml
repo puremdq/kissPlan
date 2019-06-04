@@ -51,15 +51,15 @@
         readNum,
         a
         .
-        author_name
+        username
         as
-        authorName,
+        username,
         a.article_type as articleType,
         a
         .
-        author_avatars
+       avatars
         as
-        authorAvatars,
+        avatars,
         a
         .
         create_by
@@ -131,12 +131,7 @@
             <if test="readNum != null">
                 and a.read_num = #{readNum,jdbcType=INTEGER}
             </if>
-            <if test="authorName != null and authorName != ''">
-                and a.author_name = #{authorName,jdbcType=VARCHAR}
-            </if>
-            <if test="authorAvatars != null and authorAvatars != ''">
-                and a.author_avatars = #{authorAvatars,jdbcType=VARCHAR}
-            </if>
+
             <if test="createBy != null and createBy != ''">
                 and a.create_by = #{createBy,jdbcType=CHAR}
             </if>
@@ -178,12 +173,17 @@
         a.like_num as likeNum,
         a.comment_num as commentNum,
         a.read_num as readNum,
-        a.author_avatars as authorAvatars,
-        a.author_name as authorName,
+        a.avatars as avatars,
+        a.username as username,
         a.create_date as createDate,
         a.update_date as updateDate
         from
         <include refid="Base_select_table"/>
+        <where>
+            <if test="authorId !=null">
+                a.author_id = #{authorId}
+            </if>
+        </where>
         order by
         a.create_date desc
     </select>

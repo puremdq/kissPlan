@@ -42,7 +42,9 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-
+.el-message{
+	z-index: 100000 !important;
+}
 
 
 @media (min-width: 1920px){

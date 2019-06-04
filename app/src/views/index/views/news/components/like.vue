@@ -1,8 +1,8 @@
 <template>
     <div class="like">
-        <div class="like-box" @click="clickHandle">
-            <i class="iconfont icon-shoucang_xiantiao" style="font-size:25px;vertical-align: middle;"></i>
-            <span>喜欢</span>
+        <div class="like-box":class="{active:data.isCurrentUserLiked}">
+            <i class="iconfont icon-shoucang_xiantiao" style="font-size:25px;vertical-align: middle;"  @click="clickHandle" ></i>
+            <span  @click="clickHandle" >喜欢</span>
             <span>|</span>
             <span>{{data.likeNum | MoneyFormat(true)}}</span>
         </div>

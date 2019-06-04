@@ -1,0 +1,6 @@
+uploadPath=/var/www/upload
+appname=kissplan
+imgServer=http://img.begoodman.cn
+#七牛云 accessKey
+qiliu.accessKey=你的accessKey
+qiliu.secretKey=你的secretKey

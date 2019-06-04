@@ -88,6 +88,7 @@ public class ControllerAop {
     }
 
 
+    /*校验参数*/
     private BindingResult assertHasNoError(Object[] args) {
 
         if (args == null || args.length < 1) {

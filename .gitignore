@@ -2,3 +2,4 @@
 app/dist
 app/.project
 app/package-lock.json
+admin/src/main/resources/application.properties

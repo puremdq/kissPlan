@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MessageService extends BaseService<Message, MessageMapper> {
@@ -59,22 +60,26 @@ public class MessageService extends BaseService<Message, MessageMapper> {
     /**
      * 查看某个用户的消息列表
      *
-     * @param userId      userId
+     * @param partnerId   伙伴id 和谁的聊天记录
      * @param maxSendTime maxSendTime
      */
     @Transactional
-    public List<Message> messageList(Integer userId, Date maxSendTime) {
+    public List<Message> messageList(Integer partnerId,Integer userId, Date maxSendTime) {
 
         boolean isNeedSetReadStatus = (maxSendTime == null);
-
         if (maxSendTime == null) {
             maxSendTime = new Date();
         }
-
-        List<Message> list = this.mapper.messageList(userId, maxSendTime);
+        List<Message> list = this.mapper.messageList(partnerId, userId, maxSendTime);
         if (isNeedSetReadStatus) {
             this.mapper.setReadByUserId(userId);
         }
         return list;
     }
+
+
+    public List<Message> messagePreview(Integer currentUserId) {
+        return this.mapper.messagePreview(currentUserId);
+    }
+
 }

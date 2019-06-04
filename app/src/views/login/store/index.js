@@ -10,7 +10,6 @@ export default {
         a_getCount({commit},data){
             api.post('https://http://aojiaoo.com:8080',data)
                 .then((res) => {
-                    console.log(res);
                 })
         }
     },

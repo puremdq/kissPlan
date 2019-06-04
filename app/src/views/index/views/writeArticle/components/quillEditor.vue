@@ -1,131 +1,103 @@
 <template>
-    <div class="quillEditor">
-        <div class="quill-editor" 
-            v-model="content"
-            @change="onEditorChange"
-            v-quill:myQuillEditor="editorOption">
-        </div>
-
+    <div class="wangEditor">
+        <div id="mYwangEditor"></div>
     </div>
 </template>
 <script>
-var time = null;
-import Vue from "vue"
+// import wangeditor from "wangeditor" 不支持服务端渲染
+var wangeditor
+import {config} from "@/api"
 export default {
-    name:'quillEditor',
+    name:'wangEditor',
     data(){
         return {
-            content:this.value.content,
-            editorOption:{},
+            editor:null,
+            uploadUrl:config.client.baseURL,
         }
     },
     props:['value'],
     mounted(){
-        
+        wangeditor = require('wangeditor')
+        this.create_info();
     },
     methods:{
-        onEditorBlur(e){//失去焦点事件
-            
-        },
-        onEditorFocus(){//获得焦点事件
-        },
-        onEditorChange(){//内容改变事件
-            this.$emit('input',{
-                content:this.content,
-                baseText:this.content,
-            })
-            if(!time){
-                time = window.setTimeout(()=>{
-                    this.$message({
-                        message: '本地保存',
-                        showClose: true,
-                        type: 'success'
-                    });
-                    
-                    clearTimeout(time);
-                    time = null;
-                },3000)
+        create_info(){
+            var that = this;
+            this.editor = new wangeditor('#mYwangEditor');
+            this.editor.customConfig.uploadImgServer = this.uploadUrl+'/upload';
+            this.editor.customConfig.uploadFileName = 'file'
+            this.editor.customConfig.onchange = function (html) {
+                that.$emit('input',{
+                    content:html,
+                    mdContent:'',
+                    articleType:'0'
+                })
             }
+            this.editor.customConfig.customAlert = function (info) {
+                that.$Message.warning(info);
+            }
+            this.editor.customConfig.uploadImgHooks = {
+                before: function (xhr, editor, files) {
+                    // 图片上传之前触发
+                    // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
+                    
+                    // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+                    // return {
+                    //     prevent: true,
+                    //     msg: '放弃上传'
+                    // }
+                },
+                success: function (xhr, editor, result) {
+                    // 图片上传并返回结果，图片插入成功之后触发
+                    // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+                },
+                fail: function (xhr, editor, result) {
+                    // 图片上传并返回结果，但图片插入错误时触发
+                    // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+                },
+                error: function (xhr, editor) {
+                    // 图片上传出错时触发
+                    // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+                },
+                timeout: function (xhr, editor) {
+                    // 图片上传超时时触发
+                    // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+                },
+
+                // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+                // （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+                customInsert: function (insertImg, result, editor) {
+                    // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+                    // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+                    if(result.status=='200' && result.data ){
+                        var url = result.data
+                        insertImg(url)
+                    }else{
+                        that.$Message.warning('图片上传失败');
+                    }
+                    
+
+                }
+            }
+            this.editor.create()
+            this.editor.txt.html(this.value.content)
+        }
+    },
+    watch:{
+        value(newValue,oldValue) {
+            this.editor.txt.html(this.value.content)
         }
     }
 }
 </script>
 <style lang="less">
-    .quillEditor{
-        .editor {
-        line-height: normal !important;
-        height: 800px;
+    #mYwangEditor{
+        
+        .w-e-text-container{
+            height:80vh !important;
         }
-        .ql-snow .ql-tooltip[data-mode=link]::before {
-        content: "请输入链接地址:";
-        }
-        .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
-            border-right: 0px;
-            content: '保存';
-            padding-right: 0px;
-        }
-
-        .ql-snow .ql-tooltip[data-mode=video]::before {
-            content: "请输入视频地址:";
-        }
-
-        .ql-snow .ql-picker.ql-size .ql-picker-label::before,
-        .ql-snow .ql-picker.ql-size .ql-picker-item::before {
-        content: '14px';
-        }
-        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value=small]::before,
-        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {
-        content: '10px';
-        }
-        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value=large]::before,
-        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=large]::before {
-        content: '18px';
-        }
-        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value=huge]::before,
-        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=huge]::before {
-        content: '32px';
-        }
-
-        .ql-snow .ql-picker.ql-header .ql-picker-label::before,
-        .ql-snow .ql-picker.ql-header .ql-picker-item::before {
-        content: '文本';
-        }
-        .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="1"]::before,
-        .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="1"]::before {
-        content: '标题1';
-        }
-        .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="2"]::before,
-        .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="2"]::before {
-        content: '标题2';
-        }
-        .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="3"]::before,
-        .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="3"]::before {
-        content: '标题3';
-        }
-        .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="4"]::before,
-        .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="4"]::before {
-        content: '标题4';
-        }
-        .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="5"]::before,
-        .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="5"]::before {
-        content: '标题5';
-        }
-        .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="6"]::before,
-        .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="6"]::before {
-        content: '标题6';
-        }
-
-        .ql-snow .ql-picker.ql-font .ql-picker-label::before,
-        .ql-snow .ql-picker.ql-font .ql-picker-item::before {
-        content: '标准字体';
-        }
-        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value=serif]::before,
-        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value=serif]::before {
-        content: '衬线字体';
-        }
-        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value=monospace]::before,
-        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value=monospace]::before {
-        content: '等宽字体';
+        .w-e-toolbar{
+            flex-wrap:wrap;
         }
     }
 </style>

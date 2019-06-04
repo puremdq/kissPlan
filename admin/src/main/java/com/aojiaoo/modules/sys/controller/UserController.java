@@ -1,5 +1,6 @@
 package com.aojiaoo.modules.sys.controller;
 
+import com.aojiaoo.core.annotations.IgnoreInField;
 import com.aojiaoo.core.base.BaseController;
 import com.aojiaoo.core.common.GlobalProperties;
 import com.aojiaoo.core.common.ServerResponse;
@@ -7,6 +8,7 @@ import com.aojiaoo.modules.kissPlan.service.UserDetailService;
 import com.aojiaoo.modules.sys.entity.User;
 import com.aojiaoo.modules.sys.service.UserService;
 import com.aojiaoo.utils.StringUtils;
+import com.aojiaoo.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -78,4 +80,21 @@ public class UserController extends BaseController {
         return this.createServerResponseNotFoundOrSuccess(authorService.getAuthorView(id));
     }
 
+    @ResponseBody
+    @GetMapping("currentUser")
+    public ServerResponse currentUser() {
+        if (!UserUtil.isAuthenticated()) {
+            return ServerResponse.createByErrorMessage("非法操作");
+        }
+        return ServerResponse.createBySuccess(authorService.getAuthorView(UserUtil.getCurrentUserId()));
+    }
+
+
+    @ResponseBody
+    @GetMapping("save")
+
+    @IgnoreInField(type = User.class, field = "id")
+    public ServerResponse save(User user) {
+        return null;
+    }
 }

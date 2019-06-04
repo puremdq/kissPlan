@@ -23,4 +23,15 @@ public class IdUtil {
     public static boolean isValidId(Integer id) {
         return (id != null && id > 0);
     }
+
+
+    /**
+     * 查看当前传入的id是否是有效的id
+     *
+     * @param id id
+     * @return boolean
+     */
+    public static boolean isInValidId(Integer id) {
+        return !isValidId(id);
+    }
 }

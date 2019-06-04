@@ -18,5 +18,7 @@ public interface MessageMapper extends BaseMapper<Message> {
     //    <!--设置某个用户下的消息全部为已读-->
     Integer setReadByUserId(Integer userId);
 
-    List<Message> messageList(@Param("userId") Integer userId, @Param("maxSendTime") Date maxSendTime);
+    List<Message> messageList(@Param("partnerId") Integer partnerId, @Param("userId") Integer userId, @Param("maxSendTime") Date maxSendTime);
+
+    List<Message> messagePreview(Integer userId);
 }

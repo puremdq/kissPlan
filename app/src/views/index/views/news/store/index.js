@@ -1,4 +1,5 @@
 import api from '@/api'
+var Qs = require('qs');
 export default {
     name:'news',
     namespaced:true,
@@ -25,13 +26,16 @@ export default {
             })
         },
         getComment({commit},data) {
+            if(!data.sortType){
+                data.sortType = 'asc'
+            }
+            
             return api.instance({
                 method:'get',
-                url:`/article/getComment?id=${data.id}&pageNo=${data.pageNo}`
+                url:`/article/getComment?id=${data.id}&pageNo=${data.pageNo}&sortType=${data.sortType}`
             })
             .then((res)=>{
                 if(res.status==200){
-                    console.log(res);
                     if(res.data){
                         commit('getComment',res.data)
                     }else{
@@ -52,6 +56,23 @@ export default {
                    
                 }
                 return res
+            })
+        },
+        //评论
+        _articleReply({commit,dispatch},data) {
+            return api.instance({
+                method:'post',
+                url:`/article/reply`,
+                data:Qs.stringify(data)
+            })
+            
+        },
+        //点赞
+        _articleLike({commit,dispatch},data){
+            return api.instance({
+                method:'post',
+                url:`/article/like`,
+                data:Qs.stringify(data)
             })
         }
     },

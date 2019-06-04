@@ -71,9 +71,7 @@
 
 
     <bean id="formAuthenticationFilter" class="com.aojiaoo.core.shiro.filter.FormAuthenticationFilter"/>
-    <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
-        <property name="redirectUrl" value="/logoutSuccess"/>
-    </bean>
+    <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter"/>
 
     <!--配置shiroFilter (名称应与web.xml文件的fiterName一致)-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -100,11 +98,11 @@
                 authc表示需要认证 没有进行身份认证是不能进行访问的
                 -->
                 /login = authc
+                /u/currentUser = authc
                 /article/save = authc
                 /article/reply = authc
                 /article/like = authc
                 /message/** = authc
-                /logout = logout
                 /** = anon
             </value>
         </property>

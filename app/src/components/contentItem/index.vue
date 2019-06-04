@@ -5,13 +5,12 @@
         </a>
         <div class="content" :class="{hasImg:data.firstImg}">
             <a class="title"  :href="'/news/'+data.id">{{data.title}}</a>
-            <p class="abstract">
-                {{data.preview}}
+            <p class="abstract"  v-html="data.preview">
             </p>
             <div class="meta">
-                <a class="nickname mr10" target="_blank"  :href="'/news/'+data.id">小小荔枝妹</a>
-                <span class="mr10"><i class="iconfont icon-message"></i> 9</span>
-                <span><i class="iconfont icon-shoucang_xiantiao"></i> 1</span>
+                <a class="nickname mr10" target="_blank"  :href="'/news/'+data.id">{{data.username}}</a>
+                <span class="mr10"><i class="iconfont icon-message"></i>{{data.commentNum}}</span>
+                <span><i class="iconfont icon-shoucang_xiantiao"></i> {{data.likeNum}}</span>
             </div>
         </div>
     </div>

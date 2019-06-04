@@ -19,6 +19,12 @@ public class UserUtil {
     }
 
 
+    public static void Logout() {
+        if (isAuthenticated()) {
+            SecurityUtils.getSubject().logout();
+        }
+    }
+
     public static User getCurrentUser() {
         try {
             return (User) SecurityUtils.getSubject().getPrincipal();

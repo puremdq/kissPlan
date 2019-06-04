@@ -10,7 +10,9 @@ export default {
             {
                 title:'默认菜单',
                 content:'',
-                baseText:'',
+                articleType:'0',
+                preview:'',
+                mdContent:'',
                 active:true,
             },
         ]
@@ -21,11 +23,7 @@ export default {
             return api.instance({
                 method:'post',
                 url:'/article/save',
-                kiss_plan_token:config.kiss_plan_token,
-                data:Qs.stringify({
-                    title:data.title,
-                    content:data.content,
-                })
+                data:Qs.stringify(data)
             })
             .then((res)=>{
                 if(res.status==200){
@@ -66,8 +64,9 @@ export default {
         _writeText(state,data) {
             state._writeArticleMenuType.forEach((item)=>{
                 if(item.active){
-                    item.content = data.content;
-                    item.baseText =  data.baseText;
+                    item.content = data.content=='<p><br></p>'?'':data.content;
+                    item.mdContent =  data.mdContent;
+                    item.articleType =  data.articleType;
                 }
             })
         }
