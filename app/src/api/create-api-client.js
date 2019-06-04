@@ -10,6 +10,7 @@ export function createAPI ({client}){
         hasLoading:client.hasLoading,
     });
     instance.interceptors.request.use(function (config) {
+        debugger
         if(config.kiss_plan_token){
             config.headers.kiss_plan_token = config.kiss_plan_token;
         }

@@ -31,7 +31,7 @@
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command="个人中心">个人中心</el-dropdown-item>
                             <el-dropdown-item command="设置">设置</el-dropdown-item>
-                            <el-dropdown-item command="退出登录" >退出登录</el-dropdown-item>
+                            <el-dropdown-item command="退出登录" @click="signOut">退出登录</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                     
@@ -117,7 +117,6 @@
 </template>
 <script>
 import {mapState ,mapMutations} from "vuex"
-import axios from "axios"
 export default {
     name:'myHeader',
     data(){
@@ -179,10 +178,8 @@ export default {
             this.$router.push('/login')
         },
         signOut() {
-            this.$axios.instance({
-                url:'/logout',
-                method:'get',
-            })
+            debugger
+            this.$store.dispatch('logout')
             .then((res)=>{
                 window.localStorage.clear();
                 this.$router.push('/login')
