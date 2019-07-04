@@ -18,4 +18,5 @@
     <mappers>
         <mapper resource="com/aojiaoo/study/mybatis/TestMapper.xml"/>
     </mappers>
+
 </configuration>

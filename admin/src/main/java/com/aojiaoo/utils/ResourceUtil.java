@@ -3,8 +3,11 @@ package com.aojiaoo.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.security.InvalidParameterException;
 
 
@@ -67,6 +70,13 @@ public class ResourceUtil {
                         "] is neither a URL not a well-formed file path");
             }
         }
+    }
+
+
+    public static InputStream getUrlAsStream(String urlString) throws IOException {
+        URL url = new URL(urlString);
+        URLConnection conn = url.openConnection();
+        return conn.getInputStream();
     }
 
 }
