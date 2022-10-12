@@ -22,7 +22,7 @@
 
         <jdk.version>8</jdk.version>
         <spring.version>5.1.5.RELEASE</spring.version>
-        <shiro.version>1.4.0</shiro.version>
+        <shiro.version>1.10.0</shiro.version>
         <mybatis.version>3.5.1</mybatis.version>
         <freemarker.version>2.3.28</freemarker.version>
         <jackson.version>[2.9.8,)</jackson.version>
